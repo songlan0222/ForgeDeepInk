@@ -1,14 +1,22 @@
 package com.songlan.deepink.ui.main
 
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
+import android.util.Log
+import android.view.*
 import androidx.fragment.app.Fragment
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.fragment_main_view.*
 
 class CenterFragment : Fragment() {
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        Log.d("MainTest", "加载中央Fragment")
+        return inflater.inflate(R.layout.fragment_main_view, container, false)
+    }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)

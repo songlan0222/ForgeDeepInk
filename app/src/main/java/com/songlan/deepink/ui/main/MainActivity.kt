@@ -8,26 +8,25 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager.widget.ViewPager
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-
-    companion object {
-        const val DEFAULT_PAGE = 1
+    private val vm by lazy {
+        ViewModelProvider(this).get(MainActivityVM::class.java)
     }
-
     private val fragmentMap = hashMapOf<Int, Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         main_viewpager.adapter = ViewPagerAdapter(supportFragmentManager)
-        main_viewpager.currentItem = Companion.DEFAULT_PAGE
+        main_viewpager.currentItem = vm.DEFAULT_ITEM_ID
     }
-
 
     private inner class ViewPagerAdapter(fm: FragmentManager) :
         FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {

@@ -3,6 +3,7 @@ package com.songlan.deepink.ui.main
 import android.os.Bundle
 import android.util.Log
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.fragment_main_view.*
@@ -20,6 +21,10 @@ class CenterFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        // 在Fragment中，使用toolbar
+        val currentActivity = activity as (AppCompatActivity)
+        currentActivity.setSupportActionBar(main_toolbar)
+        setHasOptionsMenu(true)
         // setSupportActionBar(main_toolbar)
         // 配置工具栏左边的书架管理按钮
         // supportActionBar?.setDisplayHomeAsUpEnabled(true)

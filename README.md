@@ -26,4 +26,10 @@
 ## 2020年11月19日
 
 1. 创建Android空项目，准备开搞
-2. 
+
+2. 构造界面
+
+   - SwipeRefreshLayout，需要添加依赖
+
+     > `implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'`
+

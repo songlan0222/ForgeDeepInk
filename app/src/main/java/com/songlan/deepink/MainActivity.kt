@@ -13,8 +13,8 @@ class MainActivity : AppCompatActivity() {
 
         setSupportActionBar(main_toolbar)
         // 配置工具栏左边的书架管理按钮
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_bookshelf)
+        // supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_bookshelf)
         // 添加工具栏正中标题
         main_toolbar?.title = getString(R.string.bookshelf_name)
     }
@@ -29,8 +29,6 @@ class MainActivity : AppCompatActivity() {
             R.id.main_bookshelf_search -> {
             }
             R.id.main_bookshelf_me -> {
-            }
-            android.R.id.home -> {
             }
         }
         return true

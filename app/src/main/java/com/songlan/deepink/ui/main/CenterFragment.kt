@@ -1,17 +1,18 @@
-package com.songlan.deepink
+package com.songlan.deepink.ui.main
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
-import kotlinx.android.synthetic.main.activity_main.*
+import androidx.fragment.app.Fragment
+import com.songlan.deepink.R
+import kotlinx.android.synthetic.main.fragment_main_view.*
 
-class MainActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+class CenterFragment : Fragment() {
 
-        setSupportActionBar(main_toolbar)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+        // setSupportActionBar(main_toolbar)
         // 配置工具栏左边的书架管理按钮
         // supportActionBar?.setDisplayHomeAsUpEnabled(true)
         // supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_bookshelf)
@@ -19,9 +20,8 @@ class MainActivity : AppCompatActivity() {
         main_toolbar?.title = getString(R.string.bookshelf_name)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_toolbar_menu, menu)
-        return true
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_toolbar_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

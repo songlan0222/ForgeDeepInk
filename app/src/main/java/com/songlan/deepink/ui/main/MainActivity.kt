@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
                 else -> RightFragment()
             }
 
-
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val fragment = super.instantiateItem(container, position) as Fragment
             fragmentMap[position] = fragment

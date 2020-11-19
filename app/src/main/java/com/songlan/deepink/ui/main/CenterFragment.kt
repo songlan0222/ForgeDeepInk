@@ -21,16 +21,19 @@ class CenterFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
         // 在Fragment中，使用toolbar
-        val currentActivity = activity as (AppCompatActivity)
+        val currentActivity = activity as AppCompatActivity
         currentActivity.setSupportActionBar(main_toolbar)
         setHasOptionsMenu(true)
-        // setSupportActionBar(main_toolbar)
-        // 配置工具栏左边的书架管理按钮
-        // supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        // supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_bookshelf)
+
         // 添加工具栏正中标题
         main_toolbar?.title = getString(R.string.bookshelf_name)
+
+        // 下拉刷新功能
+        main_bookshelf_swipe_refresh.setOnRefreshListener {
+            main_bookshelf_swipe_refresh.isRefreshing = false
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

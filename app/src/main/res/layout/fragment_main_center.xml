@@ -10,6 +10,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
+        android:id="@+id/main_center_xRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/main_center_bookshelf_swipe_refresh"
         android:layout_width="match_parent"

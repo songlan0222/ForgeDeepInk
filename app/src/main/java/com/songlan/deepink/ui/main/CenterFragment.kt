@@ -3,10 +3,9 @@ package com.songlan.deepink.ui.main
 import android.os.Bundle
 import android.util.Log
 import android.view.*
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.songlan.deepink.R
-import kotlinx.android.synthetic.main.fragment_main_view.*
+import kotlinx.android.synthetic.main.fragment_main_center.*
 
 class CenterFragment : Fragment() {
 
@@ -16,14 +15,14 @@ class CenterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d("MainTest", "加载中央Fragment")
-        return inflater.inflate(R.layout.fragment_main_view, container, false)
+        return inflater.inflate(R.layout.fragment_main_center, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        main_toolbar.inflateMenu(R.menu.main_toolbar_menu)
-        main_toolbar.setOnMenuItemClickListener { item ->
+        main_center_toolbar.inflateMenu(R.menu.main_toolbar_menu)
+        main_center_toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.main_bookshelf_search -> {
                 }
@@ -34,11 +33,11 @@ class CenterFragment : Fragment() {
         }
 
         // 添加工具栏正中标题
-        main_toolbar?.title = getString(R.string.bookshelf_name)
+        main_center_toolbar?.title = getString(R.string.bookshelf_name)
 
         // 下拉刷新功能
-        main_bookshelf_swipe_refresh.setOnRefreshListener {
-            main_bookshelf_swipe_refresh.isRefreshing = false
+        main_center_bookshelf_swipe_refresh.setOnRefreshListener {
+            main_center_bookshelf_swipe_refresh.isRefreshing = false
         }
     }
 }

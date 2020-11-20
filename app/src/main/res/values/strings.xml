@@ -5,4 +5,5 @@
     <string name="main_bookshelf_me">我的配置</string>
     <string name="main_left_add_bookshelf">添加书架</string>
     <string name="main_left_toolbar_title">书架列表</string>
+    <string name="main_right_toolbar_title">EXPERIENCER</string>
 </resources>

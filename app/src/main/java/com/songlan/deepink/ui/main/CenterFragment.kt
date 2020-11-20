@@ -22,10 +22,16 @@ class CenterFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        // 在Fragment中，使用toolbar
-        val currentActivity = activity as AppCompatActivity
-        currentActivity.setSupportActionBar(main_toolbar)
-        setHasOptionsMenu(true)
+        main_toolbar.inflateMenu(R.menu.main_toolbar_menu)
+        main_toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.main_bookshelf_search -> {
+                }
+                R.id.main_bookshelf_me -> {
+                }
+            }
+            true
+        }
 
         // 添加工具栏正中标题
         main_toolbar?.title = getString(R.string.bookshelf_name)
@@ -34,19 +40,5 @@ class CenterFragment : Fragment() {
         main_bookshelf_swipe_refresh.setOnRefreshListener {
             main_bookshelf_swipe_refresh.isRefreshing = false
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_toolbar_menu, menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.main_bookshelf_search -> {
-            }
-            R.id.main_bookshelf_me -> {
-            }
-        }
-        return true
     }
 }

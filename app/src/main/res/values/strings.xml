@@ -3,4 +3,6 @@
     <string name="bookshelf_name">正在阅读</string>
     <string name="main_bookshelf_search">搜书</string>
     <string name="main_bookshelf_me">我的配置</string>
+    <string name="main_left_add_bookshelf">添加书架</string>
+    <string name="main_left_toolbar_title">书架列表</string>
 </resources>

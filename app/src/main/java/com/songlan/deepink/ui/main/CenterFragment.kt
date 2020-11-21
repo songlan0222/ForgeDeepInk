@@ -8,11 +8,14 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.jcodecraeer.xrecyclerview.XRecyclerView
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import kotlinx.android.synthetic.main.fragment_main_center.*
 
-class CenterFragment : Fragment() {
+class CenterFragment : Fragment(), XRecyclerView.LoadingListener {
+
+    private val bookList = mutableListOf<Book>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,6 +23,10 @@ class CenterFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         Log.d("MainTest", "加载中央Fragment")
+        bookList.add(Book(R.drawable.ic_book_default, "易筋经"))
+        bookList.add(Book(R.drawable.ic_book_default, "洗髓经"))
+        bookList.add(Book(R.drawable.ic_book_default, "金刚经"))
+        bookList.add(Book(R.drawable.ic_book_default, "四十二章经"))
         return inflater.inflate(R.layout.fragment_main_center, container, false)
     }
 
@@ -46,7 +53,20 @@ class CenterFragment : Fragment() {
         }
     }
 
-    private inner class MyXRecyclerViewAdapter(val context: Context, val bookList: List<Book>) :
+    // 上拉刷新
+    override fun onRefresh() {
+    }
+
+    // 下拉加载
+    override fun onLoadMore() {
+    }
+
+    fun onProgress(){
+        val adapter = MyXRecyclerViewAdapter(bookList)
+
+    }
+
+    private inner class MyXRecyclerViewAdapter(val bookList: List<Book>) :
         RecyclerView.Adapter<MyXRecyclerViewAdapter.ViewHolder>() {
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val bookImage: ImageView = view.findViewById(R.id.bookImage)
@@ -71,4 +91,6 @@ class CenterFragment : Fragment() {
 
         override fun getItemCount() = bookList.size
     }
+
+
 }

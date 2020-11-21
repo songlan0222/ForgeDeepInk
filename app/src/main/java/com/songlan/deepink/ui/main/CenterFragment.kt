@@ -62,7 +62,9 @@ class CenterFragment : Fragment(), XRecyclerView.LoadingListener {
     // 下拉刷新
     override fun onRefresh() {
         Log.d("MainTest", "下拉刷新")
-        main_center_xRecyclerView.refreshComplete()
+        // 刷新时延迟2秒效果
+        Handler().postDelayed(Runnable { main_center_xRecyclerView.refreshComplete() }, 2000)
+
     }
 
     // 上拉加载

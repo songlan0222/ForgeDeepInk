@@ -2,12 +2,15 @@ package com.songlan.deepink.ui.main
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.jcodecraeer.xrecyclerview.ProgressStyle
 import com.jcodecraeer.xrecyclerview.XRecyclerView
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
@@ -48,21 +51,42 @@ class CenterFragment : Fragment(), XRecyclerView.LoadingListener {
         main_center_toolbar?.title = getString(R.string.bookshelf_name)
 
         // 下拉刷新功能
-        main_center_bookshelf_swipe_refresh.setOnRefreshListener {
-            main_center_bookshelf_swipe_refresh.isRefreshing = false
-        }
+//        main_center_bookshelf_swipe_refresh.setOnRefreshListener {
+//            main_center_bookshelf_swipe_refresh.isRefreshing = false
+//        }
+
+        // 配置xRecyclerView
+        onProgress()
     }
 
-    // 上拉刷新
+    // 下拉刷新
     override fun onRefresh() {
+        Log.d("MainTest", "下拉刷新")
+        main_center_xRecyclerView.refreshComplete()
     }
 
-    // 下拉加载
+    // 上拉加载
     override fun onLoadMore() {
+        Log.d("MainTest", "上拉加载")
+        main_center_xRecyclerView.refreshComplete()
     }
 
-    fun onProgress(){
+    private fun onProgress() {
         val adapter = MyXRecyclerViewAdapter(bookList)
+        val manager = GridLayoutManager(requireActivity().applicationContext, 3)
+        // 为xRecyclerView配置数据
+        main_center_xRecyclerView.adapter = adapter
+        main_center_xRecyclerView.layoutManager = manager
+        // 设置下拉监听
+        main_center_xRecyclerView.setLoadingListener(this);
+        main_center_xRecyclerView.setLoadingMoreProgressStyle(ProgressStyle.Pacman);
+        // 设置上次下拉刷新时间
+        main_center_xRecyclerView.defaultRefreshHeaderView.setRefreshTimeVisible(true)
+
+        // 设置加载时文字
+        // main_center_xRecyclerView.defaultFootView.setLoadingHint("刷新中")
+        // main_center_xRecyclerView.defaultFootView.setLoadingDoneHint("刷新完成")
+
 
     }
 

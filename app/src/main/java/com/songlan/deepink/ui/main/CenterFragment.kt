@@ -50,11 +50,6 @@ class CenterFragment : Fragment(), XRecyclerView.LoadingListener {
         // 添加工具栏正中标题
         main_center_toolbar?.title = getString(R.string.bookshelf_name)
 
-        // 下拉刷新功能
-//        main_center_bookshelf_swipe_refresh.setOnRefreshListener {
-//            main_center_bookshelf_swipe_refresh.isRefreshing = false
-//        }
-
         // 配置xRecyclerView
         onProgress()
     }
@@ -85,11 +80,6 @@ class CenterFragment : Fragment(), XRecyclerView.LoadingListener {
         // 设置上次下拉刷新时间
         main_center_xRecyclerView.defaultRefreshHeaderView.setRefreshTimeVisible(true)
 
-        // 设置加载时文字
-        // main_center_xRecyclerView.defaultFootView.setLoadingHint("刷新中")
-        // main_center_xRecyclerView.defaultFootView.setLoadingDoneHint("刷新完成")
-
-
     }
 
     private inner class MyXRecyclerViewAdapter(val bookList: List<Book>) :
@@ -117,6 +107,4 @@ class CenterFragment : Fragment(), XRecyclerView.LoadingListener {
 
         override fun getItemCount() = bookList.size
     }
-
-
 }

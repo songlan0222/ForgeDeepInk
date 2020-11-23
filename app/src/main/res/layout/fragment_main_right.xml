@@ -11,7 +11,17 @@
         android:layout_height="wrap_content" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/main_right_bookshelf"
+        android:id="@+id/main_right_recyclerView_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/main_right_recyclerView_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp" />
+
+    <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1" />

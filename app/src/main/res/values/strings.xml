@@ -6,4 +6,7 @@
     <string name="main_left_add_bookshelf">添加书架</string>
     <string name="main_left_toolbar_title">书架列表</string>
     <string name="main_right_toolbar_title">EXPERIENCER</string>
+    <string name="main_right_scan_local">图书</string>
+    <string name="main_right_manage_book_src">书源</string>
+    <string name="main_right_rank">排行</string>
 </resources>

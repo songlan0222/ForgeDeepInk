@@ -5,22 +5,38 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.hjq.bar.OnTitleBarListener
 import com.songlan.deepink.MyApplication
 import com.songlan.deepink.R
+import com.songlan.deepink.model.Option
 import kotlinx.android.synthetic.main.fragment_main_left.*
 import kotlinx.android.synthetic.main.fragment_main_right.*
 
 class RightFragment : Fragment() {
+
+    private val topOptionItemList = mutableListOf<Option>()
+    private val bottomOptionItemList = mutableListOf<Option>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_main_right, container, false)
+
+        val view = inflater.inflate(R.layout.fragment_main_right, container, false)
+        topOptionItemList.add(Option(R.drawable.ic_main_right_scan_local, "图书"))
+        topOptionItemList.add(Option(R.drawable.ic_main_right_manage_book_src, "书源"))
+        topOptionItemList.add(Option(R.drawable.ic_main_right_rank, "排行"))
+        bottomOptionItemList.add(Option(R.drawable.ic_main_right_rss, "RSS"))
+        bottomOptionItemList.add(Option(R.drawable.ic_main_right_community, "社区"))
+        bottomOptionItemList.add(Option(R.drawable.ic_main_right_settings, "设置"))
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,5 +61,45 @@ class RightFragment : Fragment() {
             }
 
         })
+
+
+        // 配置列表
+        val adapterTop = MyRecyclerViewAdapter(topOptionItemList)
+        val managerTop = LinearLayoutManager(requireContext())
+        main_right_recyclerView_top.adapter = adapterTop
+        main_right_recyclerView_top.layoutManager = managerTop
+
+        val adapterBottom = MyRecyclerViewAdapter(bottomOptionItemList)
+        val managerBottom = LinearLayoutManager(requireContext())
+        main_right_recyclerView_bottom.adapter = adapterBottom
+        main_right_recyclerView_bottom.layoutManager = managerBottom
+    }
+
+    inner class MyRecyclerViewAdapter(private val itemList: List<Option>) :
+        RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
+        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val itemImage: ImageView = view.findViewById(R.id.itemImage)
+            val itemName: TextView = view.findViewById(R.id.itemName)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view =
+                LayoutInflater.from(requireContext())
+                    .inflate(R.layout.item_main_right_item_top, parent, false)
+            val viewHolder = ViewHolder(view)
+            viewHolder.itemView.setOnClickListener {
+
+            }
+            return viewHolder
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val item = itemList[position]
+            holder.itemImage.setImageResource(item.itemImageId)
+            holder.itemName.text = item.itemImageName
+        }
+
+        override fun getItemCount() = itemList.size
+
     }
 }

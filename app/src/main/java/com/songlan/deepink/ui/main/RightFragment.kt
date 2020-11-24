@@ -1,6 +1,5 @@
 package com.songlan.deepink.ui.main
 
-import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,6 @@ import com.hjq.bar.OnTitleBarListener
 import com.songlan.deepink.MyApplication
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Option
-import kotlinx.android.synthetic.main.fragment_main_left.*
 import kotlinx.android.synthetic.main.fragment_main_right.*
 
 class RightFragment : Fragment() {
@@ -85,7 +83,7 @@ class RightFragment : Fragment() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view =
                 LayoutInflater.from(requireContext())
-                    .inflate(R.layout.item_main_right_item_top, parent, false)
+                    .inflate(R.layout.item_main_right, parent, false)
             val viewHolder = ViewHolder(view)
             viewHolder.itemView.setOnClickListener {
 

@@ -82,7 +82,7 @@ class CenterFragment : Fragment(), XRecyclerView.LoadingListener {
 
     }
 
-    private inner class MyXRecyclerViewAdapter(val bookList: List<Book>) :
+    class MyXRecyclerViewAdapter(val bookList: List<Book>) :
         RecyclerView.Adapter<MyXRecyclerViewAdapter.ViewHolder>() {
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val bookImage: ImageView = view.findViewById(R.id.bookImage)

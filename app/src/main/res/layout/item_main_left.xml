@@ -10,29 +10,31 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_margin="20dp"
-        >
+        android:layout_margin="20dp">
 
-        <com.google.android.material.checkbox.MaterialCheckBox
+        <CheckBox
             android:id="@+id/itemCheckbox"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
-            android:layout_alignParentLeft="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="20dp"
-            />
+            android:layout_marginRight="20dp"
+            android:theme="@style/MyCheckBox" />
 
         <TextView
             android:id="@+id/itemName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/itemCheckbox"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/itemCheckbox"
+            android:textSize="16dp" />
 
         <ImageButton
             android:id="@+id/itemMore"
-            android:layout_width="10dp"
-            android:layout_height="10dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@color/white"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
             android:src="@drawable/ic_main_left_more" />
 
     </RelativeLayout>

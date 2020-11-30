@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
 import android.widget.GridLayout
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -70,11 +71,33 @@ class LeftFragment : Fragment() {
             holder.bookshelfItemChecked.isChecked = true
             holder.bookshelfName.text = bookshelf.bookshelfName
             holder.bookshelfDetails.adapter =
-                CenterFragment.MyXRecyclerViewAdapter(bookshelf.bookList)
-            holder.bookshelfDetails.layoutManager = LinearLayoutManager(requireContext())
+                DetailsAdapter(bookshelf.bookList)
+            val layoutManager = LinearLayoutManager(requireContext())
+            layoutManager.orientation = LinearLayoutManager.HORIZONTAL
+            holder.bookshelfDetails.layoutManager = layoutManager
         }
 
         override fun getItemCount() = bookshelfList.size
+
+        inner class DetailsAdapter(val bookList: List<Book>) :
+            RecyclerView.Adapter<DetailsAdapter.ViewHolder>() {
+            inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+                val detailsImage: ImageView = view.findViewById(R.id.detailsImage)
+            }
+
+            override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+                val view = layoutInflater.inflate(R.layout.item_main_left_details, parent, false)
+                return ViewHolder(view)
+            }
+
+            override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+                val book = bookList[position]
+                holder.detailsImage.setImageResource(book.bookImage)
+            }
+
+            override fun getItemCount() = bookList.size
+
+        }
 
     }
 }

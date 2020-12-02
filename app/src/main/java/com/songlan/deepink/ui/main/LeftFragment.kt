@@ -6,10 +6,7 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.GridLayout
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -56,7 +53,7 @@ class LeftFragment : Fragment() {
 
     fun showBottomDialog(){
         val view = View.inflate(activity, R.layout.dialog_main_left_more, null)
-        val bottomDialog = Dialog(requireContext())
+        val bottomDialog = Dialog(requireContext(), R.style.DialogTheme)
         bottomDialog.setContentView(view)
 
         val window = bottomDialog.window?.let { it->
@@ -78,11 +75,16 @@ class LeftFragment : Fragment() {
             val bookshelfItemChecked: CheckBox = view.findViewById(R.id.itemCheckbox)
             val bookshelfName: TextView = view.findViewById(R.id.itemName)
             val bookshelfDetails: RecyclerView = view.findViewById(R.id.item_main_left_details)
+            val bookshelfMore: ImageButton = view.findViewById(R.id.itemImage)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = layoutInflater.inflate(R.layout.item_main_left, parent, false)
-            return ViewHolder(view)
+            val holder = ViewHolder(view)
+            holder.bookshelfMore.setOnClickListener {
+                showBottomDialog()
+            }
+            return holder
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {

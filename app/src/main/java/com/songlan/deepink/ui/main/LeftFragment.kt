@@ -1,6 +1,8 @@
 package com.songlan.deepink.ui.main
 
+import android.app.Dialog
 import android.os.Bundle
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,6 +52,23 @@ class LeftFragment : Fragment() {
         val adapter = MyRecyclerViewAdapter(bookshelfList)
         main_left_bookshelf_recycler.layoutManager = manager
         main_left_bookshelf_recycler.adapter = adapter
+    }
+
+    fun showBottomDialog(){
+        val view = View.inflate(activity, R.layout.dialog_main_left_more, null)
+        val bottomDialog = Dialog(requireContext())
+        bottomDialog.setContentView(view)
+
+        val window = bottomDialog.window?.let { it->
+            it.setGravity(Gravity.BOTTOM)
+            it.setWindowAnimations(R.style.main_menu_animStyle)
+            it.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        }
+
+        bottomDialog.show()
+
+
+
     }
 
     inner class MyRecyclerViewAdapter(private val bookshelfList: List<Bookshelf>) :

@@ -21,6 +21,7 @@ class LeftFragment : Fragment() {
 
     private var bookshelfList = mutableListOf<Bookshelf>()
     private val bookList = mutableListOf<Book>()
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +35,10 @@ class LeftFragment : Fragment() {
         bookList.add(Book(R.drawable.ic_book_default, "四十二章经"))
         val bookshelf = Bookshelf("正在阅读", bookList)
         bookshelfList.add(bookshelf)
+
+        if(activity!= null){
+            mainActivity = activity as MainActivity
+        }
 
         return inflater.inflate(R.layout.fragment_main_left, container, false)
     }
@@ -52,8 +57,8 @@ class LeftFragment : Fragment() {
     }
 
     fun showBottomDialog(){
-        val view = View.inflate(activity, R.layout.dialog_main_left_more, null)
-        val bottomDialog = Dialog(requireContext(), R.style.DialogTheme)
+        val view = View.inflate(context, R.layout.dialog_main_left_more, null)
+        val bottomDialog = Dialog(context!!, R.style.DialogTheme)
         bottomDialog.setContentView(view)
 
         val window = bottomDialog.window?.let { it->
@@ -63,9 +68,6 @@ class LeftFragment : Fragment() {
         }
 
         bottomDialog.show()
-
-
-
     }
 
     inner class MyRecyclerViewAdapter(private val bookshelfList: List<Bookshelf>) :
@@ -75,7 +77,7 @@ class LeftFragment : Fragment() {
             val bookshelfItemChecked: CheckBox = view.findViewById(R.id.itemCheckbox)
             val bookshelfName: TextView = view.findViewById(R.id.itemName)
             val bookshelfDetails: RecyclerView = view.findViewById(R.id.item_main_left_details)
-            val bookshelfMore: ImageButton = view.findViewById(R.id.itemImage)
+            val bookshelfMore: ImageButton = view.findViewById(R.id.itemMore)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

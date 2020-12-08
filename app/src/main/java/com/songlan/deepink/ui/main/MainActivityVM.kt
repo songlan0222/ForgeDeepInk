@@ -8,9 +8,9 @@ import com.songlan.deepink.model.Bookshelf
 class MainActivityVM : ViewModel() {
     companion object{
         val BOOKSHELF_GROUP_FRAGMENT_ID = 0
-        val BOOKSHELF_GROUP_DETAILS_ID = 1
-        val BOOKSHELF_GROUP_OTHERS_ID = 2
-        val DEFAULT_ITEM_ID = BOOKSHELF_GROUP_DETAILS_ID
+        val BOOKSHELF_DETAILS_FRAGMENT_ID = 1
+        val BOOKSHELF_OTHERS_FRAGMENT_ID = 2
+        val DEFAULT_ITEM_ID = BOOKSHELF_DETAILS_FRAGMENT_ID
 
         // 暂定为 0，后续变为用户可更改数据
         var CURRENT_BOOKSHELF_ID = 0

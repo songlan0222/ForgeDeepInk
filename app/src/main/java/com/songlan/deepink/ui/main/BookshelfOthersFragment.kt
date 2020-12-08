@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,16 +17,23 @@ import com.songlan.deepink.R
 import com.songlan.deepink.model.Option
 import kotlinx.android.synthetic.main.fragment_bookshelf_others.*
 
-class BookshelfOthersFragment : Fragment() {
+
+class BookshelfOthersFragment : BaseFragment() {
 
     private val topOptionItemList = mutableListOf<Option>()
     private val bottomOptionItemList = mutableListOf<Option>()
+
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        if (activity != null) {
+            mainActivity = activity as MainActivity
+        }
 
         val view = inflater.inflate(R.layout.fragment_bookshelf_others, container, false)
         topOptionItemList.add(Option(R.drawable.ic_main_right_scan_local, "图书"))
@@ -71,6 +79,11 @@ class BookshelfOthersFragment : Fragment() {
         val managerBottom = LinearLayoutManager(requireContext())
         main_right_recyclerView_bottom.adapter = adapterBottom
         main_right_recyclerView_bottom.layoutManager = managerBottom
+    }
+
+    override fun onBackPressed(): Boolean {
+        mainActivity.changeFragment(MainActivityVM.BOOKSHELF_DETAILS_FRAGMENT_ID)
+        return true
     }
 
     inner class MyRecyclerViewAdapter(private val itemList: List<Option>) :

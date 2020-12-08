@@ -9,11 +9,14 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.R
 import com.songlan.deepink.ui.main.`interface`.BackHandleInterface
+import com.songlan.deepink.ui.main.base.BaseFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), BackHandleInterface {
 
+    // 继承自BaseFragment，需要重写返回功能的Fragment
     private lateinit var backHandleFragment: BaseFragment
+    
     val vm by lazy {
         ViewModelProvider(this).get(MainActivityVM::class.java)
     }
@@ -26,7 +29,7 @@ class MainActivity : AppCompatActivity(), BackHandleInterface {
         main_viewpager.currentItem = MainActivityVM.DEFAULT_ITEM_ID
     }
 
-    public fun changeFragment(id: Int){
+    public fun changeFragment(id: Int) {
         main_viewpager.setCurrentItem(id, true)
     }
 
@@ -50,17 +53,19 @@ class MainActivity : AppCompatActivity(), BackHandleInterface {
 
     }
 
-    // 添加返回事件
+    // 绑定需要重写返回按钮功能的Fragment
     override fun onSelectedFragment(backHandleFragment: BaseFragment) {
         this.backHandleFragment = backHandleFragment
     }
 
+    // 添加返回事件
     override fun onBackPressed() {
-        if(backHandleFragment == null || !backHandleFragment.onBackPressed()){
-            if(supportFragmentManager.backStackEntryCount == 0){
-                super.onBackPressed();
-            }else{
-                supportFragmentManager.popBackStack();
+        // 如果绑定的Fragment为空，或者Fragment没有重写onBackPressed方法，则调用原本的返回功能
+        if (backHandleFragment == null || !backHandleFragment.onBackPressed()) {
+            if (supportFragmentManager.backStackEntryCount == 0) {
+                super.onBackPressed()
+            } else {
+                supportFragmentManager.popBackStack()
             }
         }
     }

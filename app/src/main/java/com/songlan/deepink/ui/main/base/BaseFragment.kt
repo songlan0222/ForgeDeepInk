@@ -1,4 +1,4 @@
-package com.songlan.deepink.ui.main
+package com.songlan.deepink.ui.main.base
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -13,8 +13,10 @@ public abstract class BaseFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (activity is BackHandleInterface) {
-            backHandleInterface = (activity as BackHandleInterface?)!!
+
+        // 获取带有重写返回功能的activity
+        if (activity != null && activity is BackHandleInterface) {
+            backHandleInterface = activity as BackHandleInterface
         } else {
             throw ClassCastException("Hosting Activity must implement BackHandledInterface")
         }
@@ -22,6 +24,7 @@ public abstract class BaseFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
+        // 将当前Fragment与Activity绑定
         backHandleInterface.onSelectedFragment(this)
     }
 

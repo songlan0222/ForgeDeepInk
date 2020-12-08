@@ -6,15 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.hjq.bar.OnTitleBarListener
 import com.songlan.deepink.MyApplication
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Option
+import com.songlan.deepink.ui.main.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_bookshelf_others.*
 
 
@@ -65,7 +64,6 @@ class BookshelfOthersFragment : BaseFragment() {
 
             override fun onRightClick(v: View?) {
             }
-
         })
 
 
@@ -79,11 +77,6 @@ class BookshelfOthersFragment : BaseFragment() {
         val managerBottom = LinearLayoutManager(requireContext())
         main_right_recyclerView_bottom.adapter = adapterBottom
         main_right_recyclerView_bottom.layoutManager = managerBottom
-    }
-
-    override fun onBackPressed(): Boolean {
-        mainActivity.changeFragment(MainActivityVM.BOOKSHELF_DETAILS_FRAGMENT_ID)
-        return true
     }
 
     inner class MyRecyclerViewAdapter(private val itemList: List<Option>) :
@@ -111,6 +104,11 @@ class BookshelfOthersFragment : BaseFragment() {
         }
 
         override fun getItemCount() = itemList.size
+    }
 
+    // 重写点击返回按钮时需要调用的方法
+    override fun onBackPressed(): Boolean {
+        mainActivity.changeFragment(MainActivityVM.BOOKSHELF_DETAILS_FRAGMENT_ID)
+        return true
     }
 }

@@ -16,7 +16,7 @@ import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import kotlinx.android.synthetic.main.fragment_main_center.*
 
-class CenterFragment : Fragment(), XRecyclerView.LoadingListener {
+class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
 
     private val bookList = mutableListOf<Book>()
 
@@ -30,7 +30,7 @@ class CenterFragment : Fragment(), XRecyclerView.LoadingListener {
         bookList.add(Book(R.drawable.ic_book_default, "洗髓经"))
         bookList.add(Book(R.drawable.ic_book_default, "金刚经"))
         bookList.add(Book(R.drawable.ic_book_default, "四十二章经"))
-        return inflater.inflate(R.layout.fragment_main_center, container, false)
+        return inflater.inflate(R.layout.fragment_bookshelf_details, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {

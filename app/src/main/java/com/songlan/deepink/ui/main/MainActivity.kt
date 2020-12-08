@@ -2,16 +2,11 @@ package com.songlan.deepink.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import androidx.viewpager.widget.ViewPager
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -36,9 +31,9 @@ class MainActivity : AppCompatActivity() {
 
         override fun getItem(position: Int): Fragment =
             when (position) {
-                0 -> fragmentMap[0] ?: LeftFragment()
-                1 -> fragmentMap[1] ?: CenterFragment()
-                else -> RightFragment()
+                0 -> fragmentMap[0] ?: BookshelfGroupsFragment()
+                1 -> fragmentMap[1] ?: BookshelfDetailsFragment()
+                else -> BookshelfOthersFragment()
             }
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {

@@ -16,7 +16,7 @@ import com.songlan.deepink.R
 import com.songlan.deepink.model.Option
 import kotlinx.android.synthetic.main.fragment_main_right.*
 
-class RightFragment : Fragment() {
+class BookshelfOthersFragment : Fragment() {
 
     private val topOptionItemList = mutableListOf<Option>()
     private val bottomOptionItemList = mutableListOf<Option>()
@@ -27,7 +27,7 @@ class RightFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_main_right, container, false)
+        val view = inflater.inflate(R.layout.fragment_bookshelf_others, container, false)
         topOptionItemList.add(Option(R.drawable.ic_main_right_scan_local, "图书"))
         topOptionItemList.add(Option(R.drawable.ic_main_right_manage_book_src, "书源"))
         topOptionItemList.add(Option(R.drawable.ic_main_right_rank, "排行"))

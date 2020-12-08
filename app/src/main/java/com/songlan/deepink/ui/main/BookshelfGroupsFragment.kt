@@ -17,7 +17,7 @@ import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import kotlinx.android.synthetic.main.fragment_main_left.*
 
-class LeftFragment : Fragment() {
+class BookshelfGroupsFragment : Fragment() {
 
     private var bookshelfList = mutableListOf<Bookshelf>()
     private val bookList = mutableListOf<Book>()
@@ -40,7 +40,7 @@ class LeftFragment : Fragment() {
             mainActivity = activity as MainActivity
         }
 
-        return inflater.inflate(R.layout.fragment_main_left, container, false)
+        return inflater.inflate(R.layout.fragment_bookshelf_groups, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

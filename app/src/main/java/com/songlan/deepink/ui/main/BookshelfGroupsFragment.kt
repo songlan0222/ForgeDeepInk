@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
+import com.songlan.deepink.ui.main.`interface`.BackHandleInterface
+import com.songlan.deepink.ui.main.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_bookshelf_groups.*
 
-class BookshelfGroupsFragment : Fragment() {
+class BookshelfGroupsFragment : BaseFragment() {
 
     private lateinit var mainActivity: MainActivity
 
@@ -108,8 +110,12 @@ class BookshelfGroupsFragment : Fragment() {
             }
 
             override fun getItemCount() = bookList.size
-
         }
+    }
 
+    // 重写点击返回按钮时调用的方法
+    override fun onBackPressed(): Boolean {
+        mainActivity.changeFragment(MainActivityVM.BOOKSHELF_DETAILS_FRAGMENT_ID)
+        return true
     }
 }

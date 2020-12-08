@@ -8,12 +8,22 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/main_center_toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="96dp"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textStyle="bold"
+            android:textSize="20sp" />
+
+    </androidx.appcompat.widget.Toolbar>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/main_center_xRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
 </LinearLayout>

@@ -52,7 +52,13 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
         }
 
         // 添加工具栏正中标题
-        main_center_toolbar?.title = getString(R.string.bookshelf_name)
+        // main_center_toolbar.title = getString(R.string.bookshelf_name)
+
+        title.text = getString(R.string.bookshelf_name)
+        title.setOnClickListener {
+            Log.d("MainTest", "点击标题")
+            mainActivity.changeFragment(MainActivityVM.BOOKSHELF_GROUP_FRAGMENT_ID)
+        }
 
         // 配置xRecyclerView
         onProgress()

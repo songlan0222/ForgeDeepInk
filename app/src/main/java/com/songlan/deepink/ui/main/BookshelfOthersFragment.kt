@@ -83,7 +83,7 @@ class BookshelfOthersFragment : Fragment() {
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view =
                 LayoutInflater.from(requireContext())
-                    .inflate(R.layout.item_main_right, parent, false)
+                    .inflate(R.layout.item_bookshelf_others, parent, false)
             val viewHolder = ViewHolder(view)
             viewHolder.itemView.setOnClickListener {
 

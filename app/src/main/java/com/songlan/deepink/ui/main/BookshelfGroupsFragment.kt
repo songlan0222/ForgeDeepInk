@@ -8,14 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.checkbox.MaterialCheckBox
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
-import kotlinx.android.synthetic.main.fragment_main_left.*
+import kotlinx.android.synthetic.main.fragment_bookshelf_groups.*
 
 class BookshelfGroupsFragment : Fragment() {
 
@@ -57,7 +55,7 @@ class BookshelfGroupsFragment : Fragment() {
     }
 
     fun showBottomDialog(){
-        val view = View.inflate(context, R.layout.dialog_main_left_more, null)
+        val view = View.inflate(context, R.layout.dialog_bookshelf_options, null)
         val bottomDialog = Dialog(context!!, R.style.DialogTheme)
         bottomDialog.setContentView(view)
 
@@ -81,7 +79,7 @@ class BookshelfGroupsFragment : Fragment() {
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = layoutInflater.inflate(R.layout.item_main_left, parent, false)
+            val view = layoutInflater.inflate(R.layout.item_bookshelf_groups, parent, false)
             val holder = ViewHolder(view)
             holder.bookshelfMore.setOnClickListener {
                 showBottomDialog()
@@ -109,7 +107,7 @@ class BookshelfGroupsFragment : Fragment() {
             }
 
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-                val view = layoutInflater.inflate(R.layout.item_main_left_details, parent, false)
+                val view = layoutInflater.inflate(R.layout.item_bookshelf_groups_book, parent, false)
                 return ViewHolder(view)
             }
 

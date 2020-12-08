@@ -91,7 +91,7 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_bookshelf_books, parent, false)
+                .inflate(R.layout.item_bookshelf_details_book, parent, false)
             val viewHolder = ViewHolder(view)
             viewHolder.itemView.setOnClickListener {
 

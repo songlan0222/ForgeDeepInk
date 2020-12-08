@@ -14,7 +14,7 @@ import com.hjq.bar.OnTitleBarListener
 import com.songlan.deepink.MyApplication
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Option
-import kotlinx.android.synthetic.main.fragment_main_right.*
+import kotlinx.android.synthetic.main.fragment_bookshelf_others.*
 
 class BookshelfOthersFragment : Fragment() {
 

@@ -1,6 +1,5 @@
 package com.songlan.deepink.ui.main
 
-import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -14,7 +13,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle
 import com.jcodecraeer.xrecyclerview.XRecyclerView
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
-import kotlinx.android.synthetic.main.fragment_main_center.*
+import kotlinx.android.synthetic.main.fragment_bookshelf_details.*
 
 class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
 

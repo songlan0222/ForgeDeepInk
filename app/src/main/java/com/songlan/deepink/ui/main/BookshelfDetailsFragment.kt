@@ -38,9 +38,11 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
         main_center_toolbar.inflateMenu(R.menu.main_toolbar_menu)
         main_center_toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
+
                 R.id.main_bookshelf_search -> {
                 }
                 R.id.main_bookshelf_me -> {
+                    mainActivity.changeFragment(MainActivityVM.BOOKSHELF_GROUP_OTHERS_ID)
                 }
             }
             true
@@ -68,7 +70,7 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
     }
 
     private fun onProgress() {
-        val adapter = MyXRecyclerViewAdapter(mainActivity.vm.bookshelfList[mainActivity.vm.CURRENT_BOOKSHELF_ID].bookList)
+        val adapter = MyXRecyclerViewAdapter(mainActivity.vm.bookshelfList[MainActivityVM.CURRENT_BOOKSHELF_ID].bookList)
         val manager = GridLayoutManager(requireActivity().applicationContext, 3)
         // 为xRecyclerView配置数据
         main_center_xRecyclerView.adapter = adapter

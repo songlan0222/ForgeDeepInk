@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.ViewPager
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -21,7 +22,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         main_viewpager.adapter = ViewPagerAdapter(supportFragmentManager)
-        main_viewpager.currentItem = vm.DEFAULT_ITEM_ID
+        main_viewpager.currentItem = MainActivityVM.DEFAULT_ITEM_ID
+    }
+
+    public fun changeFragment(id: Int){
+        main_viewpager.setCurrentItem(id, true)
     }
 
     private inner class ViewPagerAdapter(fm: FragmentManager) :

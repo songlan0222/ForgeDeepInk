@@ -6,10 +6,17 @@ import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 
 class MainActivityVM : ViewModel() {
-    @Suppress("PropertyName")
-    val DEFAULT_ITEM_ID = 1
-    // 暂定为 0，后续变为用户可更改数据
-    var CURRENT_BOOKSHELF_ID = 0
+    companion object{
+        val BOOKSHELF_GROUP_FRAGMENT_ID = 0
+        val BOOKSHELF_GROUP_DETAILS_ID = 1
+        val BOOKSHELF_GROUP_OTHERS_ID = 2
+        val DEFAULT_ITEM_ID = BOOKSHELF_GROUP_DETAILS_ID
+
+        // 暂定为 0，后续变为用户可更改数据
+        var CURRENT_BOOKSHELF_ID = 0
+    }
+
+
 
     val bookshelfList = mutableListOf<Bookshelf>()
 

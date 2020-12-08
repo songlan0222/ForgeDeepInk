@@ -1,3 +1,3 @@
 package com.songlan.deepink.model
 
-class Bookshelf(val bookshelfName: String, val bookList: List<Book>)
+class Bookshelf(val bookshelfId: Int, val bookshelfName: String, val bookList: List<Book>)

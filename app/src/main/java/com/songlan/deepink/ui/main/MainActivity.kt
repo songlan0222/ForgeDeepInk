@@ -12,7 +12,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val vm by lazy {
+    val vm by lazy {
         ViewModelProvider(this).get(MainActivityVM::class.java)
     }
     private val fragmentMap = hashMapOf<Int, Fragment>()

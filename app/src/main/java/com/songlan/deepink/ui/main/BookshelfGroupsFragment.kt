@@ -17,8 +17,6 @@ import kotlinx.android.synthetic.main.fragment_bookshelf_groups.*
 
 class BookshelfGroupsFragment : Fragment() {
 
-    private var bookshelfList = mutableListOf<Bookshelf>()
-    private val bookList = mutableListOf<Book>()
     private lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
@@ -26,15 +24,7 @@ class BookshelfGroupsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // 临时数据
-        bookList.add(Book(R.drawable.ic_book_default, "易筋经"))
-        bookList.add(Book(R.drawable.ic_book_default, "洗髓经"))
-        bookList.add(Book(R.drawable.ic_book_default, "金刚经"))
-        bookList.add(Book(R.drawable.ic_book_default, "四十二章经"))
-        val bookshelf = Bookshelf("正在阅读", bookList)
-        bookshelfList.add(bookshelf)
-
-        if(activity!= null){
+        if (activity != null) {
             mainActivity = activity as MainActivity
         }
 
@@ -49,17 +39,17 @@ class BookshelfGroupsFragment : Fragment() {
 
         // 配置书架展示部分
         val manager = LinearLayoutManager(activity)
-        val adapter = MyRecyclerViewAdapter(bookshelfList)
+        val adapter = MyRecyclerViewAdapter(mainActivity.vm.bookshelfList)
         main_left_bookshelf_recycler.layoutManager = manager
         main_left_bookshelf_recycler.adapter = adapter
     }
 
-    fun showBottomDialog(){
+    fun showBottomDialog() {
         val view = View.inflate(context, R.layout.dialog_bookshelf_options, null)
         val bottomDialog = Dialog(context!!, R.style.DialogTheme)
         bottomDialog.setContentView(view)
 
-        val window = bottomDialog.window?.let { it->
+        val window = bottomDialog.window?.let { it ->
             it.setGravity(Gravity.BOTTOM)
             it.setWindowAnimations(R.style.main_menu_animStyle)
             it.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -107,7 +97,8 @@ class BookshelfGroupsFragment : Fragment() {
             }
 
             override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-                val view = layoutInflater.inflate(R.layout.item_bookshelf_groups_book, parent, false)
+                val view =
+                    layoutInflater.inflate(R.layout.item_bookshelf_groups_book, parent, false)
                 return ViewHolder(view)
             }
 

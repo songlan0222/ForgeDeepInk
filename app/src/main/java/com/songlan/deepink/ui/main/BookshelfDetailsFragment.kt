@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_bookshelf_details.*
 
 class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
 
-    private val bookList = mutableListOf<Book>()
+    private lateinit var mainActivity: MainActivity
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -25,10 +25,10 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
         savedInstanceState: Bundle?
     ): View? {
         Log.d("MainTest", "加载中央Fragment")
-        bookList.add(Book(R.drawable.ic_book_default, "易筋经"))
-        bookList.add(Book(R.drawable.ic_book_default, "洗髓经"))
-        bookList.add(Book(R.drawable.ic_book_default, "金刚经"))
-        bookList.add(Book(R.drawable.ic_book_default, "四十二章经"))
+        if (activity != null) {
+            mainActivity = activity as MainActivity
+        }
+
         return inflater.inflate(R.layout.fragment_bookshelf_details, container, false)
     }
 
@@ -68,7 +68,7 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
     }
 
     private fun onProgress() {
-        val adapter = MyXRecyclerViewAdapter(bookList)
+        val adapter = MyXRecyclerViewAdapter(mainActivity.vm.bookshelfList[mainActivity.vm.CURRENT_BOOKSHELF_ID].bookList)
         val manager = GridLayoutManager(requireActivity().applicationContext, 3)
         // 为xRecyclerView配置数据
         main_center_xRecyclerView.adapter = adapter

@@ -3,7 +3,6 @@
 
     <!-- 正常状态 -->
     <item android:drawable="@drawable/save_btn_normal" android:state_pressed="false"/>
-
     <!-- 按下状态 -->
     <item android:drawable="@drawable/save_btn_pressed" android:state_pressed="true"/>
 

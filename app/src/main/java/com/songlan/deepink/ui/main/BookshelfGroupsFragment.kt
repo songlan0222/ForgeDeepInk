@@ -92,7 +92,7 @@ class BookshelfGroupsFragment : BaseFragment() {
 
         override fun getItemCount() = bookshelfList.size
 
-        inner class DetailsAdapter(val bookList: List<Book>) :
+        inner class DetailsAdapter(private val bookList: List<Book>) :
             RecyclerView.Adapter<DetailsAdapter.ViewHolder>() {
             inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
                 val detailsImage: ImageView = view.findViewById(R.id.detailsImage)

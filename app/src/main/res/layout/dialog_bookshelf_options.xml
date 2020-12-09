@@ -15,7 +15,8 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_main_left_more_multi" />
 
         <TextView
             android:id="@+id/text_multiManage"
@@ -36,7 +37,8 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_main_left_more_edit" />
 
         <TextView
             android:id="@+id/text_manageBookshelf"
@@ -57,7 +59,8 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="10dp" />
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_main_left_more_rubbish" />
 
         <TextView
             android:id="@+id/text_deleteBookshelf"

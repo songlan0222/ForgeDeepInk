@@ -2,6 +2,7 @@ package com.songlan.deepink.ui.main
 
 import android.app.Dialog
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,8 @@ import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.ui.main.`interface`.BackHandleInterface
 import com.songlan.deepink.ui.main.base.BaseFragment
+import kotlinx.android.synthetic.main.dialog_bookshelf_options.*
+import kotlinx.android.synthetic.main.fragment_bookshelf_details.*
 import kotlinx.android.synthetic.main.fragment_bookshelf_groups.*
 
 class BookshelfGroupsFragment : BaseFragment() {
@@ -46,20 +49,6 @@ class BookshelfGroupsFragment : BaseFragment() {
         main_left_bookshelf_recycler.adapter = adapter
     }
 
-    fun showBottomDialog() {
-        val view = View.inflate(context, R.layout.dialog_bookshelf_options, null)
-        val bottomDialog = Dialog(context!!, R.style.DialogTheme)
-        bottomDialog.setContentView(view)
-
-        val window = bottomDialog.window?.let { it ->
-            it.setGravity(Gravity.BOTTOM)
-            it.setWindowAnimations(R.style.main_menu_animStyle)
-            it.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        }
-
-        bottomDialog.show()
-    }
-
     inner class MyRecyclerViewAdapter(private val bookshelfList: List<Bookshelf>) :
         RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
 
@@ -74,7 +63,9 @@ class BookshelfGroupsFragment : BaseFragment() {
             val view = layoutInflater.inflate(R.layout.item_bookshelf_groups, parent, false)
             val holder = ViewHolder(view)
             holder.bookshelfMore.setOnClickListener {
-                showBottomDialog()
+                val position = holder.adapterPosition
+                Log.d("MainTest", "current position: $position")
+                showBottomDialog(position)
             }
             return holder
         }
@@ -91,6 +82,23 @@ class BookshelfGroupsFragment : BaseFragment() {
         }
 
         override fun getItemCount() = bookshelfList.size
+
+        // 底部更多选项弹窗
+        private fun showBottomDialog(position: Int) {
+            val view = View.inflate(context, R.layout.dialog_bookshelf_options, null)
+            val bookshelfName = view.findViewById<TextView>(R.id.textView_bookshelfName)
+            bookshelfName.text = bookshelfList[position].bookshelfName
+            val bottomDialog = Dialog(context!!, R.style.DialogTheme)
+            bottomDialog.setContentView(view)
+
+            val window = bottomDialog.window?.let { it ->
+                it.setGravity(Gravity.BOTTOM)
+                it.setWindowAnimations(R.style.main_menu_animStyle)
+                it.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+            }
+
+            bottomDialog.show()
+        }
 
         inner class DetailsAdapter(private val bookList: List<Book>) :
             RecyclerView.Adapter<DetailsAdapter.ViewHolder>() {

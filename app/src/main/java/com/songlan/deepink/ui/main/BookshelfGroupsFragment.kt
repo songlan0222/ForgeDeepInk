@@ -1,6 +1,7 @@
 package com.songlan.deepink.ui.main
 
 import android.app.Dialog
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -32,7 +33,6 @@ class BookshelfGroupsFragment : BaseFragment() {
         if (activity != null) {
             mainActivity = activity as MainActivity
         }
-
         return inflater.inflate(R.layout.fragment_bookshelf_groups, container, false)
     }
 
@@ -41,6 +41,15 @@ class BookshelfGroupsFragment : BaseFragment() {
 
         // 配置顶部工具栏
         main_left_toolbar.inflateMenu(R.menu.main_left_toolbar_menu)
+        main_left_toolbar.setOnMenuItemClickListener { item ->
+            when (item.itemId) {
+                R.id.main_left_add_bookshelf -> {
+                    val intent = Intent(this.context, EditBookshelfActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+            false
+        }
 
         // 配置书架展示部分
         val manager = LinearLayoutManager(activity)
@@ -86,6 +95,7 @@ class BookshelfGroupsFragment : BaseFragment() {
         // 底部更多选项弹窗
         private fun showBottomDialog(position: Int) {
             val view = View.inflate(context, R.layout.dialog_bookshelf_options, null)
+            // 添加书架名称
             val bookshelfName = view.findViewById<TextView>(R.id.textView_bookshelfName)
             bookshelfName.text = bookshelfList[position].bookshelfName
             val bottomDialog = Dialog(context!!, R.style.DialogTheme)
@@ -94,7 +104,10 @@ class BookshelfGroupsFragment : BaseFragment() {
             val window = bottomDialog.window?.let { it ->
                 it.setGravity(Gravity.BOTTOM)
                 it.setWindowAnimations(R.style.main_menu_animStyle)
-                it.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+                it.setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
             }
 
             bottomDialog.show()

@@ -13,7 +13,7 @@
 
     <stroke
         android:width="5px"
-        android:color="#1199EF" />
+        android:color="@color/edit_text_line" />
 
     <solid android:color="@color/white" />
 </shape>

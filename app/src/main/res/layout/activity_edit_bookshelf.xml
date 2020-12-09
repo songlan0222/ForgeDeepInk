@@ -210,9 +210,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:background="@drawable/selector_save_btn"
             android:text="保存"
-            android:textColor="@color/edit_text_line" />
+            style="@style/Button_List_Style"
+        />
 
     </LinearLayout>
 

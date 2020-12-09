@@ -29,4 +29,14 @@
         <item name="android:windowEnterAnimation">@anim/dialog_in_anim</item>
         <item name="android:windowExitAnimation">@anim/dialog_out_anim</item>
     </style>
+
+    <!-- saveBtn去掉阴影-->
+    <style name="Button_List_Style" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:minWidth">100dp</item>
+        <item name="android:minHeight">30dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/selector_save_btn</item>
+        <item name="android:textColor">@color/edit_text_line</item>
+    </style>
 </resources>

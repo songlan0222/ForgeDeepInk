@@ -3,16 +3,17 @@
     android:shape="rectangle" >
 
     <padding
-        android:bottom="7dp"
-        android:left="7dp"
-        android:right="7dp"
-        android:top="7dp" />
+        android:bottom="10dp"
+        android:left="10dp"
+        android:right="10dp"
+        android:top="10dp" />
+
     <!-- 设置圆角矩形 -->
-    <corners android:radius="3dp" />
+    <corners android:radius="10dp" />
 
     <stroke
         android:width="5px"
         android:color="#1199EF" />
 
-    <solid android:color="#CCCCCC" />
+    <solid android:color="@color/white" />
 </shape>

@@ -12,7 +12,18 @@
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="56dp">
+
+            <TextView
+                android:id="@+id/textView_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.Toolbar>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -79,7 +90,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
             android:text="当有多个书架且有零个或多个以上的首选书架时，每次加入书架前需要手动指定书架。" />
 
         <!-- 布局 -->
@@ -159,7 +173,10 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
             android:text="网格中简要仅显示封面，详细额外显示书名；列表中简要显示书名、作者及未读章节数，详情额外显示最新章节名。" />
 
         <!-- 排序 -->
@@ -202,17 +219,19 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="10dp"
             android:text="时间将根据图书最后一次阅读的时间倒序排序；拖拽默认根据加入书架的时间正序排序，通过长按菜单可以拖拽排序。" />
 
         <!-- 保存 -->
         <Button
+            style="@style/Button_List_Style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:text="保存"
-            style="@style/Button_List_Style"
-        />
+            android:text="保存" />
 
     </LinearLayout>
 

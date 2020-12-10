@@ -9,5 +9,5 @@
     <color name="white">#FFFFFFFF</color>
     <color name="edit_text_line">#1199EF</color>
     <color name="silver">#C0C0C0</color>
-    <color name="light_grey">#D3D3D3</color>
+    <color name="gainsboro">#DCDCDC</color>
 </resources>

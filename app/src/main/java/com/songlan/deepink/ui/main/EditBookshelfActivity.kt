@@ -29,6 +29,15 @@ class EditBookshelfActivity : AppCompatActivity() {
         // 弹出软键盘
         val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         manager.showSoftInput(editText_bookshelfName, 0)
+
+        // 为保存按钮配置点击事件
+        Btn_save.setOnClickListener {
+            saveBookshelfInfo()
+        }
+    }
+
+    private fun saveBookshelfInfo() {
+        
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

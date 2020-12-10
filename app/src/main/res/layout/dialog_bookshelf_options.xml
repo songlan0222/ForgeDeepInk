@@ -16,10 +16,12 @@
         android:textStyle="bold" />
 
     <LinearLayout
+        android:id="@+id/linearLayout_multiManage"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="10dp"
         android:layout_marginLeft="20dp"
+        android:clickable="true"
         android:orientation="horizontal">
 
         <ImageView
@@ -40,10 +42,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout_manageBookshelf"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="10dp"
         android:layout_marginLeft="20dp"
+        android:clickable="true"
         android:orientation="horizontal">
 
         <ImageView
@@ -64,10 +68,12 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/linearLayout_deleteBookshelf"
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="10dp"
         android:layout_marginLeft="20dp"
+        android:clickable="true"
         android:orientation="horizontal">
 
         <ImageView

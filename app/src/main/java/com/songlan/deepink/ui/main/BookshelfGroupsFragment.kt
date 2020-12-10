@@ -45,6 +45,7 @@ class BookshelfGroupsFragment : BaseFragment() {
             when (item.itemId) {
                 R.id.main_left_add_bookshelf -> {
                     val intent = Intent(this.context, EditBookshelfActivity::class.java)
+                    intent.putExtra("edit_bookshelf", false)
                     startActivity(intent)
                 }
             }
@@ -73,7 +74,7 @@ class BookshelfGroupsFragment : BaseFragment() {
             val holder = ViewHolder(view)
             holder.bookshelfMore.setOnClickListener {
                 val position = holder.adapterPosition
-                Log.d("MainTest", "current position: $position")
+                // Log.d("MainTest", "current position: $position")
                 showBottomDialog(position)
             }
             return holder
@@ -114,6 +115,17 @@ class BookshelfGroupsFragment : BaseFragment() {
             // 添加取消按钮点击事件
             val cancelBtn = view.findViewById<Button>(R.id.btn_cancel)
             cancelBtn.setOnClickListener {
+                bottomDialog.cancel()
+            }
+
+            // 添加[编辑书架]按钮的响应事件
+            val manageBookshelfLayout =
+                view.findViewById<LinearLayout>(R.id.linearLayout_manageBookshelf)
+            manageBookshelfLayout.setOnClickListener {
+                val intent = Intent(context, EditBookshelfActivity::class.java)
+                intent.putExtra("edit_bookshelf", true)
+                intent.putExtra("bookshelf_id", bookshelfList[position].bookshelfId)
+                startActivity(intent)
                 bottomDialog.cancel()
             }
             bottomDialog.show()

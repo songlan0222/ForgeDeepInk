@@ -10,4 +10,6 @@
     <color name="edit_text_line">#1199EF</color>
     <color name="silver">#C0C0C0</color>
     <color name="gainsboro">#DCDCDC</color>
+    <color name="sky_blue">#87CEEB</color>
+    <color name="light_blue">#ADD8E6</color>
 </resources>

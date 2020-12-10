@@ -15,7 +15,7 @@
         <item name="android:windowIsTranslucent">true</item>
         <!-- 无标题 -->
         <item name="android:windowNoTitle">true</item>
-        <item name="android:background">@color/white</item>
+        <item name="android:background">@drawable/shape_bottom_dialog</item>
         <!-- 背景透明 -->
         <item name="android:windowBackground">@android:color/transparent</item>
         <!-- 模糊 -->

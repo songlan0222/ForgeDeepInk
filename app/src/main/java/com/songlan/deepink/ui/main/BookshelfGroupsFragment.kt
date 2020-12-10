@@ -98,6 +98,7 @@ class BookshelfGroupsFragment : BaseFragment() {
             // 添加书架名称
             val bookshelfName = view.findViewById<TextView>(R.id.textView_bookshelfName)
             bookshelfName.text = bookshelfList[position].bookshelfName
+
             val bottomDialog = Dialog(context!!, R.style.DialogTheme)
             bottomDialog.setContentView(view)
 
@@ -110,6 +111,11 @@ class BookshelfGroupsFragment : BaseFragment() {
                 )
             }
 
+            // 添加取消按钮点击事件
+            val cancelBtn = view.findViewById<Button>(R.id.btn_cancel)
+            cancelBtn.setOnClickListener {
+                bottomDialog.cancel()
+            }
             bottomDialog.show()
         }
 

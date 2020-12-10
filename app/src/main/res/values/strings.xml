@@ -13,4 +13,5 @@
     <string name="manageBookshelf">编辑书架</string>
     <string name="deleteBookshelf">删除书架</string>
     <string name="edit_bookshelf_info">编辑书架</string>
+    <string name="cancel">取消</string>
 </resources>

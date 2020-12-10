@@ -11,12 +11,15 @@
         android:layout_gravity="center"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
-        android:gravity="center" />
+        android:gravity="center"
+        android:textSize="16sp"
+        android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="10dp"
+        android:layout_marginLeft="20dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -24,6 +27,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:src="@drawable/ic_main_left_more_multi" />
 
@@ -39,6 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="10dp"
+        android:layout_marginLeft="20dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -46,6 +51,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:src="@drawable/ic_main_left_more_edit" />
 
@@ -61,6 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_margin="10dp"
+        android:layout_marginLeft="20dp"
         android:orientation="horizontal">
 
         <ImageView
@@ -68,6 +75,7 @@
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_gravity="center_vertical"
+            android:layout_marginLeft="10dp"
             android:layout_marginRight="20dp"
             android:src="@drawable/ic_main_left_more_rubbish" />
 
@@ -78,6 +86,15 @@
             android:layout_gravity="center_vertical"
             android:text="@string/deleteBookshelf" />
     </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_cancel"
+        style="?android:attr/borderlessButtonStyle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="15dp"
+        android:background="@drawable/selector_save_btn"
+        android:text="@string/cancel" />
 
 
 </LinearLayout>

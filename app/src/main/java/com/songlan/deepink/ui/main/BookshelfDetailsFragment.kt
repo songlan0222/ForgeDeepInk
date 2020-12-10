@@ -1,9 +1,12 @@
 package com.songlan.deepink.ui.main
 
+import android.app.Dialog
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.*
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
@@ -107,7 +110,40 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
             viewHolder.itemView.setOnClickListener {
 
             }
+            viewHolder.itemView.setOnLongClickListener {
+                val position = viewHolder.adapterPosition
+                showBookManageDialog(parent.context, position)
+                true
+            }
             return viewHolder
+        }
+
+        private fun showBookManageDialog(context: Context, position: Int) {
+            val view = View.inflate(context, R.layout.dialog_book_options, null)
+            val book = bookList[position - 1]
+            val bookshelfName = view.findViewById<TextView>(R.id.textView_bookNameWithAuthor)
+            // 需要补充作者信息
+            bookshelfName.text = "《${book.bookName.toString()}》"
+
+            val bottomDialog = Dialog(context, R.style.DialogTheme)
+            bottomDialog.setContentView(view)
+
+            val window = bottomDialog.window?.let {
+                it.setGravity(Gravity.BOTTOM)
+                it.setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+                it.setWindowAnimations(R.style.main_menu_animStyle)
+            }
+
+            // 添加取消按钮点击事件
+            val cancelBtn = view.findViewById<Button>(R.id.btn_cancel)
+            cancelBtn.setOnClickListener {
+                bottomDialog.cancel()
+            }
+            bottomDialog.show()
+
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {

@@ -8,8 +8,10 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
+import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
 import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.R
+import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.activity_edit_bookshelf.*
 
 class EditBookshelfActivity : AppCompatActivity() {
@@ -25,20 +27,28 @@ class EditBookshelfActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         supportActionBar?.title = null
 
+        // 为保存按钮配置点击事件
+        Btn_save.setOnClickListener {
+            saveBookshelfInfo()
+        }
+
         // 获取进入Activity时对应的参数
         val isEditBookshelf = intent.getBooleanExtra("edit_bookshelf", false)
-        Log.d("MainTest", "$isEditBookshelf")
+        LogUtil.d("MainTest", "$isEditBookshelf")
 
         // 如果是通过添加书架按钮进入Activity
         if (!isEditBookshelf) {
             textView_title.text = "创建书架"
             // editText 获取焦点
+            editText_bookshelfName.viewTreeObserver.addOnGlobalLayoutListener {
+                // 确保editText绘制完成后，弹出软键盘
+                val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                manager.showSoftInput(editText_bookshelfName, SHOW_IMPLICIT)
+            }
             editText_bookshelfName.isFocusable = true
             editText_bookshelfName.isFocusableInTouchMode = true
             editText_bookshelfName.requestFocus()
-            // 弹出软键盘
-            val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            manager.showSoftInput(editText_bookshelfName, 0)
+
         } else {
             textView_title.text = "编辑书架"
             val bookshelfId = intent.getIntExtra("bookshelf_id", -1)
@@ -46,13 +56,6 @@ class EditBookshelfActivity : AppCompatActivity() {
                 throw Exception("参数：bookshelfID，发生错误")
             }
             // 从数据库根据bookshelfId直接查询书架
-
-        }
-
-
-        // 为保存按钮配置点击事件
-        Btn_save.setOnClickListener {
-            saveBookshelfInfo()
         }
     }
 

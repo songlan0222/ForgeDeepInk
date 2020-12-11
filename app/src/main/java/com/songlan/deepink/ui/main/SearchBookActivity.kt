@@ -5,11 +5,19 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.activity_search_book.*
 
 class SearchBookActivity : AppCompatActivity() {
+
+    private val fragmentMap = mutableMapOf<Int, Fragment>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_book)
@@ -24,9 +32,13 @@ class SearchBookActivity : AppCompatActivity() {
         editText_searchBookName.isFocusableInTouchMode = true
         editText_searchBookName.requestFocus()
         editText_searchBookName.viewTreeObserver.addOnGlobalLayoutListener {
-            val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
             manager.showSoftInput(editText_searchBookName, 0)
         }
+
+        // 配置ViewPager
+        viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
+        viewPager.currentItem = SearchBookActivityVM.DEFAULT_FRAGMENT
 
     }
 
@@ -45,5 +57,24 @@ class SearchBookActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private inner class ViewPagerAdapter(fragmentManager: FragmentManager) :
+        FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        override fun getCount() = 2
+
+        override fun getItem(position: Int) =
+            when (position) {
+                0 -> fragmentMap[0] ?: SearchBookHistoryFragment()
+                else -> fragmentMap[1] ?: SearchBookResultFragment()
+            }
+
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            val fragment = super.instantiateItem(container, position) as Fragment
+            fragmentMap[position] = fragment
+            return fragment
+        }
+
+
     }
 }

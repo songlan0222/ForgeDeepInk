@@ -37,7 +37,13 @@
         <item name="android:minHeight">30dp</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/selector_save_btn</item>
+        <item name="android:background">@drawable/selector_btn_with_grey_color</item>
+        <item name="android:textColor">@color/edit_text_line</item>
+    </style>
+
+    <!-- 去掉阴影无边框的button样式 -->
+    <style name="Button_Without_Color" parent="@style/Widget.AppCompat.Button.Borderless">
+        <item name="android:background">@drawable/selector_btn_without_color</item>
         <item name="android:textColor">@color/edit_text_line</item>
     </style>
 

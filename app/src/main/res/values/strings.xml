@@ -20,4 +20,8 @@
     <string name="deleteBook">删除图书</string>
     <string name="search_book_edittext_hint">搜索书名或作者</string>
     <string name="pay_for_app"><![CDATA[付费订阅 >]]></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="search_history">搜索历史</string>
+    <string name="clean_search_history">清空</string>
 </resources>

@@ -38,6 +38,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:text="@string/multiManage" />
     </LinearLayout>
 
@@ -64,6 +66,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:text="@string/manageBookshelf" />
     </LinearLayout>
 
@@ -90,6 +94,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:textSize="16sp"
+            android:textStyle="bold"
             android:text="@string/deleteBookshelf" />
     </LinearLayout>
 

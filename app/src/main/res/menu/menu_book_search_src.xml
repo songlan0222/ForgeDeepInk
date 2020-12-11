@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/bookSrc"
-        android:icon="@drawable/ic_main_right_manage_book_src"
+        android:icon="@drawable/ic_main_right_manage_book_src_small"
         android:title="@string/main_right_manage_book_src"
         app:showAsAction="always" />
 </menu>

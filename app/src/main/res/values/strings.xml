@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">DeepInk</string>
+    <string name="app_full_name">DEEPINK READER</string>
     <string name="bookshelf_name">正在阅读</string>
     <string name="main_bookshelf_search">搜书</string>
     <string name="main_bookshelf_me">我的配置</string>
@@ -18,4 +19,5 @@
     <string name="bookInfo">查看详情</string>
     <string name="deleteBook">删除图书</string>
     <string name="search_book_edittext_hint">搜索书名或作者</string>
+    <string name="pay_for_app"><![CDATA[付费订阅 >]]></string>
 </resources>

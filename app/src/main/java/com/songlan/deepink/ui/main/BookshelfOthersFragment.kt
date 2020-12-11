@@ -1,5 +1,6 @@
 package com.songlan.deepink.ui.main
 
+import android.graphics.Typeface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -47,25 +48,24 @@ class BookshelfOthersFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 配置顶部TitleBar
-        main_right_titleBar.leftIcon =
-            ContextCompat.getDrawable(MyApplication.context, R.drawable.ic_main_right_experiencer)
-        main_right_titleBar.rightIcon =
-            ContextCompat.getDrawable(MyApplication.context, R.drawable.ic_main_right_subscriber)
-
-        // 添加点击事件
-        main_right_titleBar.setOnTitleBarListener(object : OnTitleBarListener {
-            override fun onLeftClick(v: View?) {
-            }
-
-            // 此处用不上中间的点击事件
-            override fun onTitleClick(v: View?) {
-            }
-
-            override fun onRightClick(v: View?) {
-            }
-        })
-
+//        // 配置顶部TitleBar
+//        main_right_titleBar.leftIcon =
+//            ContextCompat.getDrawable(MyApplication.context, R.drawable.ic_main_right_experiencer)
+//        main_right_titleBar.rightIcon =
+//            ContextCompat.getDrawable(MyApplication.context, R.drawable.ic_main_right_subscriber)
+//
+//        // 添加点击事件
+//        main_right_titleBar.setOnTitleBarListener(object : OnTitleBarListener {
+//            override fun onLeftClick(v: View?) {
+//            }
+//
+//            // 此处用不上中间的点击事件
+//            override fun onTitleClick(v: View?) {
+//            }
+//
+//            override fun onRightClick(v: View?) {
+//            }
+//        })
 
         // 配置列表
         val adapterTop = MyRecyclerViewAdapter(topOptionItemList)

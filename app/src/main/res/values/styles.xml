@@ -40,4 +40,16 @@
         <item name="android:background">@drawable/selector_save_btn</item>
         <item name="android:textColor">@color/edit_text_line</item>
     </style>
+
+    <style name="ThinTextFont">
+        <item name="android:fontFamily">sans-serif-thin</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/silver</item>
+    </style>
+
+    <style name="CoarseTextFont">
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

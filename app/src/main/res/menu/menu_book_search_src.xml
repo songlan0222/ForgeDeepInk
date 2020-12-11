@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/bookSrc"
+        android:icon="@drawable/ic_main_right_manage_book_src"
+        android:title="@string/main_right_manage_book_src"
+        app:showAsAction="always" />
+</menu>

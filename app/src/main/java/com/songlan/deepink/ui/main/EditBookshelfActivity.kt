@@ -18,8 +18,18 @@ class EditBookshelfActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_bookshelf)
+
+        // 配置Toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
+        supportActionBar?.title = null
+
+        // 获取进入Activity时对应的参数
         val isEditBookshelf = intent.getBooleanExtra("edit_bookshelf", false)
         Log.d("MainTest", "$isEditBookshelf")
+
+        // 如果是通过添加书架按钮进入Activity
         if (!isEditBookshelf) {
             textView_title.text = "创建书架"
             // editText 获取焦点
@@ -39,10 +49,6 @@ class EditBookshelfActivity : AppCompatActivity() {
 
         }
 
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
-        supportActionBar?.title = null
 
         // 为保存按钮配置点击事件
         Btn_save.setOnClickListener {

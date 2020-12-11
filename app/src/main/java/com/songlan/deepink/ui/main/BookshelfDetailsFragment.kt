@@ -2,6 +2,7 @@ package com.songlan.deepink.ui.main
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -38,16 +39,20 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        main_center_toolbar.inflateMenu(R.menu.main_toolbar_menu)
+        main_center_toolbar.inflateMenu(R.menu.menu_bookshelf_details_toolbar)
         main_center_toolbar.setOnMenuItemClickListener { item ->
             Log.d("MainTest", item.itemId.toString())
             when (item.itemId) {
                 android.R.id.title -> {
                     mainActivity.changeFragment(MainActivityVM.BOOKSHELF_GROUP_FRAGMENT_ID)
                 }
-                R.id.main_bookshelf_search -> {
+                // 跳转到搜书页面
+                R.id.btn_search -> {
+                    val intent = Intent(this.context, SearchBookActivity::class.java)
+                    startActivity(intent)
                 }
-                R.id.main_bookshelf_me -> {
+                // 切换Fragment到BookshelfOthers
+                R.id.btn_me -> {
                     mainActivity.changeFragment(MainActivityVM.BOOKSHELF_OTHERS_FRAGMENT_ID)
                 }
             }

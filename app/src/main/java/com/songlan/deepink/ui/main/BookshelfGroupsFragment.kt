@@ -40,7 +40,7 @@ class BookshelfGroupsFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 配置顶部工具栏
-        main_left_toolbar.inflateMenu(R.menu.main_left_toolbar_menu)
+        main_left_toolbar.inflateMenu(R.menu.menu_bookshelf_group_toolbar)
         main_left_toolbar.setOnMenuItemClickListener { item ->
             when (item.itemId) {
                 R.id.main_left_add_bookshelf -> {

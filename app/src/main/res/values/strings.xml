@@ -17,4 +17,5 @@
     <string name="changeBookshelf">移动书架</string>
     <string name="bookInfo">查看详情</string>
     <string name="deleteBook">删除图书</string>
+    <string name="search_book_edittext_hint">搜索书名或作者</string>
 </resources>

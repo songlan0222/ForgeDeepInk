@@ -2,6 +2,8 @@ package com.songlan.deepink.ui.main
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
+import com.songlan.deepink.R
+import com.songlan.deepink.model.Book
 
 class SearchBookActivityVM : ViewModel() {
 
@@ -38,6 +40,12 @@ class SearchBookActivityVM : ViewModel() {
         it.add("我师兄实在太稳了")
         it.add("小阁老")
         it.add("精灵掌门人")
+        it
+    }
+
+    val searchBookResultList by lazy {
+        val it = mutableListOf<Book>()
+        it.add(Book(R.drawable.ic_book_default, "断舍离"))
         it
     }
 }

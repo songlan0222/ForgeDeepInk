@@ -1,27 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearLayout_hotBook"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_margin="10dp"
-    android:foreground="?android:attr/selectableItemBackgroundBorderless"
-    android:orientation="horizontal"
-    android:paddingLeft="5dp"
-    android:paddingRight="5dp">
+    android:id="@+id/linearLayout_history"
+    style="@style/HistoryLinearLayout"
+    android:background="@drawable/selector_layout_click_hot"
+    android:clickable="true">
 
     <ImageView
-        android:id="@+id/imageView_hotLogo"
+        android:id="@+id/image_hotLogo"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_margin="1dp"
-        android:src="@drawable/ic_main_bookshelf_search" />
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_search_book_hot"
+        android:visibility="gone" />
 
     <TextView
-        android:id="@+id/textView_hotBookName"
+        android:id="@+id/textView_history"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
         android:layout_gravity="center_vertical"
         android:gravity="center"
-        android:text="热门书籍" />
+        android:orientation="horizontal" />
 
 </LinearLayout>

@@ -10,6 +10,7 @@
     <color name="edit_text_line">#1199EF</color>
     <color name="silver">#C0C0C0</color>
     <color name="gainsboro">#DCDCDC</color>
+    <color name="white_smoke">#F5F5F5</color>
     <color name="sky_blue">#87CEEB</color>
     <color name="light_blue">#ADD8E6</color>
     <color name="gold">#FFD700</color>
@@ -17,5 +18,6 @@
     <color name="LavenderBlush">#FFF0F5</color>
     <color name="crimson">#DC143C</color>
     <color name="transparent">#00000000</color>
-    <color name="half_transparent">#e0000000</color>
+    <color name="half_transparent">#1A000000</color>
+    <color name="gray">#808080</color>
 </resources>

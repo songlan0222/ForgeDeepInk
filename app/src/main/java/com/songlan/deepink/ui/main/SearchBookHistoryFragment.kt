@@ -1,21 +1,21 @@
 package com.songlan.deepink.ui.main
 
-import android.opengl.Visibility
+import android.annotation.SuppressLint
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.RelativeLayout
-import android.widget.TextView
+import android.widget.*
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.view.marginTop
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.fragment_search_book_history.*
-import kotlinx.android.synthetic.main.item_search_book_hot.*
 
 class SearchBookHistoryFragment : Fragment() {
 
@@ -61,9 +61,9 @@ class SearchBookHistoryFragment : Fragment() {
         }
 
         inner class HotBookViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val hotLogo: ImageView = view.findViewById(R.id.imageView_hotLogo)
-            val bookName: TextView = view.findViewById(R.id.textView_hotBookName)
-            val linearLayout: LinearLayout = view.findViewById(R.id.linearLayout_hotBook)
+            val historyText: TextView = view.findViewById(R.id.textView_history)
+            val hotLogo: ImageView = view.findViewById(R.id.image_hotLogo)
+            val historyLayout: LinearLayout = view.findViewById(R.id.linearLayout_history)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -90,6 +90,7 @@ class SearchBookHistoryFragment : Fragment() {
 
         }
 
+        @SuppressLint("ResourceAsColor")
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
             if (dataType == DataType.HISTORY) {
                 val history = dataList[position]
@@ -98,16 +99,24 @@ class SearchBookHistoryFragment : Fragment() {
             } else {
                 val bookName = dataList[position]
                 holder as HotBookViewHolder
-                holder.bookName.text = bookName
+                holder.historyText.text = bookName
                 if (position < 3) {
-                    holder.hotLogo.setImageResource(R.drawable.ic_search_book_hot)
-                    holder.hotLogo.visibility = View.VISIBLE
-                    holder.linearLayout.background = ContextCompat.getDrawable(
-                        searchBookActivity,
-                        R.drawable.shape_textview_hot_book_normal
+                    holder.historyText.setTextColor(
+                        ContextCompat.getColor(
+                            searchBookActivity,
+                            R.color.crimson
+                        )
                     )
+                    holder.hotLogo.visibility = View.VISIBLE
                 } else {
-                    holder.hotLogo.visibility = View.GONE
+
+                    holder.historyText.setTextColor(R.color.black)
+                    holder.historyLayout.background =
+                        ContextCompat.getDrawable(
+                            searchBookActivity,
+                            R.drawable.selector_layout_click_normal
+                        )
+                    holder.historyLayout.setPadding(40, 0, 40, 0)
                 }
             }
 

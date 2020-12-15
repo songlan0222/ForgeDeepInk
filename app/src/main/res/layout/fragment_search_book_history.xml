@@ -9,7 +9,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView_hotBook"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -26,44 +27,16 @@
             android:text="@string/search_history"
             android:textSize="16sp" />
 
-        <!--<Button
-            android:id="@+id/textView_clearHistory"
-            style="@style/Button_Without_Color"
+        <Button
+            android:id="@+id/btn_clearHistory"
+            style="@style/RoundButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:layout_alignParentRight="true"
             android:layout_gravity="center"
             android:layout_marginRight="20dp"
-            android:gravity="center"
-            android:text="@string/clean_search_history"
-            android:textColor="@color/edit_text_line"
-            android:textSize="14sp"
-            android:textStyle="bold" />-->
-
-        <!--        <Button-->
-        <!--            android:id="@+id/textView_clearHistory"-->
-        <!--            android:layout_width="wrap_content"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            android:layout_alignParentRight="true"-->
-        <!--            android:layout_gravity="center"-->
-        <!--            android:layout_marginRight="20dp"-->
-        <!--            android:background="@drawable/shape_transparent_circle"-->
-        <!--            android:clickable="true"-->
-        <!--            android:gravity="center"-->
-        <!--            android:button="@null"-->
-        <!--            android:text="@string/clean_search_history"-->
-        <!--            android:textColor="@color/edit_text_line"-->
-        <!--            android:textSize="14sp"-->
-        <!--            android:textStyle="bold" -->
-        <!--            />-->
-        <Button
-            android:id="@+id/textView_clearHistory"
-            style="@style/RoundButton"
-            android:layout_alignParentRight="true"
-            android:layout_gravity="center"
-            android:layout_marginRight="20dp"
-            android:foreground="@drawable/shape_transparent_circle"
             android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:foreground="@drawable/selector_btn_transparent_circle"
             android:gravity="center"
             android:text="清空" />
 

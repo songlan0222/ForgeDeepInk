@@ -40,7 +40,7 @@ class SearchBookHistoryFragment : Fragment() {
             searchBookActivity.vm.SearchBookActivityHotBookList,
             DataType.HOT_BOOK
         )
-        recyclerView_hotBook.layoutManager = LinearLayoutManager(searchBookActivity)
+        recyclerView_hotBook.layoutManager = AutoLineFeedLayoutManager()
 
         recyclerView_searchHistory.adapter =
             MyRecyclerViewAdapter(searchBookActivity.vm.searchBookHistoryList, DataType.HISTORY)

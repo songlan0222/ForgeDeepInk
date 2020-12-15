@@ -2,17 +2,14 @@ package com.songlan.deepink.ui.main
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.hardware.input.InputManager
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
-import android.view.inputmethod.InputMethodManager.SHOW_IMPLICIT
-import androidx.lifecycle.ViewModelProvider
+import androidx.appcompat.app.AppCompatActivity
 import com.songlan.deepink.R
 import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.activity_edit_bookshelf.*
+import java.util.*
 
 class EditBookshelfActivity : AppCompatActivity() {
 
@@ -40,14 +37,22 @@ class EditBookshelfActivity : AppCompatActivity() {
         if (!isEditBookshelf) {
             textView_title.text = "创建书架"
             // editText 获取焦点
-            editText_bookshelfName.viewTreeObserver.addOnGlobalLayoutListener {
-                // 确保editText绘制完成后，弹出软键盘
-                val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                manager.showSoftInput(editText_bookshelfName, SHOW_IMPLICIT)
-            }
             editText_bookshelfName.isFocusable = true
             editText_bookshelfName.isFocusableInTouchMode = true
             editText_bookshelfName.requestFocus()
+
+            // 确保editText绘制完成后，弹出软键盘
+            val timer = Timer()
+            timer.schedule(object : TimerTask() {
+                override fun run() {
+                    val imm = editText_bookshelfName.context
+                        .getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                    imm.showSoftInput(editText_bookshelfName, 0)
+                }
+            }, 300)
+
+//            val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//            manager.showSoftInput(editText_bookshelfName, 0)
 
         } else {
             textView_title.text = "编辑书架"

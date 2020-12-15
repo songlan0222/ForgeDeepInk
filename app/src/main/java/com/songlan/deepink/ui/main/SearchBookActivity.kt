@@ -31,10 +31,13 @@ class SearchBookActivity : AppCompatActivity() {
         editText_searchBookName.isFocusable = true
         editText_searchBookName.isFocusableInTouchMode = true
         editText_searchBookName.requestFocus()
-        editText_searchBookName.viewTreeObserver.addOnGlobalLayoutListener {
-            val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-            manager.showSoftInput(editText_searchBookName, 0)
-        }
+//        绑定获取焦点
+//        editText_searchBookName.viewTreeObserver.addOnGlobalLayoutListener {
+//
+//        }
+        // 弹出软键盘
+        val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        manager.showSoftInput(editText_searchBookName, 0)
 
         // 配置ViewPager
         viewPager.adapter = ViewPagerAdapter(supportFragmentManager)

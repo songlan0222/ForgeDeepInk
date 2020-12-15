@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager.widget.ViewPager
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.activity_search_book.*
@@ -17,6 +18,9 @@ import kotlinx.android.synthetic.main.activity_search_book.*
 class SearchBookActivity : AppCompatActivity() {
 
     private val fragmentMap = mutableMapOf<Int, Fragment>()
+    private val vm by lazy {
+        ViewModelProvider(this).get(SearchBookActivityVM::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,18 +35,19 @@ class SearchBookActivity : AppCompatActivity() {
         editText_searchBookName.isFocusable = true
         editText_searchBookName.isFocusableInTouchMode = true
         editText_searchBookName.requestFocus()
-//        绑定获取焦点
-//        editText_searchBookName.viewTreeObserver.addOnGlobalLayoutListener {
-//
-//        }
         // 弹出软键盘
         val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         manager.showSoftInput(editText_searchBookName, 0)
 
-        // 配置ViewPager
-        viewPager.adapter = ViewPagerAdapter(supportFragmentManager)
-        viewPager.currentItem = SearchBookActivityVM.DEFAULT_FRAGMENT
+        // 动态配置FrameLayout
+        replaceFragment(vm.searchBookHistoryFragment)
+    }
 
+    private fun replaceFragment(fragment: Fragment) {
+        val fragmentManager = supportFragmentManager
+        val transaction = fragmentManager.beginTransaction()
+        transaction.replace(R.id.frameLayout_search, fragment)
+        transaction.commit()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -60,24 +65,5 @@ class SearchBookActivity : AppCompatActivity() {
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private inner class ViewPagerAdapter(fragmentManager: FragmentManager) :
-        FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        override fun getCount() = 2
-
-        override fun getItem(position: Int) =
-            when (position) {
-                0 -> fragmentMap[0] ?: SearchBookHistoryFragment()
-                else -> fragmentMap[1] ?: SearchBookResultFragment()
-            }
-
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val fragment = super.instantiateItem(container, position) as Fragment
-            fragmentMap[position] = fragment
-            return fragment
-        }
-
-
     }
 }

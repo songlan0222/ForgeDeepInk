@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_search_book.*
 class SearchBookActivity : AppCompatActivity() {
 
     private val fragmentMap = mutableMapOf<Int, Fragment>()
-    private val vm by lazy {
+    val vm by lazy {
         ViewModelProvider(this).get(SearchBookActivityVM::class.java)
     }
 

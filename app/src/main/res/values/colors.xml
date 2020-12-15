@@ -16,4 +16,6 @@
     <color name="goldEnrod">#DAA520</color>
     <color name="LavenderBlush">#FFF0F5</color>
     <color name="crimson">#DC143C</color>
+    <color name="transparent">#00000000</color>
+    <color name="half_transparent">#e0000000</color>
 </resources>

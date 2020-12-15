@@ -7,6 +7,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -38,6 +39,15 @@ class SearchBookActivity : AppCompatActivity() {
         // 弹出软键盘
         val manager = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
         manager.showSoftInput(editText_searchBookName, 0)
+
+        editText_searchBookName.addTextChangedListener {
+            val content = it.toString()
+            if (content.isNotEmpty()) {
+                replaceFragment(vm.searchBookResultFragment)
+            } else{
+                replaceFragment(vm.searchBookHistoryFragment)
+            }
+        }
 
         // 动态配置FrameLayout
         replaceFragment(vm.searchBookHistoryFragment)

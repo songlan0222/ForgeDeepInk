@@ -27,17 +27,9 @@ class AutoLineFeedLayoutManager : RecyclerView.LayoutManager() {
             val width = getDecoratedMeasuredWidth(view) + params.leftMargin + params.rightMargin
             val height = getDecoratedMeasuredHeight(view) + params.topMargin + params.bottomMargin
             curLineWidth += width //累加当前行已有item的宽度
-            if (curLineWidth <= getWidth()) { //如果累加的宽度小于等于RecyclerView的宽度，不需要换行
-                layoutDecorated(
-                    view,
-                    curLineWidth - width + params.leftMargin,
-                    curLineTop + params.topMargin,
-                    curLineWidth - params.rightMargin,
-                    curLineTop + height - params.bottomMargin
-                ) //布局item的真实位置
-                //比较当前行多有item的最大高度，用于换行后计算item在y轴上的偏移量
-                lastLineMaxHeight = max(lastLineMaxHeight, height)
-            } else { //换行
+            if (curLineWidth > getWidth() || i == 3) {
+
+                //换行
                 curLineWidth = width
                 if (lastLineMaxHeight == 0) {
                     lastLineMaxHeight = height
@@ -52,6 +44,18 @@ class AutoLineFeedLayoutManager : RecyclerView.LayoutManager() {
                     curLineTop + height - params.bottomMargin
                 )
                 lastLineMaxHeight = height
+
+            } else {
+                //如果累加的宽度小于等于RecyclerView的宽度，不需要换行
+                layoutDecorated(
+                    view,
+                    curLineWidth - width + params.leftMargin,
+                    curLineTop + params.topMargin,
+                    curLineWidth - params.rightMargin,
+                    curLineTop + height - params.bottomMargin
+                ) //布局item的真实位置
+                //比较当前行多有item的最大高度，用于换行后计算item在y轴上的偏移量
+                lastLineMaxHeight = max(lastLineMaxHeight, height)
             }
         }
     }

@@ -14,4 +14,6 @@
     <color name="light_blue">#ADD8E6</color>
     <color name="gold">#FFD700</color>
     <color name="goldEnrod">#DAA520</color>
+    <color name="LavenderBlush">#FFF0F5</color>
+    <color name="crimson">#DC143C</color>
 </resources>

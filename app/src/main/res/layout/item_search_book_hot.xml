@@ -1,9 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/linearLayout_hotBook"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_margin="10dp"
-    android:orientation="horizontal">
+    android:foreground="?android:attr/selectableItemBackground"
+    android:orientation="horizontal"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp">
 
     <ImageView
         android:id="@+id/imageView_hotLogo"
@@ -18,6 +22,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:gravity="center"
-        android:text="搜索历史" />
+        android:text="热门书籍" />
 
 </LinearLayout>

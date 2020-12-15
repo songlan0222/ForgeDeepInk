@@ -28,13 +28,13 @@ class SearchBookActivityVM : ViewModel() {
         it
     }
 
-    val SearchBookActivityHotBookList by lazy{
+    val searchBookHotBookList by lazy {
         val it = mutableListOf<String>()
         it.add("超神机械师")
         it.add("吞噬星空")
         it.add("大奉打更人")
-        it.add("大王饶命")
         it.add("剑来")
+        it.add("大王饶命")
         it.add("我师兄实在太稳了")
         it.add("小阁老")
         it.add("精灵掌门人")

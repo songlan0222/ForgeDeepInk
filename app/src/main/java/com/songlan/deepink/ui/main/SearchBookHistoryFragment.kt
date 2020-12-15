@@ -7,8 +7,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
@@ -37,7 +39,7 @@ class SearchBookHistoryFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         recyclerView_hotBook.adapter = MyRecyclerViewAdapter(
-            searchBookActivity.vm.SearchBookActivityHotBookList,
+            searchBookActivity.vm.searchBookHistoryList,
             DataType.HOT_BOOK
         )
         recyclerView_hotBook.layoutManager = AutoLineFeedLayoutManager()
@@ -61,6 +63,7 @@ class SearchBookHistoryFragment : Fragment() {
         inner class HotBookViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val hotLogo: ImageView = view.findViewById(R.id.imageView_hotLogo)
             val bookName: TextView = view.findViewById(R.id.textView_hotBookName)
+            val linearLayout: LinearLayout = view.findViewById(R.id.linearLayout_hotBook)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -99,6 +102,10 @@ class SearchBookHistoryFragment : Fragment() {
                 if (position < 3) {
                     holder.hotLogo.setImageResource(R.drawable.ic_search_book_hot)
                     holder.hotLogo.visibility = View.VISIBLE
+                    holder.linearLayout.background = ContextCompat.getDrawable(
+                        searchBookActivity,
+                        R.drawable.shape_textview_hot_book_normal
+                    )
                 } else {
                     holder.hotLogo.visibility = View.GONE
                 }

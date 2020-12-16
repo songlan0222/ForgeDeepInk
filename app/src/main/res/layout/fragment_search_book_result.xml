@@ -6,11 +6,28 @@
     android:orientation="vertical"
     tools:context=".ui.main.SearchBookResultFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_localBooks"
+    <LinearLayout
+        android:id="@+id/linearLayout_resultFromLocal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp" />
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:gravity="center_vertical|left"
+            android:text="@string/bookshelf" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView_localBooks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 
     <View
         android:layout_width="match_parent"

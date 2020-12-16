@@ -4,49 +4,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.main.SearchBookActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".ui.main.SearchBookActivity">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.DayNight.ActionBar"
+        app:contentInsetEnd="0dp"
+        app:contentInsetLeft="0dp"
+        app:contentInsetRight="0dp"
+        app:contentInsetStart="0dp"
         app:popupTheme="@style/Theme.AppCompat.Light">
 
         <LinearLayout
             android:id="@+id/linearLayout_searchBook"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginRight="20dp"
+            android:layout_gravity="center"
             android:orientation="horizontal"
+            android:layout_marginRight="24dp"
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
             <FrameLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_gravity="center_vertical">
+                android:layout_gravity="center"
+                android:background="@drawable/shape_search_layout_left">
 
                 <ImageView
                     android:id="@+id/imageView_searchLogo"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:background="@drawable/shape_search_layout_left"
-                    android:padding="5dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="5dp"
                     android:src="@drawable/ic_main_bookshelf_search" />
                 <!-- 此处还需要添加加载时的环形进度条 -->
             </FrameLayout>
 
             <EditText
                 android:id="@+id/editText_searchBookName"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:background="@drawable/shape_search_layout_right"
+                android:layout_weight="1"
+                android:background="@drawable/shape_search_layout_center"
                 android:gravity="left|center_vertical"
                 android:hint="@string/search_book_edittext_hint"
-                android:textSize="16sp" />
+                android:textSize="16sp">
+
+            </EditText>
+
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/selector_imageview_click_circle"
+                android:clickable="true">
+
+                <ImageView
+                    android:id="@+id/imageView_cancelInput"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:src="@drawable/ic_cancel_input" />
+            </FrameLayout>
 
         </LinearLayout>
     </androidx.appcompat.widget.Toolbar>
@@ -55,6 +79,6 @@
         android:id="@+id/frameLayout_search"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
 </LinearLayout>

@@ -55,6 +55,9 @@ class BookSrcManageActivity : AppCompatActivity() {
             R.id.importWebSite -> {
 
             }
+            android.R.id.home -> {
+                finish()
+            }
         }
         return super.onOptionsItemSelected(item)
     }

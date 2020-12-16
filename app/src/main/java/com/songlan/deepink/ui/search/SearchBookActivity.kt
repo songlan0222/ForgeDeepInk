@@ -1,21 +1,17 @@
-package com.songlan.deepink.ui.main
+package com.songlan.deepink.ui.search
 
-import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager.widget.ViewPager
 import com.songlan.deepink.R
+import com.songlan.deepink.ui.src.BookSrcManageActivity
 import kotlinx.android.synthetic.main.activity_search_book.*
 
 class SearchBookActivity : AppCompatActivity() {

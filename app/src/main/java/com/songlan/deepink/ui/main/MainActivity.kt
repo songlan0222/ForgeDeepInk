@@ -8,7 +8,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.R
-import com.songlan.deepink.ui.main.`interface`.BackHandleInterface
+import com.songlan.deepink.ui.`interface`.BackHandleInterface
 import com.songlan.deepink.ui.main.base.BaseFragment
 import kotlinx.android.synthetic.main.activity_main.*
 

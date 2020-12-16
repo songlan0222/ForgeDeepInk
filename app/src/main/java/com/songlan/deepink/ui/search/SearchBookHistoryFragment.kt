@@ -1,20 +1,17 @@
-package com.songlan.deepink.ui.main
+package com.songlan.deepink.ui.search
 
 import android.annotation.SuppressLint
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import androidx.core.view.marginTop
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
+import com.songlan.deepink.ui.component.AutoLineFeedLayoutManager
 import kotlinx.android.synthetic.main.activity_search_book.*
 import kotlinx.android.synthetic.main.fragment_search_book_history.*
 

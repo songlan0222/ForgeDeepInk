@@ -1,4 +1,4 @@
-package com.songlan.deepink.ui.main
+package com.songlan.deepink.ui.src
 
 import androidx.lifecycle.ViewModel
 import com.songlan.deepink.model.BookSrc

@@ -17,6 +17,7 @@ import com.jcodecraeer.xrecyclerview.ProgressStyle
 import com.jcodecraeer.xrecyclerview.XRecyclerView
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
+import com.songlan.deepink.ui.search.SearchBookActivity
 import kotlinx.android.synthetic.main.fragment_bookshelf_details.*
 
 class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {

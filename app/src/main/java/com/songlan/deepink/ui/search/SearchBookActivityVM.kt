@@ -1,4 +1,4 @@
-package com.songlan.deepink.ui.main
+package com.songlan.deepink.ui.search
 
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel

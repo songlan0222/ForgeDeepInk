@@ -1,4 +1,4 @@
-package com.songlan.deepink.ui.main
+package com.songlan.deepink.ui.component
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

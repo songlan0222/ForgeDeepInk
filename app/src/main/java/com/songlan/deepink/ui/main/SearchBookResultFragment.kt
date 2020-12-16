@@ -15,6 +15,10 @@ class SearchBookResultFragment : Fragment() {
 
     private lateinit var searchBookActivity: SearchBookActivity
 
+    enum class ResultType {
+        FROM_INTERNET, FROM_LOCAL
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -27,34 +31,68 @@ class SearchBookResultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        recyclerView_searchResult.layoutManager = LinearLayoutManager(this.activity)
+        recyclerView_searchResult.layoutManager = LinearLayoutManager(searchBookActivity)
         recyclerView_searchResult.adapter =
-            MyRecyclerViewAdapater(searchBookActivity.vm.searchBookResultList)
+            MyRecyclerViewAdapter(searchBookActivity.vm.searchBookResultList, ResultType.FROM_LOCAL)
+
+        // 配置本地图书
+        recyclerView_localBooks.layoutManager =
+            LinearLayoutManager(searchBookActivity, LinearLayoutManager.HORIZONTAL, false)
+        val searchResultFromLocal = searchFromBookshelf(searchBookActivity.vm.searchBookName)
+        recyclerView_localBooks.adapter =
+            MyRecyclerViewAdapter(searchResultFromLocal, ResultType.FROM_LOCAL)
     }
 
-    inner class MyRecyclerViewAdapater(private val resultList: List<Book>) :
-        RecyclerView.Adapter<MyRecyclerViewAdapater.ViewHolder>() {
+    // 根据字段，在数据库中查询本地图书
+    private fun searchFromBookshelf(searchBookName: String): List<Book> {
 
-        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        return listOf<Book>()
+    }
+
+    inner class MyRecyclerViewAdapter(
+        private val resultList: List<Book>,
+        private val resultType: ResultType
+    ) :
+        RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+        inner class ViewHolderFromInternet(view: View) : RecyclerView.ViewHolder(view) {
+
+        }
+
+        inner class ViewHolderFromLocal(view: View) : RecyclerView.ViewHolder(view) {
 
         }
 
         override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
-        ): MyRecyclerViewAdapater.ViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_search_book_result, parent, false)
-            val viewHolder = ViewHolder(view)
-            return viewHolder
+        ): RecyclerView.ViewHolder {
+
+            return if (resultType == ResultType.FROM_INTERNET) {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_search_book_result_from_internet, parent, false)
+                val viewHolder = ViewHolderFromInternet(view)
+                viewHolder
+            } else {
+                val view = LayoutInflater.from(parent.context)
+                    .inflate(R.layout.item_search_book_result_from_local, parent, false)
+                val viewHolder = ViewHolderFromInternet(view)
+                viewHolder
+            }
+
         }
 
         override fun onBindViewHolder(
-            holder: MyRecyclerViewAdapater.ViewHolder,
+            holder: RecyclerView.ViewHolder,
             position: Int
         ) {
-            val position = holder.adapterPosition
-            val book = resultList[position]
+            if (resultType == ResultType.FROM_INTERNET) {
+                val position = holder.adapterPosition
+                val book = resultList[position]
+            } else {
+                val position = holder.adapterPosition
+                val book = resultList[position]
+            }
         }
 
         override fun getItemCount() = resultList.size

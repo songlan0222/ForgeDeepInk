@@ -23,6 +23,7 @@ class SearchBookActivity : AppCompatActivity() {
         ViewModelProvider(this).get(SearchBookActivityVM::class.java)
     }
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_book)
@@ -42,9 +43,10 @@ class SearchBookActivity : AppCompatActivity() {
 
         editText_searchBookName.addTextChangedListener {
             val content = it.toString()
+            vm.searchBookName = content
             if (content.isNotEmpty()) {
                 replaceFragment(vm.searchBookResultFragment)
-            } else{
+            } else {
                 replaceFragment(vm.searchBookHistoryFragment)
             }
         }

@@ -12,6 +12,9 @@ class SearchBookActivityVM : ViewModel() {
         const val SEARCH_HISTORY_FRAGMENT = 0
         const val SEARCH_RESULT_FRAGMENT = 1
     }
+    
+    // 查询条件，稍后考虑改为LiveData
+    var searchBookName: String = ""
 
     val searchBookHistoryFragment: Fragment by lazy {
         SearchBookHistoryFragment()

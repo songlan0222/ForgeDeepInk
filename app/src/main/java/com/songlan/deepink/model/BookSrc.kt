@@ -1,4 +1,4 @@
 package com.songlan.deepink.model
 
-class BookSrc() {
+class BookSrc(val name: String) {
 }

@@ -28,4 +28,6 @@
     <string name="book_src_manage">我的书源</string>
     <string name="import_src">书源导入</string>
     <string name="import_web_site">网址导入</string>
+    <string name="comments_src">评分</string>
+    <string name="delete_src">卸载</string>
 </resources>

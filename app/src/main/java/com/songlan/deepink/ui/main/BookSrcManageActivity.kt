@@ -1,9 +1,14 @@
 package com.songlan.deepink.ui.main
 
+import android.app.Dialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.*
+import android.widget.Button
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -20,7 +25,6 @@ class BookSrcManageActivity : AppCompatActivity() {
     enum class DataType {
         STAR, SRC
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +50,12 @@ class BookSrcManageActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
+            R.id.importSrc -> {
 
+            }
+            R.id.importWebSite -> {
+
+            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -57,7 +66,7 @@ class BookSrcManageActivity : AppCompatActivity() {
     ) :
         RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         inner class SrcViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
+            val moreBtn: Button = view.findViewById<Button>(R.id.moreBtn)
         }
 
         inner class StarViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -69,6 +78,10 @@ class BookSrcManageActivity : AppCompatActivity() {
                 val view = LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_book_src, parent, false)
                 val viewHolder = SrcViewHolder(view)
+                viewHolder.moreBtn.setOnClickListener {
+                    val position = viewHolder.adapterPosition
+                    showBottomDialog(position)
+                }
                 viewHolder
             } else {
                 val view = LayoutInflater.from(parent.context)
@@ -76,6 +89,45 @@ class BookSrcManageActivity : AppCompatActivity() {
                 val viewHolder = SrcViewHolder(view)
                 viewHolder
             }
+        }
+
+        private fun showBottomDialog(position: Int) {
+            val view = View.inflate(this@BookSrcManageActivity, R.layout.dialog_book_src, null)
+            // 配置标题
+            val bookSrcName = view.findViewById<TextView>(R.id.bookSrcName)
+            bookSrcName.text = bookSrcList[position].name
+
+            val dialog = Dialog(this@BookSrcManageActivity, R.style.DialogTheme)
+            dialog.setContentView(view)
+
+            // 配置Dialog
+            dialog.window?.let {
+                it.setGravity(Gravity.BOTTOM)
+                it.setWindowAnimations(R.style.main_menu_animStyle)
+                it.setLayout(
+                    ViewGroup.LayoutParams.MATCH_PARENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+                )
+            }
+
+            // 配置点击事件
+            val cancelBtn = view.findViewById<Button>(R.id.cancelBtn)
+            cancelBtn.setOnClickListener {
+                dialog.cancel()
+            }
+
+            val commentsSrc = view.findViewById<LinearLayout>(R.id.commentsSrc)
+            commentsSrc.setOnClickListener {
+
+            }
+
+            val deleteSrc = view.findViewById<LinearLayout>(R.id.deleteSrc)
+            deleteSrc.setOnClickListener {
+
+            }
+
+            dialog.show()
+
         }
 
         override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {

@@ -22,7 +22,7 @@ class BookSrcManageActivity : AppCompatActivity() {
     }
 
     enum class DataType {
-        STAR, SRC
+        COMMENTS, SRC
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

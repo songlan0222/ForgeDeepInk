@@ -4,12 +4,11 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity
-data class Chapter(
-    var chapterNumber: String,
-    var chapterName: String,
-    var bookId: Long
+data class ChapterContent(
+    var content: String,
+    var chapterId: Long
 ) {
 
     @PrimaryKey(autoGenerate = true)
-    var chapterId: Long = 0
+    var chapterContentId: Long = 0
 }

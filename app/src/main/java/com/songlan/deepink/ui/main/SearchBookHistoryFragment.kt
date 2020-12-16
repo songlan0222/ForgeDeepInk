@@ -15,6 +15,7 @@ import androidx.core.view.marginTop
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
+import kotlinx.android.synthetic.main.activity_search_book.*
 import kotlinx.android.synthetic.main.fragment_search_book_history.*
 
 class SearchBookHistoryFragment : Fragment() {
@@ -39,7 +40,7 @@ class SearchBookHistoryFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         recyclerView_hotBook.adapter = MyRecyclerViewAdapter(
-            searchBookActivity.vm.searchBookHistoryList,
+            searchBookActivity.vm.searchBookHotBookList,
             DataType.HOT_BOOK
         )
         recyclerView_hotBook.layoutManager = AutoLineFeedLayoutManager()
@@ -75,6 +76,8 @@ class SearchBookHistoryFragment : Fragment() {
                 viewHolder.itemView.setOnClickListener {
                     val position = viewHolder.adapterPosition
                     val history = dataList[position]
+                    searchBookActivity.editText_searchBookName.setText(history)
+
                 }
                 viewHolder
             } else {
@@ -84,6 +87,7 @@ class SearchBookHistoryFragment : Fragment() {
                 viewHolder.itemView.setOnClickListener {
                     val position = viewHolder.adapterPosition
                     val bookName = dataList[position]
+                    searchBookActivity.editText_searchBookName.setText(bookName)
                 }
                 viewHolder
             }

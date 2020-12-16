@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import androidx.core.widget.addTextChangedListener
@@ -46,9 +47,15 @@ class SearchBookActivity : AppCompatActivity() {
             vm.searchBookName = content
             if (content.isNotEmpty()) {
                 replaceFragment(vm.searchBookResultFragment)
+                imageView_cancelInput.visibility = View.VISIBLE
             } else {
                 replaceFragment(vm.searchBookHistoryFragment)
+                imageView_cancelInput.visibility = View.INVISIBLE
             }
+        }
+
+        frameLayout_cancelInput.setOnClickListener {
+            editText_searchBookName.text.clear()
         }
 
         // 动态配置FrameLayout

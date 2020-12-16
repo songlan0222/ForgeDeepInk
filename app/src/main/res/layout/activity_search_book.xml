@@ -23,8 +23,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center"
-            android:orientation="horizontal"
             android:layout_marginRight="24dp"
+            android:orientation="horizontal"
             android:paddingTop="10dp"
             android:paddingBottom="10dp">
 
@@ -57,6 +57,7 @@
             </EditText>
 
             <FrameLayout
+                android:id="@+id/frameLayout_cancelInput"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
@@ -69,7 +70,8 @@
                     android:layout_height="match_parent"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:src="@drawable/ic_cancel_input" />
+                    android:src="@drawable/ic_cancel_input"
+                    android:visibility="invisible" />
             </FrameLayout>
 
         </LinearLayout>

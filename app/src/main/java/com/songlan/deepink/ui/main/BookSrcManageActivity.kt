@@ -32,6 +32,7 @@ class BookSrcManageActivity : AppCompatActivity() {
 
         toolbar.overflowIcon =
             ContextCompat.getDrawable(this, R.drawable.ic_main_left_add_bookshelf)
+        toolbar.offsetTopAndBottom(40)
 
         recyclerView.adapter = MyRecyclerViewAdapter(vm.bookSrcList, DataType.SRC)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)

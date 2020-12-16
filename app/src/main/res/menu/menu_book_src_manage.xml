@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/importSrc"
+        android:icon="@null"
+        android:title="@string/import_src"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/importWebSite"
+        android:icon="@null"
+        android:title="@string/import_web_site"
+        app:showAsAction="never" />
+</menu>

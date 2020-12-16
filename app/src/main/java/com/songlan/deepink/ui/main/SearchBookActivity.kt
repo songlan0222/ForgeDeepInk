@@ -1,6 +1,7 @@
 package com.songlan.deepink.ui.main
 
 import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -80,7 +81,8 @@ class SearchBookActivity : AppCompatActivity() {
                 finish()
             }
             R.id.bookSrc -> {
-
+                val intent = Intent(this, BookSrcManageActivity::class.java)
+                startActivity(intent)
             }
         }
         return super.onOptionsItemSelected(item)

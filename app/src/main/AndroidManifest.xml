@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DeepInk">
-        <activity android:name=".ui.main.SearchBookActivity"></activity>
+        <activity android:name=".ui.main.BookSrcManageActivity"></activity>
+        <activity android:name=".ui.main.SearchBookActivity" />
         <activity android:name=".ui.main.EditBookshelfActivity" />
         <activity android:name=".ui.main.MainActivity">
             <intent-filter>

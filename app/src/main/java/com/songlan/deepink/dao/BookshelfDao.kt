@@ -17,6 +17,9 @@ interface BookshelfDao {
     @Query("select * from Bookshelf")
     fun loadAllBookshelf(): List<Bookshelf>
 
+    @Query("select * from Bookshelf where isFirstChoose = 1")
+    fun loadBookshelfWithChecked(): Bookshelf
+
     @Delete
     fun deleteBookshelf(bookshelf: Bookshelf)
 

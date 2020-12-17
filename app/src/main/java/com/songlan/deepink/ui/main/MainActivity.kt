@@ -32,16 +32,36 @@ class MainActivity : AppCompatActivity(), BackHandleInterface {
         vm.bookListLiveData.observe(this, Observer { result ->
             val bookList = result.getOrNull()
             if (bookList != null) {
-                vm.curBookList.clear()
-                vm.curBookList.addAll(bookList)
+                vm.checkedBookList.clear()
+                vm.checkedBookList.addAll(bookList)
             } else {
-                LogUtil.d("MainTest", "获取书架书籍发生意外。")
+                LogUtil.d("MainTest", "获取书架书籍时发生意外。")
+                result.exceptionOrNull()?.printStackTrace()
+            }
+        })
+        vm.bookshelfLiveData.observe(this, Observer { result ->
+            val bookshelf = result.getOrNull()
+            if (bookshelf != null) {
+                vm.checkedBookshelf = bookshelf
+            } else {
+                LogUtil.d("MainTest", "获取书架时发生意外。")
+                result.exceptionOrNull()?.printStackTrace()
+            }
+        })
+        vm.bookshelfListLiveData.observe(this, Observer { result ->
+            val bookshelfList = result.getOrNull()
+            if (bookshelfList != null) {
+                vm.bookshelfList.clear()
+                vm.bookshelfList.addAll(bookshelfList)
+            } else {
+                LogUtil.d("MainTest", "获取全部书架时发生意外。")
                 result.exceptionOrNull()?.printStackTrace()
             }
         })
 
         // 获取书籍
-        vm.getBookshelfBooks()
+        vm.checkedBookshelf(0)
+        vm.getBookshelfList()
     }
 
     public fun changeFragment(id: Int) {

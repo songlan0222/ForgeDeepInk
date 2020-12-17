@@ -8,17 +8,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.ui.main.base.BaseFragment
+import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.fragment_bookshelf_groups.*
 
 class BookshelfGroupsFragment : BaseFragment() {
 
     private lateinit var mainActivity: MainActivity
+    private lateinit var bookshelfListAdapter: MyRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,11 +50,27 @@ class BookshelfGroupsFragment : BaseFragment() {
             false
         }
 
+        mainActivity.vm.bookshelfListLiveData.observe(mainActivity, Observer { result ->
+            val bookshelfList = result.getOrNull()
+            if (bookshelfList != null) {
+                mainActivity.vm.bookshelfList.clear()
+                mainActivity.vm.bookshelfList.addAll(bookshelfList)
+                bookshelfListAdapter.notifyDataSetChanged()
+            } else {
+                LogUtil.d("MainTest", "获取全部书架时发生意外。")
+                result.exceptionOrNull()?.printStackTrace()
+            }
+        })
+        mainActivity.vm.getBookshelfList()
+
         // 配置书架展示部分
         val manager = LinearLayoutManager(activity)
-        val adapter = MyRecyclerViewAdapter(mainActivity.vm.bookshelfList)
+        bookshelfListAdapter = MyRecyclerViewAdapter(mainActivity.vm.bookshelfList)
         main_left_bookshelf_recycler.layoutManager = manager
-        main_left_bookshelf_recycler.adapter = adapter
+        main_left_bookshelf_recycler.adapter = bookshelfListAdapter
+
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

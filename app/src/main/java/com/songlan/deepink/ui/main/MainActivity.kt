@@ -27,40 +27,6 @@ class MainActivity : AppCompatActivity(), BackHandleInterface {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        vm.bookListLiveData.observe(this, Observer { result ->
-            val bookList = result.getOrNull()
-            if (bookList != null) {
-                vm.checkedBookList.clear()
-                vm.checkedBookList.addAll(bookList)
-            } else {
-                LogUtil.d("MainTest", "获取书架书籍时发生意外。")
-                result.exceptionOrNull()?.printStackTrace()
-            }
-        })
-        vm.bookshelfLiveData.observe(this, Observer { result ->
-            val bookshelf = result.getOrNull()
-            if (bookshelf != null) {
-                vm.checkedBookshelf = bookshelf
-            } else {
-                LogUtil.d("MainTest", "获取书架时发生意外。")
-                result.exceptionOrNull()?.printStackTrace()
-            }
-        })
-        vm.bookshelfListLiveData.observe(this, Observer { result ->
-            val bookshelfList = result.getOrNull()
-            if (bookshelfList != null) {
-                vm.bookshelfList.clear()
-                vm.bookshelfList.addAll(bookshelfList)
-            } else {
-                LogUtil.d("MainTest", "获取全部书架时发生意外。")
-                result.exceptionOrNull()?.printStackTrace()
-            }
-        })
-
-        // 获取书籍
-        vm.checkedBookshelf(1)
-        vm.getBookshelfList()
-
         main_viewpager.adapter = ViewPagerAdapter(supportFragmentManager)
         main_viewpager.currentItem = MainActivityVM.DEFAULT_ITEM_ID
     }

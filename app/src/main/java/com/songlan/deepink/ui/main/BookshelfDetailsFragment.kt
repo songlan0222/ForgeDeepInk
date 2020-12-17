@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.fragment_bookshelf_details.*
 class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
 
     private lateinit var mainActivity: MainActivity
+    private lateinit var xRecyclerViewAdapter: MyXRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,6 +72,32 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
             mainActivity.changeFragment(MainActivityVM.BOOKSHELF_GROUP_FRAGMENT_ID)
         }
 
+        mainActivity.vm.bookListLiveData.observe(mainActivity, Observer { result ->
+            val bookList = result.getOrNull()
+            if (bookList != null) {
+                mainActivity.vm.checkedBookList.clear()
+                mainActivity.vm.checkedBookList.addAll(bookList)
+                xRecyclerViewAdapter.notifyDataSetChanged()
+            } else {
+                LogUtil.d("MainTest", "获取书架书籍时发生意外。")
+                result.exceptionOrNull()?.printStackTrace()
+            }
+        })
+        mainActivity.vm.bookshelfLiveData.observe(mainActivity, Observer { result ->
+            val bookshelf = result.getOrNull()
+            if (bookshelf != null) {
+                mainActivity.vm.checkedBookshelf = bookshelf
+                xRecyclerViewAdapter.notifyDataSetChanged()
+            } else {
+                LogUtil.d("MainTest", "获取书架时发生意外。")
+                result.exceptionOrNull()?.printStackTrace()
+            }
+        })
+
+        // 获取书籍
+        mainActivity.vm.checkedBookshelf(1)
+        mainActivity.vm.getBookshelfList()
+
         // 配置xRecyclerView
         onProgress()
     }
@@ -90,11 +117,11 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
     }
 
     private fun onProgress() {
-        val adapter =
+        xRecyclerViewAdapter =
             MyXRecyclerViewAdapter(mainActivity.vm.checkedBookList)
         val manager = GridLayoutManager(requireActivity().applicationContext, 3)
         // 为xRecyclerView配置数据
-        main_center_xRecyclerView.adapter = adapter
+        main_center_xRecyclerView.adapter = xRecyclerViewAdapter
         main_center_xRecyclerView.layoutManager = manager
         // 设置下拉监听
         main_center_xRecyclerView.setLoadingListener(this);

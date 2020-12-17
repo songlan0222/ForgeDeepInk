@@ -2,9 +2,11 @@ package com.songlan.deepink.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverters
 import java.sql.Date
 
 @Entity
+@TypeConverters(BookDataConverter::class)
 data class Book(
     var bookImage: Int,
     var bookName: String,

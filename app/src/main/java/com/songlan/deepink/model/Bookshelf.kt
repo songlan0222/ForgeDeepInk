@@ -7,9 +7,9 @@ import androidx.room.PrimaryKey
 data class Bookshelf(
     var bookshelfName: String,
     var isFirstChoose: Boolean,
-    var layoutWay: Int,
-    var infoWay: Int,
-    var sortWay: Int
+    var layoutWay: Int = 0,
+    var infoWay: Int = 0,
+    var sortWay: Int = 0
 ) {
     @PrimaryKey(autoGenerate = true)
     var bookshelfId: Long = 0

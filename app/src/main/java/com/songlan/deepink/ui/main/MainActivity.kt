@@ -1,22 +1,25 @@
 package com.songlan.deepink.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.R
 import com.songlan.deepink.ui.`interface`.BackHandleInterface
 import com.songlan.deepink.ui.main.base.BaseFragment
+import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), BackHandleInterface {
 
     // 继承自BaseFragment，需要重写返回功能的Fragment
     private lateinit var backHandleFragment: BaseFragment
-    
+
     val vm by lazy {
         ViewModelProvider(this).get(MainActivityVM::class.java)
     }
@@ -27,6 +30,20 @@ class MainActivity : AppCompatActivity(), BackHandleInterface {
         setContentView(R.layout.activity_main)
         main_viewpager.adapter = ViewPagerAdapter(supportFragmentManager)
         main_viewpager.currentItem = MainActivityVM.DEFAULT_ITEM_ID
+
+        vm.bookListLiveData.observe(this, Observer { result ->
+            val bookList = result.getOrNull()
+            if (bookList != null) {
+                vm.curBookList.clear()
+                vm.curBookList.addAll(bookList)
+            } else {
+                LogUtil.d("MainTest", "获取书架书籍发生意外。")
+                result.exceptionOrNull()?.printStackTrace()
+            }
+        })
+
+        // 获取书籍
+        vm.getBookshelfBooks()
     }
 
     public fun changeFragment(id: Int) {

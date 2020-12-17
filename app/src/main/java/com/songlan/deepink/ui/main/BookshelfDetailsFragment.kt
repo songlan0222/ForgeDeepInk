@@ -89,7 +89,7 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
 
     private fun onProgress() {
         val adapter =
-            MyXRecyclerViewAdapter(mainActivity.vm.bookshelfList[MainActivityVM.CURRENT_BOOKSHELF_ID].bookList)
+            MyXRecyclerViewAdapter(mainActivity.vm.curBookList)
         val manager = GridLayoutManager(requireActivity().applicationContext, 3)
         // 为xRecyclerView配置数据
         main_center_xRecyclerView.adapter = adapter

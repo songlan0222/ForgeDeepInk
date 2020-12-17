@@ -31,8 +31,8 @@ class BookshelfGroupsFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_bookshelf_groups, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
 
         // 配置顶部工具栏
         main_left_toolbar.inflateMenu(R.menu.menu_bookshelf_group_toolbar)
@@ -52,6 +52,10 @@ class BookshelfGroupsFragment : BaseFragment() {
         val adapter = MyRecyclerViewAdapter(mainActivity.vm.bookshelfList)
         main_left_bookshelf_recycler.layoutManager = manager
         main_left_bookshelf_recycler.adapter = adapter
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
     }
 
     inner class MyRecyclerViewAdapter(private val bookshelfList: List<Bookshelf>) :

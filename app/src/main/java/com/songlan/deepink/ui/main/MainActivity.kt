@@ -26,8 +26,6 @@ class MainActivity : AppCompatActivity(), BackHandleInterface {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        main_viewpager.adapter = ViewPagerAdapter(supportFragmentManager)
-        main_viewpager.currentItem = MainActivityVM.DEFAULT_ITEM_ID
 
         vm.bookListLiveData.observe(this, Observer { result ->
             val bookList = result.getOrNull()
@@ -60,11 +58,14 @@ class MainActivity : AppCompatActivity(), BackHandleInterface {
         })
 
         // 获取书籍
-        vm.checkedBookshelf(0)
+        vm.checkedBookshelf(1)
         vm.getBookshelfList()
+
+        main_viewpager.adapter = ViewPagerAdapter(supportFragmentManager)
+        main_viewpager.currentItem = MainActivityVM.DEFAULT_ITEM_ID
     }
 
-    public fun changeFragment(id: Int) {
+    fun changeFragment(id: Int) {
         main_viewpager.setCurrentItem(id, true)
     }
 

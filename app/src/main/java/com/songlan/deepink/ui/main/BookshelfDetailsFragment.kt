@@ -11,6 +11,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jcodecraeer.xrecyclerview.ProgressStyle
@@ -18,6 +19,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.ui.search.SearchBookActivity
+import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.fragment_bookshelf_details.*
 
 class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
@@ -102,7 +104,7 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
 
     }
 
-    class MyXRecyclerViewAdapter(val bookList: List<Book>) :
+    class MyXRecyclerViewAdapter(private val bookList: List<Book>) :
         RecyclerView.Adapter<MyXRecyclerViewAdapter.ViewHolder>() {
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val bookImage: ImageView = view.findViewById(R.id.bookImage)

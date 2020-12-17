@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.songlan.deepink.AppDatabase
 import com.songlan.deepink.MyApplication.Companion.context
+import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import kotlinx.coroutines.Dispatchers
@@ -25,7 +26,7 @@ object DatabaseRepository {
         emit(result)
     }
 
-    fun getBookshelfWithChecked() = liveData(Dispatchers.IO) {
+    /*fun getBookshelfWithChecked() = liveData(Dispatchers.IO) {
         val result = try {
             val bookshelf = bookshelfDao.loadBookshelfWithChecked()
             // 如果数据库中没有被选中bookshelf，说明此事bookshelf为空；此时，则创建bookshelf，并添加到数据库
@@ -40,12 +41,21 @@ object DatabaseRepository {
             Result.failure<Bookshelf>(e)
         }
         emit(result)
-    }
+    }*/
 
     fun getBookshelfWithId(query: Long) = liveData(Dispatchers.IO) {
         val result = try {
+            // bookshelfDao.deleteAllBookshelf()
             val bookshelf = bookshelfDao.loadBookshelf(query)
-            Result.success(bookshelf)
+            // 如果数据库中没有被选中bookshelf，说明此事bookshelf为空；此时，则创建bookshelf，并添加到数据库
+            if (bookshelf != null) {
+                // bookDao.insertBook(Book(R.drawable.ic_book_default, "大王饶命", bookshelfId = 1))
+                Result.success(bookshelf)
+            } else {
+                val initBookshelf = Bookshelf("默认", true)
+                bookshelfDao.insertBookshelf(initBookshelf)
+                Result.success(initBookshelf)
+            }
         } catch (e: Exception) {
             Result.failure<Bookshelf>(e)
         }

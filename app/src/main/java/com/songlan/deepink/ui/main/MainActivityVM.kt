@@ -47,14 +47,7 @@ class MainActivityVM : ViewModel() {
         allBookshelfListLiveData.value = allBookshelfListLiveData.value
     }
 
-//    init {
-//        bookshelfList.clear()
-//        val bookList = mutableListOf<Book>()
-//        bookList.clear()
-//        bookList.add(Book(R.drawable.ic_book_default, "易筋经"))
-//        bookList.add(Book(R.drawable.ic_book_default, "洗髓经"))
-//        bookList.add(Book(R.drawable.ic_book_default, "金刚经"))
-//        bookList.add(Book(R.drawable.ic_book_default, "四十二章经"))
-//        bookshelfList.add(Bookshelf(0, "正在阅读", bookList))
-//    }
+    init {
+        getBookshelfList()
+    }
 }

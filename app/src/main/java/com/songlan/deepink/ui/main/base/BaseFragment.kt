@@ -2,7 +2,7 @@ package com.songlan.deepink.ui.main.base
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import com.songlan.deepink.ui.`interface`.BackHandleInterface
+import com.songlan.deepink.ui.main.BackHandleInterface
 
 
 public abstract class BaseFragment : Fragment() {

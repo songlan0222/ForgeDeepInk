@@ -1,4 +1,4 @@
-package com.songlan.deepink.ui.`interface`
+package com.songlan.deepink.ui.main
 
 import com.songlan.deepink.ui.main.base.BaseFragment
 

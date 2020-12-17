@@ -10,7 +10,11 @@ import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.model.Chapter
 
-@Database(version = 1, entities = [Book::class, Bookshelf::class, Chapter::class])
+@Database(
+    version = 1,
+    entities = [Book::class, Bookshelf::class, Chapter::class],
+    exportSchema = false
+)
 abstract class AppDatabase : RoomDatabase() {
 
     abstract fun bookDao(): BookDao

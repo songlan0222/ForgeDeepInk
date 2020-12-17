@@ -97,7 +97,7 @@ class BookSrcManageActivity : AppCompatActivity() {
             val view = View.inflate(this@BookSrcManageActivity, R.layout.dialog_book_src, null)
             // 配置标题
             val bookSrcName = view.findViewById<TextView>(R.id.bookSrcName)
-            bookSrcName.text = bookSrcList[position].name
+            bookSrcName.text = bookSrcList[position].bookSrcName
 
             val dialog = Dialog(this@BookSrcManageActivity, R.style.DialogTheme)
             dialog.setContentView(view)

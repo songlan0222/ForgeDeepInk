@@ -7,9 +7,9 @@ import com.songlan.deepink.enum.Comments
 @Entity
 class BookSrc(
     var bookSrcName: String,
-    var comments: Comments,
-    var useTimes: Int,
-    var webSet: String
+    var comments: Comments = Comments.TEN,
+    var useTimes: Int = 0,
+    var webSet: String = ""
 ) {
     @PrimaryKey(autoGenerate = true)
     var bookSrcId: Long = 0

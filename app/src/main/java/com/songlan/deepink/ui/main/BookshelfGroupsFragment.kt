@@ -80,7 +80,7 @@ class BookshelfGroupsFragment : BaseFragment() {
             holder.bookshelfItemChecked.isChecked = true
             holder.bookshelfName.text = bookshelf.bookshelfName
             holder.bookshelfDetails.adapter =
-                DetailsAdapter(bookshelf.bookList)
+                DetailsAdapter(mainActivity.vm.curBookList)
             val layoutManager = LinearLayoutManager(requireContext())
             layoutManager.orientation = LinearLayoutManager.HORIZONTAL
             holder.bookshelfDetails.layoutManager = layoutManager

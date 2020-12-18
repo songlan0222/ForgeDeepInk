@@ -52,8 +52,20 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0'
     testImplementation 'junit:junit:4.+'
-    implementation 'androidx.room:room-runtime:2.1.0'
-    kapt "androidx.room:room-compiler:2.1.0"
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    // 单元测试配置如下
+    implementation 'com.android.support.test:runner:1.0.2'
+    def room_version = "2.1.0"
+    implementation 'androidx.room:room-runtime:2.1.0'
+    implementation "android.arch.persistence.room:runtime:$room_version"
+    annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "android.arch.persistence.room:rxjava2:$room_version"
+    //之后会用到rxjava，所以这里也可以有
+    testImplementation "android.arch.persistence.room:testing:$room_version"
+    //robolectric测试
+    testImplementation 'org.robolectric:shadows-multidex:3.8'
+    testImplementation "org.robolectric:robolectric:3.8"
 }

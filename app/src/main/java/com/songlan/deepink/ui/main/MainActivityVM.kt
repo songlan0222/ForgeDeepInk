@@ -46,8 +46,4 @@ class MainActivityVM : ViewModel() {
     fun getBookshelfList() {
         allBookshelfListLiveData.value = allBookshelfListLiveData.value
     }
-
-    init {
-        getBookshelfList()
-    }
 }

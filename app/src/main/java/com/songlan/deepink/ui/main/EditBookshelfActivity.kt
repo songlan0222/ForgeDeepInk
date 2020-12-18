@@ -1,7 +1,6 @@
 package com.songlan.deepink.ui.main
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
@@ -10,12 +9,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.R
-import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
+import androidx.lifecycle.Observer
 import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.activity_edit_bookshelf.*
 import java.util.*
-import kotlin.properties.Delegates
 
 class EditBookshelfActivity : AppCompatActivity() {
 
@@ -25,11 +23,13 @@ class EditBookshelfActivity : AppCompatActivity() {
 
     // 判断是否为编辑状态，默认设置为不是
     private var isEditBookshelf = false
+//    private lateinit var bookshelf: Bookshelf
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_bookshelf)
+
 
         // 配置Toolbar
         setSupportActionBar(toolbar)
@@ -42,14 +42,34 @@ class EditBookshelfActivity : AppCompatActivity() {
         LogUtil.d("MainTest", "$isEditBookshelf")
 
         // 绑定observer，用于更新viewModel的数据
-        viewModel.checkedBookshelfLiveData.observe(this, androidx.lifecycle.Observer { result ->
+        viewModel.checkedBookshelfLiveData.observe(this, Observer { result ->
             val bookshelf = result.getOrNull()
             if (bookshelf != null) {
                 viewModel.checkedBookshelf = bookshelf
             }
+            editText_bookshelfName.setText(viewModel.checkedBookshelf.bookshelfName)
+            // 根据bookshelf的信息，修改界面中RadioButton的状态
+            if (viewModel.checkedBookshelf.isFirstChoose)
+                firstChoose_true.isChecked = true
+            else firstChoose_false.isChecked = true
+
+            if (viewModel.checkedBookshelf.layoutWay == 0)
+                layout_grid.isChecked = true
+            else
+                layout_list.isChecked = true
+
+            if (viewModel.checkedBookshelf.sortWay == 0)
+                sort_time.isChecked = true
+            else
+                sort_self_define.isChecked = true
+
+            if (viewModel.checkedBookshelf.infoWay == 0)
+                info_simple.isChecked = true
+            else
+                info_details.isChecked = true
+
         })
 
-        lateinit var bookshelf: Bookshelf
         // 如果是通过添加书架按钮进入Activity
         if (!isEditBookshelf) {
             textView_title.text = "创建书架"
@@ -67,74 +87,49 @@ class EditBookshelfActivity : AppCompatActivity() {
                     imm.showSoftInput(editText_bookshelfName, 0)
                 }
             }, 300)
-
-            bookshelf = Bookshelf("")
-
         } else {
             textView_title.text = "编辑书架"
             val bookshelfId = intent.getLongExtra("bookshelf_id", -1)
             if (bookshelfId == -1L) {
                 throw Exception("参数：bookshelfID，发生错误")
             }
-            // 从数据库根据bookshelfId直接查询书架
             viewModel.loadBookshelf(bookshelfId)
-            bookshelf = viewModel.checkedBookshelf
         }
-
-        // 根据bookshelf的信息，修改界面中RadioButton的状态
-        if (bookshelf.isFirstChoose)
-            firstChoose_true.isChecked = true
-        else firstChoose_false.isChecked = true
-
-        if (bookshelf.layoutWay == 0)
-            layout_grid.isChecked = true
-        else
-            layout_list.isChecked = true
-
-        if (bookshelf.sortWay == 0)
-            sort_time.isChecked = true
-        else
-            sort_self_define.isChecked = true
-
-        if (bookshelf.infoWay == 0)
-            info_simple.isChecked = true
-        else
-            info_details.isChecked = true
 
         // 为保存按钮配置点击事件
         Btn_save.setOnClickListener {
-            saveBookshelfInfo(bookshelf)
+            saveBookshelfInfo(viewModel.checkedBookshelf)
         }
 
         editText_bookshelfName.addTextChangedListener {
-            bookshelf.bookshelfName = it.toString()
+            viewModel.checkedBookshelf.bookshelfName = it.toString()
         }
 
         firstChooseGroup.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
-                R.id.firstChoose_false -> bookshelf.isFirstChoose = false
-                R.id.firstChoose_true -> bookshelf.isFirstChoose = true
+                R.id.firstChoose_false -> viewModel.checkedBookshelf.isFirstChoose = false
+                R.id.firstChoose_true -> viewModel.checkedBookshelf.isFirstChoose = true
             }
         }
 
         layoutGroup.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
-                R.id.layout_grid -> bookshelf.layoutWay = 0
-                R.id.layout_list -> bookshelf.layoutWay = 1
+                R.id.layout_grid -> viewModel.checkedBookshelf.layoutWay = 0
+                R.id.layout_list -> viewModel.checkedBookshelf.layoutWay = 1
             }
         }
 
         sortGroup.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
-                R.id.sort_time -> bookshelf.sortWay = 0
-                R.id.sort_self_define -> bookshelf.sortWay = 1
+                R.id.sort_time -> viewModel.checkedBookshelf.sortWay = 0
+                R.id.sort_self_define -> viewModel.checkedBookshelf.sortWay = 1
             }
         }
 
         infoGroup.setOnCheckedChangeListener { group, checkedId ->
             when (checkedId) {
-                R.id.info_simple -> bookshelf.infoWay = 0
-                R.id.info_details -> bookshelf.infoWay = 1
+                R.id.info_simple -> viewModel.checkedBookshelf.infoWay = 0
+                R.id.info_details -> viewModel.checkedBookshelf.infoWay = 1
             }
         }
     }

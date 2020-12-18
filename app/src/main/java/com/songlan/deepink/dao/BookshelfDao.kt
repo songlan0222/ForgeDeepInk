@@ -11,7 +11,7 @@ interface BookshelfDao {
     @Update
     fun updateBookshelf(bookshelf: Bookshelf)
 
-    @Query("select * from bookshelf where bookshelfId = :bookshelfId")
+    @Query("select * from Bookshelf where bookshelfId = :bookshelfId")
     fun loadBookshelf(bookshelfId: Long): Bookshelf
 
     @Query("select * from Bookshelf where 1 = 1")

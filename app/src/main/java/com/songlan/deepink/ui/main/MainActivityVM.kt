@@ -22,13 +22,14 @@ class MainActivityVM : ViewModel() {
     // 数据库获取信息
     private val checkedBookshelfLiveData = MutableLiveData<Long>()
     private val allBookshelfListLiveData = MutableLiveData<Any?>()
+    private val pDeleteBookshelfLiveData = MutableLiveData<Long>()
 
     var checkedBookshelf = Bookshelf("默认", true)
     val checkedBookList = ArrayList<Book>()
     val bookshelfList = ArrayList<Bookshelf>()
 
     val bookshelfLiveData = Transformations.switchMap(checkedBookshelfLiveData) { bookshelfId ->
-        DatabaseRepository.loadBookshelfWithId(bookshelfId)
+        DatabaseRepository.loadBookshelf(bookshelfId)
     }
     val bookListLiveData = Transformations.switchMap(checkedBookshelfLiveData) { bookshelfId ->
         DatabaseRepository.loadBookList(bookshelfId)
@@ -36,6 +37,10 @@ class MainActivityVM : ViewModel() {
     val bookshelfListLiveData = Transformations.switchMap(allBookshelfListLiveData) {
         DatabaseRepository.loadBookshelfList()
     }
+    val deleteBookshelfLiveData =
+        Transformations.switchMap(pDeleteBookshelfLiveData) { bookshelfId ->
+            DatabaseRepository.deleteBookshelf(bookshelfId)
+        }
 
     fun checkedBookshelf(query: Long) {
         checkedBookshelfLiveData.value = query
@@ -43,5 +48,9 @@ class MainActivityVM : ViewModel() {
 
     fun getBookshelfList() {
         allBookshelfListLiveData.value = allBookshelfListLiveData.value
+    }
+
+    fun deleteBookshelf(query: Long) {
+        pDeleteBookshelfLiveData.value = query
     }
 }

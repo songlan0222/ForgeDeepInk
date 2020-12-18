@@ -66,6 +66,11 @@ object DatabaseRepository {
         Result.success(bookshelf)
     }
 
+    fun deleteBookshelf(bookshelfId: Long) = fire(Dispatchers.IO) {
+        val deleteBookshelf = bookshelfDao.loadBookshelf(bookshelfId)
+        bookshelfDao.deleteBookshelf(deleteBookshelf)
+        Result.success(Any())
+    }
 
     // 对获取liveData进行简化
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =

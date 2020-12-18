@@ -62,6 +62,14 @@ class BookshelfGroupsFragment : BaseFragment() {
                 result.exceptionOrNull()?.printStackTrace()
             }
         })
+
+        mainActivity.vm.deleteBookshelfLiveData.observe(mainActivity, Observer { result ->
+            val deleteResult = result.getOrNull()
+            if(deleteResult != null){
+                mainActivity.vm.getBookshelfList()
+            }
+        })
+
         mainActivity.vm.getBookshelfList()
 
         // 配置书架展示部分
@@ -69,8 +77,6 @@ class BookshelfGroupsFragment : BaseFragment() {
         bookshelfListAdapter = MyRecyclerViewAdapter(mainActivity.vm.bookshelfList)
         main_left_bookshelf_recycler.layoutManager = manager
         main_left_bookshelf_recycler.adapter = bookshelfListAdapter
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -156,6 +162,13 @@ class BookshelfGroupsFragment : BaseFragment() {
                 intent.putExtra("edit_bookshelf", true)
                 intent.putExtra("bookshelf_id", bookshelfList[position].bookshelfId)
                 startActivityForResult(intent, 1)
+                bottomDialog.cancel()
+            }
+
+            val deleteBookshelfLayout =
+                view.findViewById<LinearLayout>(R.id.linearLayout_deleteBookshelf)
+            deleteBookshelfLayout.setOnClickListener {
+                mainActivity.vm.deleteBookshelf(bookshelfList[position].bookshelfId)
                 bottomDialog.cancel()
             }
             bottomDialog.show()

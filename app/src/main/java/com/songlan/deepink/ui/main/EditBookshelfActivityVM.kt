@@ -10,7 +10,7 @@ class EditBookshelfActivityVM : ViewModel() {
     private val pBookshelfIdLiveData = MutableLiveData<Long>()
     private val pBookshelfLiveData = MutableLiveData<Bookshelf>()
 
-    val checkedBookshelf = Bookshelf("")
+    var checkedBookshelf = Bookshelf("")
 
     val checkedBookshelfLiveData = Transformations.switchMap(pBookshelfIdLiveData) { bookshelfId ->
         DatabaseRepository.loadBookshelf(bookshelfId)
@@ -18,7 +18,7 @@ class EditBookshelfActivityVM : ViewModel() {
     val insertBookshelfLiveData = Transformations.switchMap(pBookshelfLiveData) { bookshelf ->
         DatabaseRepository.insertBookshelf(bookshelf)
     }
-    val updateBbookshelfLiveData = Transformations.switchMap(pBookshelfLiveData) { bookshelf ->
+    val updateBookshelfLiveData = Transformations.switchMap(pBookshelfLiveData) { bookshelf ->
         DatabaseRepository.updateBookshelf(bookshelf)
     }
 
@@ -27,10 +27,11 @@ class EditBookshelfActivityVM : ViewModel() {
     }
 
     fun insertBookshelf(bookshelf: Bookshelf) {
+        pBookshelfLiveData.value = bookshelf
 
     }
 
     fun updateBookshelf(bookshelf: Bookshelf) {
-
+        pBookshelfLiveData.value = bookshelf
     }
 }

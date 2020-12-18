@@ -39,6 +39,14 @@ class EditBookshelfActivity : AppCompatActivity() {
         isEditBookshelf = intent.getBooleanExtra("edit_bookshelf", false)
         LogUtil.d("MainTest", "$isEditBookshelf")
 
+        // 绑定observer，用于更新viewModel的数据
+        viewModel.checkedBookshelfLiveData.observe(this, androidx.lifecycle.Observer { result ->
+            val bookshelf = result.getOrNull()
+            if (bookshelf != null) {
+                viewModel.checkedBookshelf = bookshelf
+            }
+        })
+
         lateinit var bookshelf: Bookshelf
         // 如果是通过添加书架按钮进入Activity
         if (!isEditBookshelf) {
@@ -72,6 +80,24 @@ class EditBookshelfActivity : AppCompatActivity() {
         }
 
         // 根据bookshelf的信息，修改界面中RadioButton的状态
+        if (bookshelf.isFirstChoose)
+            firstChoose_true.isChecked = true
+        else firstChoose_false.isChecked = true
+
+        if (bookshelf.layoutWay == 0)
+            layout_grid.isChecked = true
+        else
+            layout_list.isChecked = true
+
+        if (bookshelf.sortWay == 0)
+            sort_time.isChecked = true
+        else
+            sort_self_define.isChecked = true
+
+        if (bookshelf.infoWay == 0)
+            info_simple.isChecked = true
+        else
+            info_details.isChecked = true
 
 
         // 为保存按钮配置点击事件

@@ -14,7 +14,7 @@ interface BookshelfDao {
     @Query("select * from bookshelf where bookshelfId = :bookshelfId")
     fun loadBookshelf(bookshelfId: Long): Bookshelf
 
-    @Query("select * from Bookshelf")
+    @Query("select * from Bookshelf where 1 = 1")
     fun loadAllBookshelf(): List<Bookshelf>
 
     @Query("select * from Bookshelf where isFirstChoose = 1")

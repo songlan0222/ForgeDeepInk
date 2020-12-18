@@ -32,9 +32,11 @@ abstract class AppDatabase : RoomDatabase() {
                 context.applicationContext,
                 AppDatabase::class.java,
                 "app_database"
-            ).build().apply {
-                instance = this
-            }
+            )
+                .allowMainThreadQueries()
+                .build().apply {
+                    instance = this
+                }
         }
     }
 }

@@ -15,7 +15,7 @@ interface BookDao {
     @Query("select * from Book where bookId = :bookId")
     fun loadBookWithBookId(bookId: Long): Book
 
-    @Query("select * from Book")
+    @Query("select * from Book where 1 = 1")
     fun loadAllBooks(): List<Book>
 
     @Query("select * from Book where bookshelfId = :bookshelfId")

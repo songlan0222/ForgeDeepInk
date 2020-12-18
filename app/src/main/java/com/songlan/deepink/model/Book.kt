@@ -15,7 +15,7 @@ data class Book(
     var lastUpdate: Date = Date(0),
     var readProgress: Float = 0F,
     var readTime: Float = 0F,
-    var bookshelfId: Long = 0,
+    var bookshelfId: Long = 1,
 ) {
     @PrimaryKey(autoGenerate = true)
     var bookId: Long = 0

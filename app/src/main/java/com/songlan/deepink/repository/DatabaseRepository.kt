@@ -30,9 +30,17 @@ object DatabaseRepository {
     }
 
 
-
-
     // 书架管理方法
+    fun insertBookshelf(bookshelf: Bookshelf) = fire(Dispatchers.IO) {
+        val bookshelfId = bookshelfDao.insertBookshelf(bookshelf)
+        Result.success(bookshelfId)
+    }
+
+    fun updateBookshelf(bookshelf: Bookshelf) = fire(Dispatchers.IO) {
+        bookshelfDao.updateBookshelf(bookshelf)
+        Result.success(Any())
+    }
+
     fun loadBookshelfList() = fire(Dispatchers.IO) {
         val bookshelfList = bookshelfDao.loadAllBookshelf()
         Result.success(bookshelfList)

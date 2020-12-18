@@ -13,12 +13,16 @@ import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.activity_edit_bookshelf.*
 import java.util.*
+import kotlin.properties.Delegates
 
 class EditBookshelfActivity : AppCompatActivity() {
 
     private val viewModel by lazy {
         ViewModelProvider(this).get(EditBookshelfActivityVM::class.java)
     }
+
+    // 判断是否为编辑状态，默认设置为不是
+    private var isEditBookshelf = false
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,15 +35,11 @@ class EditBookshelfActivity : AppCompatActivity() {
         supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_back)
         supportActionBar?.title = null
 
-        // 为保存按钮配置点击事件
-        Btn_save.setOnClickListener {
-            saveBookshelfInfo()
-        }
-
         // 获取进入Activity时对应的参数
-        val isEditBookshelf = intent.getBooleanExtra("edit_bookshelf", false)
+        isEditBookshelf = intent.getBooleanExtra("edit_bookshelf", false)
         LogUtil.d("MainTest", "$isEditBookshelf")
 
+        lateinit var bookshelf: Bookshelf
         // 如果是通过添加书架按钮进入Activity
         if (!isEditBookshelf) {
             textView_title.text = "创建书架"
@@ -58,6 +58,8 @@ class EditBookshelfActivity : AppCompatActivity() {
                 }
             }, 300)
 
+            bookshelf = Bookshelf("")
+
         } else {
             textView_title.text = "编辑书架"
             val bookshelfId = intent.getLongExtra("bookshelf_id", -1)
@@ -66,13 +68,25 @@ class EditBookshelfActivity : AppCompatActivity() {
             }
             // 从数据库根据bookshelfId直接查询书架
             viewModel.loadBookshelf(bookshelfId)
+            bookshelf = viewModel.checkedBookshelf
+        }
+
+        // 根据bookshelf的信息，修改界面中RadioButton的状态
+
+
+        // 为保存按钮配置点击事件
+        Btn_save.setOnClickListener {
+            saveBookshelfInfo(bookshelf)
         }
     }
 
-    private fun saveBookshelfInfo(bookshelf: Bookshelf) {
-        viewModel.insertBookshelf(bookshelf)
+    private fun saveBookshelfInfo(bookshelf: Bookshelf) =
+        // 分情况，如果是新增，则使用insert，反之update
+        if (isEditBookshelf)
+            viewModel.insertBookshelf(bookshelf)
+        else
+            viewModel.updateBookshelf(bookshelf)
 
-    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

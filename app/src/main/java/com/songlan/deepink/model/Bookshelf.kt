@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 @Entity
 data class Bookshelf(
     var bookshelfName: String,
-    var isFirstChoose: Boolean,
+    var isFirstChoose: Boolean = false,
     var layoutWay: Int = 0,
     var infoWay: Int = 0,
     var sortWay: Int = 0

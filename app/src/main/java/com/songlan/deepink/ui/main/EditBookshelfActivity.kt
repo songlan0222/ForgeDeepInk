@@ -6,12 +6,19 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.R
+import com.songlan.deepink.model.Book
+import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.activity_edit_bookshelf.*
 import java.util.*
 
 class EditBookshelfActivity : AppCompatActivity() {
+
+    private val viewModel by lazy {
+        ViewModelProvider(this).get(EditBookshelfActivityVM::class.java)
+    }
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -51,20 +58,19 @@ class EditBookshelfActivity : AppCompatActivity() {
                 }
             }, 300)
 
-//            val manager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-//            manager.showSoftInput(editText_bookshelfName, 0)
-
         } else {
             textView_title.text = "编辑书架"
-            val bookshelfId = intent.getIntExtra("bookshelf_id", -1)
-            if (bookshelfId == -1) {
+            val bookshelfId = intent.getLongExtra("bookshelf_id", -1)
+            if (bookshelfId == -1L) {
                 throw Exception("参数：bookshelfID，发生错误")
             }
             // 从数据库根据bookshelfId直接查询书架
+            viewModel.loadBookshelf(bookshelfId)
         }
     }
 
-    private fun saveBookshelfInfo() {
+    private fun saveBookshelfInfo(bookshelf: Bookshelf) {
+        viewModel.insertBookshelf(bookshelf)
 
     }
 

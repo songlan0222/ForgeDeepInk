@@ -18,11 +18,27 @@ object DatabaseRepository {
     private val bookDao = AppDatabase.getDatabase(context).bookDao()
     private val bookshelfDao = AppDatabase.getDatabase(context).bookshelfDao()
 
+    // 书籍管理方法
+    fun insertBook(book: Book) = fire(Dispatchers.IO) {
+        val bookId = bookDao?.insertBook(book)
+        Result.success(bookId)
+    }
+
     fun loadBookList(bookshelfId: Long) = fire(Dispatchers.IO) {
         val bookList = bookDao.loadBookWithBookshelfId(bookshelfId)
         Result.success(bookList)
     }
 
+
+
+
+    // 书架管理方法
+    fun loadBookshelfList() = fire(Dispatchers.IO) {
+        val bookshelfList = bookshelfDao.loadAllBookshelf()
+        Result.success(bookshelfList)
+    }
+
+    // 该方法逻辑有问题，待修改
     fun loadBookshelfWithId(query: Long) = fire(Dispatchers.IO) {
         // bookshelfDao.deleteAllBookshelf()
         val bookshelf = bookshelfDao.loadBookshelf(query)
@@ -37,15 +53,11 @@ object DatabaseRepository {
         }
     }
 
-    fun loadBookshelfList() = fire(Dispatchers.IO) {
-        val bookshelfList = bookshelfDao.loadAllBookshelf()
-        Result.success(bookshelfList)
+    fun loadBookshelf(bookshelfId: Long) = fire(Dispatchers.IO) {
+        val bookshelf = bookshelfDao.loadBookshelf(bookshelfId)
+        Result.success(bookshelf)
     }
 
-    fun insertBook(book: Book) = fire(Dispatchers.IO) {
-        val bookId = bookDao?.insertBook(book)
-        Result.success(bookId)
-    }
 
     // 对获取liveData进行简化
     private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =

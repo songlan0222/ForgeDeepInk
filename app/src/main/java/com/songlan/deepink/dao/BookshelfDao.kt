@@ -26,5 +26,8 @@ interface BookshelfDao {
     @Query("delete from Bookshelf where 1= 1")
     fun deleteAllBookshelf(): Int
 
+    @Query("select bookshelfId from Bookshelf where isFirstChoose = 1")
+    fun getFirstChooseBookshelf(): Long
+
 
 }

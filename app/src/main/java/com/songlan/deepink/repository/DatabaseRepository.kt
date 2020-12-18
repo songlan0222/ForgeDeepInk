@@ -47,7 +47,7 @@ object DatabaseRepository {
     }
 
     // 该方法逻辑有问题，待修改
-    fun loadBookshelfWithId(query: Long) = fire(Dispatchers.IO) {
+    /*fun loadBookshelfWithId(query: Long) = fire(Dispatchers.IO) {
         // bookshelfDao.deleteAllBookshelf()
         val bookshelf = bookshelfDao.loadBookshelf(query)
         // 如果数据库中没有被选中bookshelf，说明此事bookshelf为空；此时，则创建bookshelf，并添加到数据库
@@ -59,7 +59,7 @@ object DatabaseRepository {
             bookshelfDao.insertBookshelf(initBookshelf)
             Result.success(initBookshelf)
         }
-    }
+    }*/
 
     fun loadBookshelf(bookshelfId: Long) = fire(Dispatchers.IO) {
         val bookshelf = bookshelfDao.loadBookshelf(bookshelfId)
@@ -70,6 +70,11 @@ object DatabaseRepository {
         val deleteBookshelf = bookshelfDao.loadBookshelf(bookshelfId)
         bookshelfDao.deleteBookshelf(deleteBookshelf)
         Result.success(Any())
+    }
+
+    fun getFirstChooseBookshelf() = fire(Dispatchers.IO) {
+        val bookshelfId = bookshelfDao.getFirstChooseBookshelf()
+        Result.success(bookshelfId)
     }
 
     // 对获取liveData进行简化

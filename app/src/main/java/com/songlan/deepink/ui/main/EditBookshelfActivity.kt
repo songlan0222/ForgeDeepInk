@@ -2,10 +2,12 @@ package com.songlan.deepink.ui.main
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
@@ -99,19 +101,69 @@ class EditBookshelfActivity : AppCompatActivity() {
         else
             info_details.isChecked = true
 
-
         // 为保存按钮配置点击事件
         Btn_save.setOnClickListener {
             saveBookshelfInfo(bookshelf)
         }
+
+        editText_bookshelfName.addTextChangedListener {
+            bookshelf.bookshelfName = it.toString()
+        }
+
+        firstChooseGroup.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.firstChoose_false -> bookshelf.isFirstChoose = false
+                R.id.firstChoose_true -> bookshelf.isFirstChoose = true
+            }
+        }
+
+        layoutGroup.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.layout_grid -> bookshelf.layoutWay = 0
+                R.id.layout_list -> bookshelf.layoutWay = 1
+            }
+        }
+
+        sortGroup.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.sort_time -> bookshelf.sortWay = 0
+                R.id.sort_self_define -> bookshelf.sortWay = 1
+            }
+        }
+
+        infoGroup.setOnCheckedChangeListener { group, checkedId ->
+            when (checkedId) {
+                R.id.info_simple -> bookshelf.infoWay = 0
+                R.id.info_details -> bookshelf.infoWay = 1
+            }
+        }
     }
 
-    private fun saveBookshelfInfo(bookshelf: Bookshelf) =
+    private fun saveBookshelfInfo(bookshelf: Bookshelf) {
         // 分情况，如果是新增，则使用insert，反之update
-        if (isEditBookshelf)
+        if (!isEditBookshelf) {
+            viewModel.insertBookshelfLiveData.observe(this, androidx.lifecycle.Observer { result ->
+                val bookshelfId = result.getOrNull()
+                if (bookshelfId != null) {
+                    LogUtil.v("MainTest", "insert_bookshelf_id = $bookshelfId")
+                }
+            })
             viewModel.insertBookshelf(bookshelf)
-        else
+        } else {
+            viewModel.updateBookshelfLiveData.observe(this, androidx.lifecycle.Observer { result ->
+                val bookshelfId = result.getOrNull()
+                if (bookshelfId != null) {
+                    LogUtil.v("MainTest", "insert_bookshelf_id = $bookshelfId")
+                }
+            })
             viewModel.updateBookshelf(bookshelf)
+        }
+
+        val intent = Intent()
+        intent.putExtra("refresh_bookshelfs", true)
+        setResult(RESULT_OK, intent)
+        finish()
+    }
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

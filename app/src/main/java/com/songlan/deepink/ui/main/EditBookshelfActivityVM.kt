@@ -8,17 +8,18 @@ import com.songlan.deepink.repository.DatabaseRepository
 
 class EditBookshelfActivityVM : ViewModel() {
     private val pBookshelfIdLiveData = MutableLiveData<Long>()
-    private val pBookshelfLiveData = MutableLiveData<Bookshelf>()
+    private val pInsertBookshelfLiveData = MutableLiveData<Bookshelf>()
+    private val pUpdateBookshelfLiveData = MutableLiveData<Bookshelf>()
 
     var checkedBookshelf = Bookshelf("")
 
     val checkedBookshelfLiveData = Transformations.switchMap(pBookshelfIdLiveData) { bookshelfId ->
         DatabaseRepository.loadBookshelf(bookshelfId)
     }
-    val insertBookshelfLiveData = Transformations.switchMap(pBookshelfLiveData) { bookshelf ->
+    val insertBookshelfLiveData = Transformations.switchMap(pInsertBookshelfLiveData) { bookshelf ->
         DatabaseRepository.insertBookshelf(bookshelf)
     }
-    val updateBookshelfLiveData = Transformations.switchMap(pBookshelfLiveData) { bookshelf ->
+    val updateBookshelfLiveData = Transformations.switchMap(pUpdateBookshelfLiveData) { bookshelf ->
         DatabaseRepository.updateBookshelf(bookshelf)
     }
 
@@ -27,11 +28,10 @@ class EditBookshelfActivityVM : ViewModel() {
     }
 
     fun insertBookshelf(bookshelf: Bookshelf) {
-        pBookshelfLiveData.value = bookshelf
-
+        pInsertBookshelfLiveData.value = bookshelf
     }
 
     fun updateBookshelf(bookshelf: Bookshelf) {
-        pBookshelfLiveData.value = bookshelf
+        pUpdateBookshelfLiveData.value = bookshelf
     }
 }

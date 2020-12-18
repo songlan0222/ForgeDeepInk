@@ -1,5 +1,6 @@
 package com.songlan.deepink.ui.main
 
+import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
@@ -44,7 +45,7 @@ class BookshelfGroupsFragment : BaseFragment() {
                 R.id.main_left_add_bookshelf -> {
                     val intent = Intent(this.context, EditBookshelfActivity::class.java)
                     intent.putExtra("edit_bookshelf", false)
-                    startActivity(intent)
+                    startActivityForResult(intent, 1)
                 }
             }
             false
@@ -70,11 +71,22 @@ class BookshelfGroupsFragment : BaseFragment() {
         main_left_bookshelf_recycler.adapter = bookshelfListAdapter
 
 
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        when (requestCode) {
+            1 -> if (resultCode == RESULT_OK) {
+                val returnedData = data?.getBooleanExtra("refresh_bookshelfs", false)
+                if (returnedData!!) {
+                    mainActivity.vm.getBookshelfList()
+                }
+            }
+        }
     }
 
     inner class MyRecyclerViewAdapter(private val bookshelfList: List<Bookshelf>) :
@@ -143,7 +155,7 @@ class BookshelfGroupsFragment : BaseFragment() {
                 val intent = Intent(context, EditBookshelfActivity::class.java)
                 intent.putExtra("edit_bookshelf", true)
                 intent.putExtra("bookshelf_id", bookshelfList[position].bookshelfId)
-                startActivity(intent)
+                startActivityForResult(intent, 1)
                 bottomDialog.cancel()
             }
             bottomDialog.show()

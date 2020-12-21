@@ -12,6 +12,7 @@ import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.songlan.deepink.MyApplication
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
@@ -65,7 +66,7 @@ class BookshelfGroupsFragment : BaseFragment() {
 
         mainActivity.vm.deleteBookshelfLiveData.observe(mainActivity, Observer { result ->
             val deleteResult = result.getOrNull()
-            if(deleteResult != null){
+            if (deleteResult != null) {
                 mainActivity.vm.getBookshelfList()
             }
         })
@@ -77,10 +78,6 @@ class BookshelfGroupsFragment : BaseFragment() {
         bookshelfListAdapter = MyRecyclerViewAdapter(mainActivity.vm.bookshelfList)
         main_left_bookshelf_recycler.layoutManager = manager
         main_left_bookshelf_recycler.adapter = bookshelfListAdapter
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -97,12 +94,14 @@ class BookshelfGroupsFragment : BaseFragment() {
 
     inner class MyRecyclerViewAdapter(private val bookshelfList: List<Bookshelf>) :
         RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
+        private val checkBoxList = mutableListOf<CheckBox>()
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val bookshelfItemChecked: CheckBox = view.findViewById(R.id.itemCheckbox)
             val bookshelfName: TextView = view.findViewById(R.id.itemName)
             val bookshelfDetails: RecyclerView = view.findViewById(R.id.item_main_left_details)
             val bookshelfMore: ImageButton = view.findViewById(R.id.itemMore)
+            val isBookshelfChecked: CheckBox = view.findViewById(R.id.itemCheckbox)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -118,7 +117,16 @@ class BookshelfGroupsFragment : BaseFragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val bookshelf = bookshelfList[position]
-            holder.bookshelfItemChecked.isChecked = true
+            holder.bookshelfItemChecked.isChecked =
+                bookshelf.bookshelfId == MyApplication.appProfiles.getCheckedBookshelfIdFromProfile()
+            checkBoxList.add(holder.bookshelfItemChecked)
+            holder.bookshelfItemChecked.setOnCheckedChangeListener { buttonView, isChecked ->
+                if (isChecked) checkBoxList.forEach { checkBox ->
+                    if (checkBox != buttonView && checkBox.isChecked) {
+                        checkBox.isChecked = false
+                    }
+                }
+            }
             holder.bookshelfName.text = bookshelf.bookshelfName
             holder.bookshelfDetails.adapter =
                 DetailsAdapter(mainActivity.vm.checkedBookList)

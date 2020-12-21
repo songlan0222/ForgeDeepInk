@@ -29,6 +29,11 @@ object DatabaseRepository {
         Result.success(bookList)
     }
 
+    fun loadAllBooks() = fire(Dispatchers.IO) {
+        val bookList = bookDao.loadAllBooks()
+        Result.success(bookList)
+    }
+
 
     // 书架管理方法
     fun insertBookshelf(bookshelf: Bookshelf) = fire(Dispatchers.IO) {

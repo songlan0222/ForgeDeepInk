@@ -4,13 +4,16 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.MotionEvent
+import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Bookshelf
-import androidx.lifecycle.Observer
 import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.activity_edit_bookshelf.*
 import java.util.*
@@ -132,6 +135,38 @@ class EditBookshelfActivity : AppCompatActivity() {
                 R.id.info_details -> viewModel.checkedBookshelf.infoWay = 1
             }
         }
+    }
+
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if (ev?.action == MotionEvent.ACTION_DOWN) {
+            val v: View? = currentFocus
+            if (isNeedHideInput(v, ev)) {
+                (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
+                    v?.windowToken,
+                    0
+                )
+            }
+            return super.dispatchTouchEvent(ev)
+        }
+        if (window.superDispatchTouchEvent(ev)) {
+            return true
+        }
+        return onTouchEvent(ev)
+    }
+
+    private fun isNeedHideInput(v: View?, event: MotionEvent): Boolean {
+        if (v != null && v is EditText) {
+            val leftTop = intArrayOf(0, 0)
+            //获取输入框当前的location位置
+            //获取输入框当前的location位置
+            v.getLocationInWindow(leftTop)
+            val left = leftTop[0]
+            val top = leftTop[1]
+            val bottom = top + v.getHeight()
+            val right = left + v.getWidth()
+            return !(event.x > left && event.x < right && event.y > top && event.y < bottom)
+        }
+        return false
     }
 
     private fun saveBookshelfInfo(bookshelf: Bookshelf) {

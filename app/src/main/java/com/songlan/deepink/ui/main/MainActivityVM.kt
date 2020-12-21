@@ -47,11 +47,11 @@ class MainActivityVM : ViewModel() {
         DatabaseRepository.getFirstChooseBookshelf()
     }
 
-    fun checkedBookshelf(query: Long) {
+    fun loadCheckedBookshelf(query: Long) {
         checkedBookshelfLiveData.value = query
     }
 
-    fun getBookshelfList() {
+    fun loadBookshelfList() {
         allBookshelfListLiveData.value = allBookshelfListLiveData.value
     }
 
@@ -62,4 +62,5 @@ class MainActivityVM : ViewModel() {
     fun getFirstChooseBookshelfId() {
         pCheckedBookshelfIdLiveData.value = pCheckedBookshelfIdLiveData.value
     }
+
 }

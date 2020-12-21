@@ -67,11 +67,11 @@ class BookshelfGroupsFragment : BaseFragment() {
         mainActivity.vm.deleteBookshelfLiveData.observe(mainActivity, Observer { result ->
             val deleteResult = result.getOrNull()
             if (deleteResult != null) {
-                mainActivity.vm.getBookshelfList()
+                mainActivity.vm.loadBookshelfList()
             }
         })
 
-        mainActivity.vm.getBookshelfList()
+        mainActivity.vm.loadBookshelfList()
 
         // 配置书架展示部分
         val manager = LinearLayoutManager(activity)
@@ -86,7 +86,7 @@ class BookshelfGroupsFragment : BaseFragment() {
             1 -> if (resultCode == RESULT_OK) {
                 val returnedData = data?.getBooleanExtra("refresh_bookshelfs", false)
                 if (returnedData!!) {
-                    mainActivity.vm.getBookshelfList()
+                    mainActivity.vm.loadBookshelfList()
                 }
             }
         }
@@ -124,6 +124,8 @@ class BookshelfGroupsFragment : BaseFragment() {
                 if (isChecked) checkBoxList.forEach { checkBox ->
                     if (checkBox != buttonView && checkBox.isChecked) {
                         checkBox.isChecked = false
+                    } else {
+                        mainActivity.vm.loadCheckedBookshelf(bookshelf.bookshelfId)
                     }
                 }
             }

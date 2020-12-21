@@ -97,12 +97,12 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
         mainActivity.vm.checkedBookshelfIdLiveData.observe(mainActivity, Observer { result ->
             val bookshelfId = result.getOrNull()
             if (bookshelfId != null) {
-                mainActivity.vm.checkedBookshelf(bookshelfId)
+                mainActivity.vm.loadCheckedBookshelf(bookshelfId)
             }
         })
         // 获取书籍
         mainActivity.vm.getFirstChooseBookshelfId()
-        mainActivity.vm.getBookshelfList()
+        mainActivity.vm.loadBookshelfList()
 
         // 配置xRecyclerView
         onProgress()

@@ -101,7 +101,6 @@ class BookshelfGroupsFragment : BaseFragment() {
             val bookshelfName: TextView = view.findViewById(R.id.itemName)
             val bookshelfDetails: RecyclerView = view.findViewById(R.id.item_main_left_details)
             val bookshelfMore: ImageButton = view.findViewById(R.id.itemMore)
-            val isBookshelfChecked: CheckBox = view.findViewById(R.id.itemCheckbox)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {

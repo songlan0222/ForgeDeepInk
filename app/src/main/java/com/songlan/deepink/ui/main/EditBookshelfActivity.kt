@@ -140,7 +140,7 @@ class EditBookshelfActivity : AppCompatActivity() {
     override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
         if (ev?.action == MotionEvent.ACTION_DOWN) {
             val v: View? = currentFocus
-            if (isNeedHideInput(v, ev)) {
+            if (!isInEditTextRange(v, ev)) {
                 (getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(
                     v?.windowToken,
                     0
@@ -154,7 +154,7 @@ class EditBookshelfActivity : AppCompatActivity() {
         return onTouchEvent(ev)
     }
 
-    private fun isNeedHideInput(v: View?, event: MotionEvent): Boolean {
+    private fun isInEditTextRange(v: View?, event: MotionEvent): Boolean {
         if (v != null && v is EditText) {
             val leftTop = intArrayOf(0, 0)
             //获取输入框当前的location位置
@@ -164,9 +164,9 @@ class EditBookshelfActivity : AppCompatActivity() {
             val top = leftTop[1]
             val bottom = top + v.getHeight()
             val right = left + v.getWidth()
-            return !(event.x > left && event.x < right && event.y > top && event.y < bottom)
+            return (event.x > left && event.x < right && event.y > top && event.y < bottom)
         }
-        return false
+        return true
     }
 
     private fun saveBookshelfInfo(bookshelf: Bookshelf) {

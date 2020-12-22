@@ -37,6 +37,7 @@ class BookshelfOthersFragment : BaseFragment(), View.OnClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 配置选项点击的监听器
         localBook.setOnClickListener(this)
         bookSrc.setOnClickListener(this)
         bookRank.setOnClickListener(this)
@@ -44,6 +45,7 @@ class BookshelfOthersFragment : BaseFragment(), View.OnClickListener {
         rss.setOnClickListener(this)
         community.setOnClickListener(this)
         settings.setOnClickListener(this)
+
     }
 
     // 重写点击返回按钮时需要调用的方法

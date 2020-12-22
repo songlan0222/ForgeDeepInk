@@ -6,16 +6,18 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.ui.settings.SettingActivity
 
-class AppProfiles(context: Context) {
+object AppProfiles {
+
     private val prefs: SharedPreferences =
         context.getSharedPreferences("app_profile", Context.MODE_PRIVATE)
     private val editor: SharedPreferences.Editor = prefs.edit()
 
     // 默认选中的书架ID
-    private val CHECKED_BOOKSHELF_ID = "CHECKED_BOOKSHELF_ID"
-    private val DEFAULT_BOOKSHELF_ID = 1L
+    const val CHECKED_BOOKSHELF_ID = "CHECKED_BOOKSHELF_ID"
+    private const val DEFAULT_BOOKSHELF_ID = 1L
     fun getCheckedBookshelfIdFromProfile(): Long {
         return prefs.getLong(CHECKED_BOOKSHELF_ID, DEFAULT_BOOKSHELF_ID)
     }
@@ -25,11 +27,11 @@ class AppProfiles(context: Context) {
     }
 
     // 设置界面的默认参数
-    val CHECK_UPDATE = "CHECK_UPDATE"
-    val SIGN_NOTIFY = "SIGN_NOTIFY"
-    val MIDDLE_FONT_SIZE = "MIDDLE_FONT_SIZE"
-    val FOLLOW_SYSTEM_THEME = "FOLLOW_SYSTEM_THEME"
-    val CHASING_MODE = "CHASING_MODE"
+    const val CHECK_UPDATE = "CHECK_UPDATE"
+    const val SIGN_NOTIFY = "SIGN_NOTIFY"
+    const val MIDDLE_FONT_SIZE = "MIDDLE_FONT_SIZE"
+    const val FOLLOW_SYSTEM_THEME = "FOLLOW_SYSTEM_THEME"
+    const val CHASING_MODE = "CHASING_MODE"
     fun jumpToSettingActivity(activity: AppCompatActivity) {
         val intent = Intent(activity, SettingActivity::class.java)
         val checkUpdate = prefs.getInt(CHECK_UPDATE, 0)

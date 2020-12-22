@@ -12,6 +12,9 @@ import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.songlan.deepink.AppProfiles
+import com.songlan.deepink.AppProfiles.CHECKED_BOOKSHELF_ID
+import com.songlan.deepink.AppProfiles.saveToProfile
 import com.songlan.deepink.MyApplication
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
@@ -116,9 +119,12 @@ class BookshelfGroupsFragment : BaseFragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val bookshelf = bookshelfList[position]
+            // 根据配置文件来判定当前书架是否选中
             holder.bookshelfItemChecked.isChecked =
-                bookshelf.bookshelfId == MyApplication.appProfiles.getCheckedBookshelfIdFromProfile()
+                bookshelf.bookshelfId == AppProfiles.getCheckedBookshelfIdFromProfile()
+            // 将书架对象加入数组，方便统一管理
             checkBoxList.add(holder.bookshelfItemChecked)
+            // 当书架被选中时，将其他书架设置为不选中
             holder.bookshelfItemChecked.setOnCheckedChangeListener { buttonView, isChecked ->
                 if (isChecked) checkBoxList.forEach { checkBox ->
                     if (checkBox != buttonView && checkBox.isChecked) {
@@ -127,6 +133,8 @@ class BookshelfGroupsFragment : BaseFragment() {
                         mainActivity.vm.loadCheckedBookshelf(bookshelf.bookshelfId)
                     }
                 }
+                // 设置完成后保存选中信息
+                saveToProfile(CHECKED_BOOKSHELF_ID, bookshelf.bookshelfId)
             }
             holder.bookshelfName.text = bookshelf.bookshelfName
             holder.bookshelfDetails.adapter =

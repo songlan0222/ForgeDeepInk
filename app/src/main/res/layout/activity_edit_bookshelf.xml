@@ -91,7 +91,8 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="关闭"
-                    android:textColor="@drawable/selector_radio_text" />
+                    android:textColor="@drawable/selector_radio_text"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:id="@+id/firstChoose_true"
@@ -105,7 +106,8 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="开启"
-                    android:textColor="@drawable/selector_radio_text" />
+                    android:textColor="@drawable/selector_radio_text"
+                    android:textStyle="bold" />
             </RadioGroup>
 
         </RelativeLayout>
@@ -159,7 +161,8 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="关闭"
-                    android:textColor="@drawable/selector_radio_text" />
+                    android:textColor="@drawable/selector_radio_text"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:id="@+id/layout_list"
@@ -173,7 +176,8 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="开启"
-                    android:textColor="@drawable/selector_radio_text" />
+                    android:textColor="@drawable/selector_radio_text"
+                    android:textStyle="bold" />
             </RadioGroup>
 
         </RelativeLayout>
@@ -219,7 +223,8 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="关闭"
-                    android:textColor="@drawable/selector_radio_text" />
+                    android:textColor="@drawable/selector_radio_text"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:id="@+id/info_details"
@@ -233,7 +238,8 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="开启"
-                    android:textColor="@drawable/selector_radio_text" />
+                    android:textColor="@drawable/selector_radio_text"
+                    android:textStyle="bold" />
             </RadioGroup>
 
         </RelativeLayout>
@@ -287,7 +293,8 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="关闭"
-                    android:textColor="@drawable/selector_radio_text" />
+                    android:textColor="@drawable/selector_radio_text"
+                    android:textStyle="bold" />
 
                 <RadioButton
                     android:id="@+id/sort_self_define"
@@ -301,7 +308,8 @@
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
                     android:text="开启"
-                    android:textColor="@drawable/selector_radio_text" />
+                    android:textColor="@drawable/selector_radio_text"
+                    android:textStyle="bold" />
             </RadioGroup>
 
         </RelativeLayout>

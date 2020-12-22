@@ -105,10 +105,11 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center_vertical"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical|left"
                     android:layout_marginLeft="20dp"
+                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:paddingTop="15dp"
                     android:paddingBottom="15dp"
@@ -118,26 +119,46 @@
 
                 <RadioGroup
                     android:layout_width="wrap_content"
-                    android:layout_height="48dp"
+                    android:layout_height="36dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_gravity="center_vertical|right"
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/updateInStartApp"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="START" />
+                        android:layout_height="match_parent"
+                        android:background="@drawable/selector_radiobutton_left"
+                        android:button="@null"
+                        android:padding="10dp"
+                        android:gravity="center"
+                        android:text="START"
+                        android:textStyle="bold"
+                        android:textColor="@drawable/selector_radio_text" />
 
                     <RadioButton
                         android:id="@+id/updateIn30Min"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="30MIN" />
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@drawable/selector_radiobutton_center"
+                        android:button="@null"
+                        android:padding="10dp"
+                        android:text="30MIN"
+                        android:textStyle="bold"
+                        android:textColor="@drawable/selector_radio_text" />
 
                     <RadioButton
                         android:id="@+id/updateIn60Min"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="60MIN" />
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:background="@drawable/selector_radiobutton_right"
+                        android:button="@null"
+                        android:padding="10dp"
+                        android:text="60MIN"
+                        android:textStyle="bold"
+                        android:textColor="@drawable/selector_radio_text" />
 
                 </RadioGroup>
             </LinearLayout>

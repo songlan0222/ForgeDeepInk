@@ -33,4 +33,20 @@
     <string name="RSS">RSS</string>
     <string name="community">社区</string>
     <string name="settings">设置</string>
+    <string name="public_test">公测</string>
+    <string name="test_version">公测 1.3.0</string>
+    <string name="account_center">账号中心</string>
+    <string name="update_des">图书/RSS两次时间间隔大于设定的时长时触发检查。</string>
+    <string name="check_update">检查更新</string>
+    <string name="system_theme">跟随系统切换深色主题，适用于Android 10+系统</string>
+    <string name="system_theme_text">系统主题</string>
+    <string name="middle_font_size">中等字号</string>
+    <string name="sign_notice">签到提醒</string>
+    <string name="chasingMode">追更模式</string>
+    <string name="chasing_mode_text">该功能基于消息通知（非服务器推送），适用于符合规则的图书订阅更新。当设备连接网络时，服务每间隔1小时左右自动检查已订阅的图书章节是否有更新，同时将更新详情以消息通知的方式展现，耗电量几乎可以忽略不计且夜间免打扰。该模式需在多任务中锁定厚墨。</string>
+    <string name="shoot_screen">投屏</string>
+    <string name="user_guide">用户指南</string>
+    <string name="use_space">使用空间</string>
+    <string name="use_agreement">用户协议</string>
+    <string name="open_source_agreement">开源协议</string>
 </resources>

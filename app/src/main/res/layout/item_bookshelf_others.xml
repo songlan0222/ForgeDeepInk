@@ -25,9 +25,10 @@
         android:id="@+id/darkModeSwitch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginRight="20dp"
         android:layout_gravity="center_vertical"
-        android:visibility="invisible"
-        />
+        android:layout_marginRight="20dp"
+        android:thumb="@drawable/selector_switch_dark_mode_thumb"
+        android:track="@drawable/selector_switch_dark_mode_track"
+        android:visibility="invisible" />
 
 </LinearLayout>

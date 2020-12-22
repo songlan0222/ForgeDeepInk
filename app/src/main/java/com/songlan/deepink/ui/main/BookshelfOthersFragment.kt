@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.Switch
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,25 +49,6 @@ class BookshelfOthersFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        // 配置顶部TitleBar
-//        main_right_titleBar.leftIcon =
-//            ContextCompat.getDrawable(MyApplication.context, R.drawable.ic_main_right_experiencer)
-//        main_right_titleBar.rightIcon =
-//            ContextCompat.getDrawable(MyApplication.context, R.drawable.ic_main_right_subscriber)
-//
-//        // 添加点击事件
-//        main_right_titleBar.setOnTitleBarListener(object : OnTitleBarListener {
-//            override fun onLeftClick(v: View?) {
-//            }
-//
-//            // 此处用不上中间的点击事件
-//            override fun onTitleClick(v: View?) {
-//            }
-//
-//            override fun onRightClick(v: View?) {
-//            }
-//        })
-
         // 配置列表
         val adapterTop = MyRecyclerViewAdapter(topOptionItemList)
         val managerTop = LinearLayoutManager(requireContext())
@@ -84,6 +66,7 @@ class BookshelfOthersFragment : BaseFragment() {
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val itemImage: ImageView = view.findViewById(R.id.itemImage)
             val itemName: TextView = view.findViewById(R.id.itemName)
+            val darkModeSwitch : Switch = view.findViewById(R.id.darkModeSwitch)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -99,8 +82,12 @@ class BookshelfOthersFragment : BaseFragment() {
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = itemList[position]
+            if(item.itemImageName == "设置"){
+                holder.darkModeSwitch.visibility = View.VISIBLE
+            }
             holder.itemImage.setImageResource(item.itemImageId)
             holder.itemName.text = item.itemImageName
+
         }
 
         override fun getItemCount() = itemList.size

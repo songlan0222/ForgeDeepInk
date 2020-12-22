@@ -26,7 +26,6 @@ class EditBookshelfActivity : AppCompatActivity() {
 
     // 判断是否为编辑状态，默认设置为不是
     private var isEditBookshelf = false
-//    private lateinit var bookshelf: Bookshelf
 
     @SuppressLint("ResourceAsColor")
     override fun onCreate(savedInstanceState: Bundle?) {

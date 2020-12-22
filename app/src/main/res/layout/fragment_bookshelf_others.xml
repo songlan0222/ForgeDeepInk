@@ -76,13 +76,22 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_right_recyclerView_top"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/silver"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_right_recyclerView_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="5dp" />
 
     <View
         android:layout_width="match_parent"

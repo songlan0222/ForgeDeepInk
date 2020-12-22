@@ -1,9 +1,12 @@
 package com.songlan.deepink
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
+import com.songlan.deepink.ui.settings.SettingActivity
 
 class AppProfiles(context: Context) {
     private val prefs: SharedPreferences =
@@ -11,19 +14,53 @@ class AppProfiles(context: Context) {
     private val editor: SharedPreferences.Editor = prefs.edit()
 
     // 默认选中的书架ID
-    private val CHECKED_BOOKSHELF_ID = "checkedBookshelfId"
+    private val CHECKED_BOOKSHELF_ID = "CHECKED_BOOKSHELF_ID"
     private val DEFAULT_BOOKSHELF_ID = 1L
     fun getCheckedBookshelfIdFromProfile(): Long {
         return prefs.getLong(CHECKED_BOOKSHELF_ID, DEFAULT_BOOKSHELF_ID)
     }
 
-    fun saveCheckedBookshelfIdToProfile(bookshelfId: Long) {
-        editor.putLong(CHECKED_BOOKSHELF_ID, bookshelfId)
-        editor.apply()
+    // 配置界面参数
+    fun getOtherUIParams() {
     }
 
-    // 配置界面参数
-    fun getOtherUIParams(){
+    // 设置界面的默认参数
+    val CHECK_UPDATE = "CHECK_UPDATE"
+    val SIGN_NOTIFY = "SIGN_NOTIFY"
+    val MIDDLE_FONT_SIZE = "MIDDLE_FONT_SIZE"
+    val FOLLOW_SYSTEM_THEME = "FOLLOW_SYSTEM_THEME"
+    val CHASING_MODE = "CHASING_MODE"
+    fun jumpToSettingActivity(activity: AppCompatActivity) {
+        val intent = Intent(activity, SettingActivity::class.java)
+        val checkUpdate = prefs.getInt(CHECK_UPDATE, 0)
+        val signNotify = prefs.getBoolean(SIGN_NOTIFY, false)
+        val middleFontSize = prefs.getBoolean(MIDDLE_FONT_SIZE, false)
+        val followSystemTheme = prefs.getBoolean(FOLLOW_SYSTEM_THEME, false)
+        val chasingMode = prefs.getBoolean(CHASING_MODE, false)
+        intent.let {
+            it.putExtra(CHECK_UPDATE, checkUpdate)
+            it.putExtra(SIGN_NOTIFY, signNotify)
+            it.putExtra(MIDDLE_FONT_SIZE, middleFontSize)
+            it.putExtra(FOLLOW_SYSTEM_THEME, followSystemTheme)
+            it.putExtra(CHASING_MODE, chasingMode)
+        }
+        activity.startActivity(intent)
+    }
+
+    // 将数据保存到配置文件中
+    fun saveToProfile(name: String, value: Any) {
+        when (value) {
+            is Long -> {
+                editor.putLong(name, value)
+            }
+            is Boolean -> {
+                editor.putBoolean(name, value)
+            }
+            is Int -> {
+                editor.putInt(name, value)
+            }
+        }
+        editor.apply()
     }
 
 }

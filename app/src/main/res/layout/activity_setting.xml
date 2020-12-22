@@ -118,6 +118,7 @@
                     android:textStyle="bold" />
 
                 <RadioGroup
+                    android:id="@+id/updateGroup"
                     android:layout_width="wrap_content"
                     android:layout_height="36dp"
                     android:layout_marginRight="20dp"

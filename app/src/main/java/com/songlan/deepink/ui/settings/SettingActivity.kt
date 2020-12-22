@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import com.songlan.deepink.MyApplication
+import com.songlan.deepink.MyApplication.Companion.appProfiles
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.activity_setting.*
 
@@ -41,20 +43,48 @@ class SettingActivity : AppCompatActivity(), View.OnClickListener {
         // 为几个开关添加监听事件
         // 签到提醒
         signNotifySwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-
+            appProfiles.saveToProfile(appProfiles.SIGN_NOTIFY, isChecked)
         }
         // 中等字号
         middleFontSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-
+            appProfiles.saveToProfile(appProfiles.MIDDLE_FONT_SIZE, isChecked)
         }
         // 系统主题
         followSystemThemeSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-
+            appProfiles.saveToProfile(appProfiles.FOLLOW_SYSTEM_THEME, isChecked)
         }
         // 追更模式
         chasingModeSwitch.setOnCheckedChangeListener { buttonView, isChecked ->
-
+            appProfiles.saveToProfile(appProfiles.CHASING_MODE, isChecked)
         }
+        // 检查更新间隔
+        updateGroup.setOnCheckedChangeListener { group, checkedId ->
+            var checkedItem = 0
+            when (checkedId) {
+                R.id.updateInStartApp -> {
+                    checkedItem = 0
+                }
+                R.id.updateIn30Min -> {
+                    checkedItem = 1
+                }
+                R.id.updateIn60Min -> {
+                    checkedItem = 2
+                }
+            }
+            appProfiles.saveToProfile(appProfiles.CHECK_UPDATE, checkedItem)
+        }
+
+        // 配置信息展示
+        when (intent.getIntExtra(appProfiles.CHECK_UPDATE, 0)) {
+            0 -> updateInStartApp.isChecked = true
+            1 -> updateIn30Min.isChecked = true
+            2 -> updateIn60Min.isChecked = true
+        }
+        signNotifySwitch.isChecked = intent.getBooleanExtra(appProfiles.SIGN_NOTIFY, false)
+        middleFontSwitch.isChecked = intent.getBooleanExtra(appProfiles.MIDDLE_FONT_SIZE, false)
+        followSystemThemeSwitch.isChecked =
+            intent.getBooleanExtra(appProfiles.FOLLOW_SYSTEM_THEME, false)
+        chasingModeSwitch.isChecked = intent.getBooleanExtra(appProfiles.CHASING_MODE, false)
 
     }
 

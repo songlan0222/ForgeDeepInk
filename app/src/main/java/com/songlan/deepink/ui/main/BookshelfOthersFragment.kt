@@ -10,6 +10,8 @@ import android.widget.Switch
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.songlan.deepink.AppProfiles
+import com.songlan.deepink.MyApplication.Companion.appProfiles
 import com.songlan.deepink.R
 import com.songlan.deepink.ui.main.base.BaseFragment
 import com.songlan.deepink.ui.settings.SettingActivity
@@ -57,8 +59,7 @@ class BookshelfOthersFragment : BaseFragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.settings -> {
-                val intent = Intent(this.context, SettingActivity::class.java)
-                startActivity(intent)
+                appProfiles.jumpToSettingActivity(mainActivity)
             }
         }
     }

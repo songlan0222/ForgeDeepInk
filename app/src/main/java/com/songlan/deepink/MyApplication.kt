@@ -13,8 +13,6 @@ class MyApplication : Application() {
         lateinit var appProfiles: AppProfiles
     }
 
-
-
     override fun onCreate() {
         super.onCreate()
         context = applicationContext

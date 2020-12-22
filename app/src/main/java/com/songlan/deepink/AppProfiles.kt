@@ -22,4 +22,8 @@ class AppProfiles(context: Context) {
         editor.apply()
     }
 
+    // 配置界面参数
+    fun getOtherUIParams(){
+    }
+
 }

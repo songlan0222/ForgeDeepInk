@@ -24,7 +24,12 @@ object DatabaseRepository {
         Result.success(bookId)
     }
 
-    fun loadBookList(bookshelfId: Long) = fire(Dispatchers.IO) {
+    fun updateBook(book: Book) = fire(Dispatchers.IO) {
+        bookDao.updateBook(book)
+        Result.success(Any())
+    }
+
+    fun loadBooksWithBookshelfId(bookshelfId: Long) = fire(Dispatchers.IO) {
         val bookList = bookDao.loadBookWithBookshelfId(bookshelfId)
         Result.success(bookList)
     }
@@ -32,6 +37,21 @@ object DatabaseRepository {
     fun loadAllBooks() = fire(Dispatchers.IO) {
         val bookList = bookDao.loadAllBooks()
         Result.success(bookList)
+    }
+
+    fun deleteBook(book: Book) = fire(Dispatchers.IO) {
+        bookDao.deleteBook(book)
+        Result.success(Any())
+    }
+
+    fun deleteBooksWithBookshelfId(bookshelfId: Long) = fire(Dispatchers.IO) {
+        val count = bookDao.deleteBookWithBookshelfId(bookshelfId)
+        Result.success(count)
+    }
+
+    fun deleteAllBooks() = fire(Dispatchers.IO) {
+        val count = bookDao.deleteAllBooks()
+        Result.success(count)
     }
 
 
@@ -46,25 +66,10 @@ object DatabaseRepository {
         Result.success(Any())
     }
 
-    fun loadBookshelfList() = fire(Dispatchers.IO) {
+    fun loadAllBookshelfs() = fire(Dispatchers.IO) {
         val bookshelfList = bookshelfDao.loadAllBookshelf()
         Result.success(bookshelfList)
     }
-
-    // 该方法逻辑有问题，待修改
-    /*fun loadBookshelfWithId(query: Long) = fire(Dispatchers.IO) {
-        // bookshelfDao.deleteAllBookshelf()
-        val bookshelf = bookshelfDao.loadBookshelf(query)
-        // 如果数据库中没有被选中bookshelf，说明此事bookshelf为空；此时，则创建bookshelf，并添加到数据库
-        if (bookshelf != null) {
-            // bookDao.insertBook(Book(R.drawable.ic_book_default, "大王饶命", bookshelfId = 1))
-            Result.success(bookshelf)
-        } else {
-            val initBookshelf = Bookshelf("默认", true)
-            bookshelfDao.insertBookshelf(initBookshelf)
-            Result.success(initBookshelf)
-        }
-    }*/
 
     fun loadBookshelf(bookshelfId: Long) = fire(Dispatchers.IO) {
         val bookshelf = bookshelfDao.loadBookshelf(bookshelfId)
@@ -77,7 +82,12 @@ object DatabaseRepository {
         Result.success(Any())
     }
 
-    fun getFirstChooseBookshelf() = fire(Dispatchers.IO) {
+    fun deleteAllBookshelfs() = fire(Dispatchers.IO) {
+        val count = bookshelfDao.deleteAllBookshelf()
+        Result.success(count)
+    }
+
+    fun getCheckedBookshelf() = fire(Dispatchers.IO) {
         val bookshelfId = bookshelfDao.getFirstChooseBookshelf()
         Result.success(bookshelfId)
     }

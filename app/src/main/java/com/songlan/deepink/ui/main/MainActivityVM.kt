@@ -33,10 +33,10 @@ class MainActivityVM : ViewModel() {
         DatabaseRepository.loadBookshelf(bookshelfId)
     }
     val bookListLiveData = Transformations.switchMap(checkedBookshelfLiveData) { bookshelfId ->
-        DatabaseRepository.loadBookList(bookshelfId)
+        DatabaseRepository.loadBooksWithBookshelfId(bookshelfId)
     }
     val bookshelfListLiveData = Transformations.switchMap(allBookshelfListLiveData) {
-        DatabaseRepository.loadBookshelfList()
+        DatabaseRepository.loadAllBookshelfs()
     }
     val deleteBookshelfLiveData =
         Transformations.switchMap(pDeleteBookshelfLiveData) { bookshelfId ->
@@ -44,7 +44,7 @@ class MainActivityVM : ViewModel() {
         }
 
     val checkedBookshelfIdLiveData = Transformations.switchMap(pCheckedBookshelfIdLiveData) {
-        DatabaseRepository.getFirstChooseBookshelf()
+        DatabaseRepository.getCheckedBookshelf()
     }
 
     fun loadCheckedBookshelf(query: Long) {

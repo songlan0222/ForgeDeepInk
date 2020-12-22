@@ -71,7 +71,7 @@ class SettingActivity : AppCompatActivity(), View.OnClickListener {
                     checkedItem = 2
                 }
             }
-            AppProfiles.saveToProfile(AppProfiles.CHECK_UPDATE, checkedItem)
+            saveToProfile(AppProfiles.CHECK_UPDATE, checkedItem)
         }
 
         // 配置信息展示

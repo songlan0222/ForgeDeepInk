@@ -10,7 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.DeepInk">
-        <activity android:name=".ui.settings.SettingActivity"></activity>
+        <activity android:name=".ui.local.RequestStoragePermissive"></activity>
+        <activity android:name=".ui.local.AddLocalBookActivity" />
+        <activity android:name=".ui.settings.SettingActivity" />
         <activity android:name=".ui.src.BookSrcManageActivity" />
         <activity android:name=".ui.search.SearchBookActivity" />
         <activity android:name=".ui.main.EditBookshelfActivity" />

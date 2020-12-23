@@ -49,4 +49,6 @@
     <string name="use_space">使用空间</string>
     <string name="use_agreement">用户协议</string>
     <string name="open_source_agreement">开源协议</string>
+    <string name="search_local_book_edittext_hint">搜索文件名</string>
+    <string name="addStoragePermission">授予权限</string>
 </resources>

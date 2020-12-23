@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.songlan.deepink.MyApplication.Companion.context
+import com.songlan.deepink.ui.local.RequestStoragePermissive
 import com.songlan.deepink.ui.settings.SettingActivity
 
 object AppProfiles {
@@ -46,6 +47,18 @@ object AppProfiles {
             it.putExtra(FOLLOW_SYSTEM_THEME, followSystemTheme)
             it.putExtra(CHASING_MODE, chasingMode)
         }
+        activity.startActivity(intent)
+    }
+
+
+    // 跳转到添加书籍界面
+    fun jumpToAddLocalBookActivity(activity: AppCompatActivity) {
+        val intent = Intent(activity, SettingActivity::class.java)
+        activity.startActivity(intent)
+    }
+
+    fun jumpToRequestStoragePermissive(activity: AppCompatActivity) {
+        val intent = Intent(activity, RequestStoragePermissive::class.java)
         activity.startActivity(intent)
     }
 

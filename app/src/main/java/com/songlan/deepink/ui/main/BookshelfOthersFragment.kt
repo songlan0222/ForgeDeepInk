@@ -53,6 +53,9 @@ class BookshelfOthersFragment : BaseFragment(), View.OnClickListener {
             R.id.settings -> {
                 AppProfiles.jumpToSettingActivity(mainActivity)
             }
+            R.id.localBook -> {
+                AppProfiles.jumpToAddLocalBookActivity(mainActivity)
+            }
         }
     }
 }

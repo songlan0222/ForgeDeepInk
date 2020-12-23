@@ -1,5 +1,6 @@
 package com.songlan.deepink.repository
 
+import android.content.UriPermission
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.songlan.deepink.AppDatabase
@@ -7,6 +8,7 @@ import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
+import com.songlan.deepink.utils.LogUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
 import java.lang.Exception
@@ -90,6 +92,15 @@ object DatabaseRepository {
     fun getCheckedBookshelf() = fire(Dispatchers.IO) {
         val bookshelfId = bookshelfDao.getFirstChooseBookshelf()
         Result.success(bookshelfId)
+    }
+
+    // 本地授权路径管理方法
+    fun loadPersistedUriPermissions() = fire(Dispatchers.IO){
+        val contentResolver = context.contentResolver
+        contentResolver.persistedUriPermissions.forEach {
+            LogUtil.v("MainTest", "/${it.uri.path?.replace("/tree/primary:", "")}")
+        }
+        Result.success(contentResolver.persistedUriPermissions)
     }
 
     // 对获取liveData进行简化

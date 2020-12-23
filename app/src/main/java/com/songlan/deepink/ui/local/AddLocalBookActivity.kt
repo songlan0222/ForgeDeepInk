@@ -2,6 +2,7 @@ package com.songlan.deepink.ui.local
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.R
@@ -18,6 +19,11 @@ class AddLocalBookActivity : AppCompatActivity() {
             it.setDisplayHomeAsUpEnabled(true)
             it.setHomeAsUpIndicator(R.drawable.ic_back)
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu_add_local_book, menu)
+        return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

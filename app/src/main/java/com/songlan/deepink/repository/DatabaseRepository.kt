@@ -1,18 +1,15 @@
 package com.songlan.deepink.repository
 
-import android.content.UriPermission
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
+import androidx.documentfile.provider.DocumentFile
 import com.songlan.deepink.AppDatabase
 import com.songlan.deepink.MyApplication.Companion.context
-import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.utils.LogUtil
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.coroutineScope
+import java.io.File
 import java.lang.Exception
-import kotlin.concurrent.thread
 import kotlin.coroutines.CoroutineContext
 
 object DatabaseRepository {
@@ -95,12 +92,28 @@ object DatabaseRepository {
     }
 
     // 本地授权路径管理方法
-    fun loadPersistedUriPermissions() = fire(Dispatchers.IO){
+    fun loadPersistedUriPermissions() = fire(Dispatchers.IO) {
         val contentResolver = context.contentResolver
         contentResolver.persistedUriPermissions.forEach {
             LogUtil.v("MainTest", "/${it.uri.path?.replace("/tree/primary:", "")}")
+            LogUtil.v("MainTest", "/${it.uri.encodedPath?.replace("/tree/primary:", "")}")
         }
         Result.success(contentResolver.persistedUriPermissions)
+    }
+
+    fun loadPersistedFiles() = fire(Dispatchers.IO) {
+        val fileList = mutableListOf<DocumentFile?>()
+        context.contentResolver.persistedUriPermissions.forEach {
+            val documentsTree = DocumentFile.fromTreeUri(context, it.uri)
+            val childDocuments = documentsTree?.listFiles()?.toMutableList()
+            childDocuments?.let { documents ->
+                fileList.addAll(documents)
+            }
+        }
+        fileList.sortBy {
+            it?.name
+        }
+        Result.success(fileList)
     }
 
     // 对获取liveData进行简化

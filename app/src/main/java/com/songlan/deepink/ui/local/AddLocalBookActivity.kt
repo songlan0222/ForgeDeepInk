@@ -106,10 +106,16 @@ class AddLocalBookActivity : AppCompatActivity() {
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val document = dataList[position]
             if (document != null) {
+                // 配置文件名称
+                var name = document.name
+                val lastPointIndex = name!!.lastIndexOf(".")
+                name = name.substring(0, lastPointIndex)
+                holder.docName.text = name
+
+                // 配置图标
                 when (document.type) {
                     "text/plain" -> {
                         holder.docIcon.setImageResource(R.drawable.ic_document_txt)
-                        holder.docName.text = document.name?.replace(".txt", "")
                     }
                     "pdf/plain" -> {
                         holder.docIcon.setImageResource(R.drawable.ic_document_pdf)

@@ -28,7 +28,6 @@
             android:layout_gravity="bottom"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:text="全职法师"
             android:textSize="16sp"
             android:textStyle="bold" />
 

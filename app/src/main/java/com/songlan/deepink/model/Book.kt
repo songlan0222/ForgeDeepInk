@@ -2,6 +2,7 @@ package com.songlan.deepink.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
 import androidx.room.TypeConverters
 import java.sql.Date
 
@@ -19,4 +20,12 @@ data class Book(
 ) {
     @PrimaryKey(autoGenerate = true)
     var bookId: Long = 0
+}
+
+class BookDataConverter {
+    @TypeConverter
+    fun revertDate(value: Long): Date = Date(value)
+
+    @TypeConverter
+    fun convertDate(value: Date): Long = value.time
 }

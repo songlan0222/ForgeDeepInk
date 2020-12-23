@@ -7,7 +7,7 @@ import com.songlan.deepink.enum.Comments
 @Entity
 class BookSrc(
     var bookSrcName: String,
-    var comments: Comments = Comments.TEN,
+    var comments: Int = Comments.TEN,
     var useTimes: Int = 0,
     var webSet: String = ""
 ) {

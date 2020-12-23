@@ -2,18 +2,27 @@ package com.songlan.deepink.ui.local
 
 import android.app.Activity
 import android.content.Intent
+import android.content.UriPermission
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.MenuItem
-import android.widget.Toast
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.songlan.deepink.AppProfiles
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.R
+import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.activity_request_storage_permissive.*
 
 
 class RequestStoragePermissive : AppCompatActivity() {
+    private lateinit var adapter: MyRecyclerViewAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_request_storage_permissive)
@@ -35,6 +44,11 @@ class RequestStoragePermissive : AppCompatActivity() {
             }
             startActivityForResult(intent, 1)
         }
+
+        persistedUri.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        val permissionList = loadPermission()
+        adapter = MyRecyclerViewAdapter(permissionList)
+        persistedUri.adapter = adapter
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -60,11 +74,12 @@ class RequestStoragePermissive : AppCompatActivity() {
         }
     }
 
-    fun queryPermission() {
+    private fun loadPermission(): MutableList<UriPermission> {
         val contentResolver = applicationContext.contentResolver
         contentResolver.persistedUriPermissions.forEach {
-            it.uri.toString()
+            LogUtil.v("MainTest", "/${it.uri.path?.replace("/tree/primary:", "")}")
         }
+        return contentResolver.persistedUriPermissions
     }
 
     private fun takePermission(uri: Uri) {
@@ -72,7 +87,7 @@ class RequestStoragePermissive : AppCompatActivity() {
         val takeFlags: Int =
             Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         contentResolver.takePersistableUriPermission(uri, takeFlags)
-        AppProfiles.saveToProfile(uri.toString(), uri)
+        adapter.notifyDataSetChanged()
     }
 
     fun releasePermission(uri: Uri) {
@@ -80,5 +95,33 @@ class RequestStoragePermissive : AppCompatActivity() {
         val takeFlags: Int =
             Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION
         contentResolver.releasePersistableUriPermission(uri, takeFlags)
+        adapter.notifyDataSetChanged()
+    }
+
+    class MyRecyclerViewAdapter(private val dataList: List<UriPermission>) :
+        RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
+        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+            val permissionItem: LinearLayout = view.findViewById(R.id.permissionItem)
+            val permissionUri: TextView = view.findViewById(R.id.permissionUri)
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_request_permission, parent, false)
+            val holder = ViewHolder(view)
+            holder.itemView.setOnClickListener {
+                val position = holder.adapterPosition
+                val uri = dataList[position].uri
+                //showBottomDialog(uri)
+            }
+            return holder
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val uri = dataList[position].uri
+            holder.permissionUri.text = "/${uri.path?.replace("/tree/primary:", "")}"
+        }
+
+        override fun getItemCount() = dataList.size
     }
 }

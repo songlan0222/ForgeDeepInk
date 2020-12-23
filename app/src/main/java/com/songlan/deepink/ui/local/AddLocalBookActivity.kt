@@ -14,6 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.R
+import com.songlan.deepink.utils.FormatUtil.getFormatFileLastModified
+import com.songlan.deepink.utils.FormatUtil.getFormatFileSize
 import kotlinx.android.synthetic.main.activity_add_local_book.*
 import java.text.SimpleDateFormat
 import java.time.Instant
@@ -123,10 +125,10 @@ class AddLocalBookActivity : AppCompatActivity() {
                     }
                 }
 
+                val documentSize = getFormatFileSize(document.length())
+                val documentLastModified = getFormatFileLastModified(document.lastModified())
                 // 格式需要修改
-                holder.docInfo.text =
-                        //"${document.length()} | ${getFormatFileLastModified(document.lastModified())}"
-                    "${document.length()} | ${getFormatFileLastModified(document.lastModified())}"
+                holder.docInfo.text = "${documentSize} | ${documentLastModified}"
             }
 
         }
@@ -134,21 +136,5 @@ class AddLocalBookActivity : AppCompatActivity() {
         override fun getItemCount() = dataList.size
     }
 
-    fun getFormatFileSize(length: Long) {
-        //return Formatter.BigDecimalLayoutForm()
-    }
 
-    fun getFormatFileLastModified(time: Long): String {
-        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            val instant = Instant.ofEpochMilli(time)
-            val date = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
-            val format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
-            format.format(date).toString()
-        } else {
-            // 这部分没用放在android O以下测试
-            val date = Date(time)
-            val format = SimpleDateFormat("yyyy/MM/dd HH:mm")
-            format.format(date)
-        }
-    }
 }

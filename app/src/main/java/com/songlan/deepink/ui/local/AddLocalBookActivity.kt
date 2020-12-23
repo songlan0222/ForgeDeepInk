@@ -1,13 +1,12 @@
 package com.songlan.deepink.ui.local
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.format.Formatter.formatFileSize
 import android.util.Log
 import android.view.*
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +16,10 @@ import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.activity_add_local_book.*
 import java.text.SimpleDateFormat
+import java.time.Instant
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
 import java.util.*
 
 class AddLocalBookActivity : AppCompatActivity() {
@@ -123,7 +126,7 @@ class AddLocalBookActivity : AppCompatActivity() {
                 // 格式需要修改
                 holder.docInfo.text =
                         //"${document.length()} | ${getFormatFileLastModified(document.lastModified())}"
-                    "${document.length()} | ${document.lastModified()}"
+                    "${document.length()} | ${getFormatFileLastModified(document.lastModified())}"
             }
 
         }
@@ -136,8 +139,16 @@ class AddLocalBookActivity : AppCompatActivity() {
     }
 
     fun getFormatFileLastModified(time: Long): String {
-        //val simpleDateFormat = SimpleDateFormat("yyyy/NM/dd HH:mm")
-        //return simpleDateFormat.format(time)
-
+        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            val instant = Instant.ofEpochMilli(time)
+            val date = LocalDateTime.ofInstant(instant, ZoneId.systemDefault())
+            val format = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")
+            format.format(date).toString()
+        } else {
+            // 这部分没用放在android O以下测试
+            val date = Date(time)
+            val format = SimpleDateFormat("yyyy/MM/dd HH:mm")
+            format.format(date)
+        }
     }
 }

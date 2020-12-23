@@ -50,5 +50,10 @@
     <string name="use_agreement">用户协议</string>
     <string name="open_source_agreement">开源协议</string>
     <string name="search_local_book_edittext_hint">搜索文件名</string>
-    <string name="addStoragePermission">授予权限</string>
+    <string name="addStoragePermission">存储访问</string>
+    <string name="default_folder">默认文件夹</string>
+    <string name="relateToWebDav">关联WebDAV服务器</string>
+    <string name="web_dav">WebDAV</string>
+    <string name="canAccessFolders">授权文件夹</string>
+    <string name="requestPermission">授权访问文件夹</string>
 </resources>

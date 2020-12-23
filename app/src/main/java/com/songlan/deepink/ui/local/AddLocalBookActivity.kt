@@ -37,4 +37,9 @@ class AddLocalBookActivity : AppCompatActivity() {
         }
         return super.onOptionsItemSelected(item)
     }
+
+    override fun onResume() {
+        super.onResume()
+        // 刷新数据列表
+    }
 }

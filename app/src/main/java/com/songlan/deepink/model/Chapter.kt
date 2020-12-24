@@ -5,8 +5,8 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class Chapter(
-    var chapterNumber: String,
     var chapterName: String,
+    var contentPath: String,
     var bookId: Long
 ) {
 

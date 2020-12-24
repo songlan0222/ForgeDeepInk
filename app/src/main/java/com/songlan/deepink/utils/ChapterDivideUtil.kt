@@ -1,8 +1,14 @@
 package com.songlan.deepink.utils
 
+import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.songlan.deepink.MyApplication.Companion.context
+import com.songlan.deepink.R
+import com.songlan.deepink.model.Book
+import com.songlan.deepink.model.Chapter
+import com.songlan.deepink.model.ChapterContent
+import com.songlan.deepink.repository.DatabaseRepository
 import java.io.*
 
 
@@ -10,13 +16,6 @@ object ChapterDivideUtil {
 
     // 遍历小说，获取章节名称
     fun getChapterTitlesFromTxt(documentFileUri: Uri): MutableList<String> {
-
-//        val path = UriTofilePath.getFilePathByUri(context, documentFileUri)
-//        val file = File(path)
-//        val encode = getFileIncode(file)
-//        Log.v("MainTest", "CodeType: $encode")
-
-
         val documentInputStream = context.contentResolver.openInputStream(documentFileUri)
         val codeType = documentInputStream?.let { getFileCharsetName(documentInputStream) }
         Log.v("MainTest", "codeType: $codeType")
@@ -24,7 +23,11 @@ object ChapterDivideUtil {
         val regex = Regex("^.*第([0-9]{1,5}|[一二三四五六七八九十百千万亿]{1,5})[章回节部集卷].{0,24}")
         val titleList = mutableListOf<String>()
         try {
-            val reader = BufferedReader(InputStreamReader(documentInputStream, codeType))
+            val reader = if (codeType != null) {
+                BufferedReader(InputStreamReader(documentInputStream, codeType))
+            } else {
+                BufferedReader(InputStreamReader(documentInputStream))
+            }
             reader.use {
                 reader.forEachLine { lineContent ->
                     val matchTitleList = regex.findAll(lineContent)
@@ -39,6 +42,63 @@ object ChapterDivideUtil {
         }
         return titleList
     }
+
+    // 导入小说，进行章节切分
+    // val book = Book(R.drawable.ic_book_default, bookName)
+    // val bookId = DatabaseRepository.insertBook(book).observe()
+    fun getChaptersFromTxt(documentFileUri: Uri, book: Book) {
+        val documentInputStream = context.contentResolver.openInputStream(documentFileUri)
+        val codeType = documentInputStream?.let {
+            getFileCharsetName(it)
+        }
+
+        val regex = Regex("^.*第([0-9]{1,5}|[一二三四五六七八九十百千万亿]{1,5})[章回节部集卷].{0,24}")
+        val titleList = mutableListOf<String>()
+        try {
+            val reader = if (codeType != null) {
+                BufferedReader(InputStreamReader(documentInputStream, codeType))
+            } else {
+                BufferedReader(InputStreamReader(documentInputStream))
+            }
+
+            reader.use {
+                var index = 0
+                lateinit var output: FileOutputStream
+                lateinit var writer: BufferedWriter
+                lateinit var chapter: Chapter
+                reader.forEachLine { lineContent ->
+                    val isMatches = regex.matches(lineContent)
+                    if (isMatches) {
+                        output?.close()
+                        output =
+                            context.openFileOutput(
+                                "book/${book.bookName}/$index.cpt",
+                                Context.MODE_PRIVATE
+                            )
+                        chapter?.let {
+                            DatabaseRepository.insertChapter(it)
+                        }
+                        chapter =
+                            Chapter(lineContent, "book/${book.bookName}/$index.cpt", book.bookId)
+                        writer?.close()
+                        writer = BufferedWriter(OutputStreamWriter(output))
+                        writer.write(lineContent)
+                    } else {
+                        writer.write(lineContent)
+                    }
+                }
+                // 如果output和writer不为空，则关闭
+                chapter?.let {
+                    DatabaseRepository.insertChapter(it)
+                }
+                writer?.close()
+                output?.close()
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+
 
     private fun getFileCharsetName(inputStream: InputStream): String? {
 //        val inputStream: InputStream = FileInputStream(fileName)

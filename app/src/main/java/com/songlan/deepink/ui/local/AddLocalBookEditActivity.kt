@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log.v
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.CheckBox
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_add_local_book.toolbar
 import kotlinx.android.synthetic.main.activity_edit_local_book.*
 import java.lang.Exception
 
-class AddLocalBookEditActivity : AppCompatActivity() {
+class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
 
     private val viewModel by lazy {
         ViewModelProvider(this).get(AddLocalBookEditActivityVM::class.java)
@@ -72,6 +73,18 @@ class AddLocalBookEditActivity : AppCompatActivity() {
         // 开始处理文件
         viewModel.getChapterTitlesFromTxt(documentUri)
 
+        importBtn.setOnClickListener(this)
+        regexApplyBtn.setOnClickListener(this)
+
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            android.R.id.home -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     inner class MyRecyclerViewAdapter(private val dataList: List<String>) :
@@ -101,5 +114,16 @@ class AddLocalBookEditActivity : AppCompatActivity() {
         }
 
         override fun getItemCount() = dataList.size
+    }
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            R.id.importBtn -> {
+
+            }
+            R.id.regexApplyBtn -> {
+
+            }
+        }
     }
 }

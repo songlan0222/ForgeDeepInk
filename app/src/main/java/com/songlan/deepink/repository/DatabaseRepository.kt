@@ -6,6 +6,7 @@ import com.songlan.deepink.AppDatabase
 import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
+import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.utils.LogUtil
 import kotlinx.coroutines.Dispatchers
 import java.io.File
@@ -16,6 +17,13 @@ object DatabaseRepository {
 
     private val bookDao = AppDatabase.getDatabase(context).bookDao()
     private val bookshelfDao = AppDatabase.getDatabase(context).bookshelfDao()
+    private val chapterDao = AppDatabase.getDatabase(context).chapterDao()
+
+    // 章节管理方法
+    fun insertChapter(chapter: Chapter) = fire(Dispatchers.IO) {
+        val chapterId = chapterDao.insertChapter(chapter)
+        Result.success(chapterId)
+    }
 
     // 书籍管理方法
     fun insertBook(book: Book) = fire(Dispatchers.IO) {

@@ -71,9 +71,4 @@ dependencies {
     //rxJava2+rxAndroid
     implementation "io.reactivex.rxjava2:rxjava:$room_version"
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-
-    // https://mvnrepository.com/artifact/com.googlecode.juniversalchardet/juniversalchardet
-    implementation group: 'com.googlecode.juniversalchardet', name: 'juniversalchardet', version: '1.0.3'
-
-
 }

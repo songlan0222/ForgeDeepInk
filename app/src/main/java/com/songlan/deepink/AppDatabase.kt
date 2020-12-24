@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.songlan.deepink.dao.BookDao
 import com.songlan.deepink.dao.BookshelfDao
+import com.songlan.deepink.dao.ChapterDao
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.model.Chapter
@@ -19,6 +20,7 @@ abstract class AppDatabase : RoomDatabase() {
 
     abstract fun bookDao(): BookDao
     abstract fun bookshelfDao(): BookshelfDao
+    abstract fun chapterDao(): ChapterDao
 
     companion object {
         private var instance: AppDatabase? = null

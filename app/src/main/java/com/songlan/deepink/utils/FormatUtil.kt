@@ -38,7 +38,7 @@ object FormatUtil {
             value /= 1024
             index++
         }
-        var size = length / 1024.0.pow(index.toDouble())
+        //var size = length / 1024.0.pow(index.toDouble())
         val sizeStr = DecimalFormat("#.0").format(value)
         return "$sizeStr ${arr[index]}"
 

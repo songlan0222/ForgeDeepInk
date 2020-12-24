@@ -16,6 +16,7 @@ data class Book(
     var lastUpdate: Date = Date(0),
     var readProgress: Float = 0F,
     var readTime: Float = 0F,
+    var regex: String = "^.*/s第(.{1,5})[章回节部集卷].{0,24}",
     var bookshelfId: Long = 1,
 ) {
     @PrimaryKey(autoGenerate = true)

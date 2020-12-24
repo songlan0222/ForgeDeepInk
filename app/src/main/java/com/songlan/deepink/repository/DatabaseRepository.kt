@@ -101,17 +101,14 @@ object DatabaseRepository {
         Result.success(contentResolver.persistedUriPermissions)
     }
 
-    fun loadPersistedFiles() = fire(Dispatchers.IO) {
+    fun loadPersistedFiles(filterContent: String = "") = fire(Dispatchers.IO) {
         val fileList = mutableListOf<DocumentFile?>()
         context.contentResolver.persistedUriPermissions.forEach {
             val documentsTree = DocumentFile.fromTreeUri(context, it.uri)
             val childDocuments = documentsTree?.listFiles()?.toMutableList()
-//            childDocuments?.let { documents ->
-//                fileList.addAll(documents)
-//            }
             childDocuments?.forEach { document ->
                 val name = document.name
-                if (name != null) {
+                if (name != null && name.contains(filterContent)) {
                     if (name.endsWith(".txt") ||
                         name.endsWith(".pdf") ||
                         name.endsWith(".epub") ||

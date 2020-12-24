@@ -7,6 +7,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.addTextChangedListener
 import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -50,10 +51,44 @@ class AddLocalBookActivity : AppCompatActivity() {
                 }
                 viewModel.persistedFiles.clear()
                 viewModel.persistedFiles.addAll(files)
+                // 当有结果时，才显示搜索框
+                searchLocalFile.visibility = View.VISIBLE
                 adapter.notifyDataSetChanged()
             }
-
         })
+
+        viewModel.loadFilesWithFilterLiveData.observe(this, Observer { result ->
+            val files = result.getOrNull()
+            if (files != null) {
+                viewModel.persistedFiles.clear()
+                viewModel.persistedFiles.addAll(files)
+                searchLocalFile.visibility = View.VISIBLE
+                adapter.notifyDataSetChanged()
+            } else {
+                searchLocalFile.visibility = View.INVISIBLE
+            }
+        })
+
+        searchLocalFileEditText.addTextChangedListener { editable ->
+            val content = editable.toString()
+            viewModel.loadPersistedFilesWithFilter(content)
+//            val documentList = viewModel.persistedFiles
+//            documentList.filterNot {
+//                if (it != null) {
+//                    Log.v("MainTest", "是否包含搜索内容：${it.name!!.contains(content)}")
+//                    it.name!!.contains(content)
+//                } else {
+//                    false
+//                }
+//            }
+//            documentList.forEach {
+//                Log.v("MainTest", "所有文件分别为：${it?.name}")
+//            }
+//            viewModel.persistedFiles.clear()
+//            viewModel.persistedFiles.addAll(documentList)
+//            viewModel.loadPersistedFiles()
+        }
+
         viewModel.loadPersistedFiles()
 
         adapter = MyRecyclerViewAdapter(viewModel.persistedFiles)

@@ -106,8 +106,20 @@ object DatabaseRepository {
         context.contentResolver.persistedUriPermissions.forEach {
             val documentsTree = DocumentFile.fromTreeUri(context, it.uri)
             val childDocuments = documentsTree?.listFiles()?.toMutableList()
-            childDocuments?.let { documents ->
-                fileList.addAll(documents)
+//            childDocuments?.let { documents ->
+//                fileList.addAll(documents)
+//            }
+            childDocuments?.forEach { document ->
+                val name = document.name
+                if (name != null) {
+                    if (name.endsWith(".txt") ||
+                        name.endsWith(".pdf") ||
+                        name.endsWith(".epub") ||
+                        name.endsWith(".mobi")
+                    ) {
+                        fileList.add(document)
+                    }
+                }
             }
         }
         fileList.sortBy {

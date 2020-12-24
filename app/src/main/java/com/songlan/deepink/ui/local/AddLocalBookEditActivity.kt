@@ -8,6 +8,7 @@ import androidx.documentfile.provider.DocumentFile
 import com.songlan.deepink.AppProfiles.DOCUMENT_URI_STRING
 import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.R
+import com.songlan.deepink.utils.ChapterDivideUtil
 import kotlinx.android.synthetic.main.activity_add_local_book.*
 import kotlinx.android.synthetic.main.activity_add_local_book.toolbar
 import kotlinx.android.synthetic.main.activity_edit_local_book.*
@@ -35,7 +36,8 @@ class AddLocalBookEditActivity : AppCompatActivity() {
         val documentName = documentFile.name!!
         val lastPointIndex = documentName.lastIndexOf(".")
         bookNameTitle.text = documentName.substring(0, lastPointIndex)
-        // 开始处理文件
 
+        // 开始处理文件
+        ChapterDivideUtil.getTxtChapterTitle(documentUri)
     }
 }

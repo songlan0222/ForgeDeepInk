@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/chapterItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/selector_layout_click"
+    android:clickable="true"
+    android:orientation="horizontal">
+
+    <CheckBox
+        android:id="@+id/checkItem"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        android:button="@drawable/selector_check_box"
+        android:checked="true"
+        android:padding="10dp" />
+
+    <TextView
+        android:id="@+id/chapterName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_margin="5dp"
+        android:layout_weight="1"
+        android:gravity="left"
+        android:padding="10dp"
+        android:textSize="16sp"
+        android:textStyle="bold" />
+
+</LinearLayout>

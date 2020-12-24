@@ -53,6 +53,11 @@ class AddLocalBookEditActivity : AppCompatActivity() {
         bookNameEditText.setText(documentName.substring(0, lastPointIndex))
         // 作者佚名，暂时不填
         bookAuthorEditText.setText("")
+        // 章节
+        adapter = MyRecyclerViewAdapter(viewModel.chapterTitles)
+        chapterNameRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        chapterNameRecyclerView.adapter = adapter
 
 
         viewModel.chapterTitlesLiveData.observe(this, Observer { result ->
@@ -67,10 +72,6 @@ class AddLocalBookEditActivity : AppCompatActivity() {
         // 开始处理文件
         viewModel.getChapterTitlesFromTxt(documentUri)
 
-        adapter = MyRecyclerViewAdapter(viewModel.chapterTitles)
-        chapterNameRecyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        chapterNameRecyclerView.adapter = adapter
     }
 
     inner class MyRecyclerViewAdapter(private val dataList: List<String>) :

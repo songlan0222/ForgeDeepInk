@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log.v
 import androidx.documentfile.provider.DocumentFile
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.AppProfiles.DOCUMENT_URI_STRING
 import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.R
@@ -15,6 +17,11 @@ import kotlinx.android.synthetic.main.activity_edit_local_book.*
 import java.lang.Exception
 
 class AddLocalBookEditActivity : AppCompatActivity() {
+
+    private val viewModel by lazy {
+        ViewModelProvider(this).get(AddLocalBookEditActivityVM::class.java)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_edit_local_book)
@@ -37,7 +44,15 @@ class AddLocalBookEditActivity : AppCompatActivity() {
         val lastPointIndex = documentName.lastIndexOf(".")
         bookNameTitle.text = documentName.substring(0, lastPointIndex)
 
+        viewModel.chapterTitlesLiveData.observe(this, Observer { result ->
+            val titles = result.getOrNull()
+            if (titles != null) {
+                viewModel.chapterTitles.clear()
+                viewModel.chapterTitles.addAll(titles)
+            }
+        })
+
         // 开始处理文件
-        ChapterDivideUtil.getTxtChapterTitle(documentUri)
+        viewModel.getChapterTitlesFromTxt(documentUri)
     }
 }

@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.AppProfiles
+import com.songlan.deepink.AppProfiles.jumpToAddLocalBookEditActivity
 import com.songlan.deepink.R
 import com.songlan.deepink.utils.FormatUtil.getFormatFileLastModified
 import com.songlan.deepink.utils.FormatUtil.getFormatFileSize
@@ -72,21 +73,6 @@ class AddLocalBookActivity : AppCompatActivity() {
         searchLocalFileEditText.addTextChangedListener { editable ->
             val content = editable.toString()
             viewModel.loadPersistedFilesWithFilter(content)
-//            val documentList = viewModel.persistedFiles
-//            documentList.filterNot {
-//                if (it != null) {
-//                    Log.v("MainTest", "是否包含搜索内容：${it.name!!.contains(content)}")
-//                    it.name!!.contains(content)
-//                } else {
-//                    false
-//                }
-//            }
-//            documentList.forEach {
-//                Log.v("MainTest", "所有文件分别为：${it?.name}")
-//            }
-//            viewModel.persistedFiles.clear()
-//            viewModel.persistedFiles.addAll(documentList)
-//            viewModel.loadPersistedFiles()
         }
 
         viewModel.loadPersistedFiles()
@@ -133,7 +119,10 @@ class AddLocalBookActivity : AppCompatActivity() {
                 .inflate(R.layout.item_add_local_book, parent, false)
             val viewHolder = ViewHolder(view)
             viewHolder.documentItem.setOnClickListener {
-
+                val position = viewHolder.adapterPosition
+                val document = dataList[position]
+                    ?: throw Exception("发生异常，无法获得文件，Except Happened In AddLocalBookAc.")
+                jumpToAddLocalBookEditActivity(this@AddLocalBookActivity, document.uri)
             }
             return viewHolder
         }

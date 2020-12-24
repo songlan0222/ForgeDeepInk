@@ -57,4 +57,8 @@
     <string name="canAccessFolders">授权文件夹</string>
     <string name="requestPermission">授权访问文件夹</string>
     <string name="delete">删除</string>
+    <string name="local_book_import">导入</string>
+    <string name="book_name">书名</string>
+    <string name="chapter_regex">章节正则</string>
+    <string name="regex_apply">应用</string>
 </resources>

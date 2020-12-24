@@ -3,11 +3,15 @@ package com.songlan.deepink
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.ui.local.AddLocalBookActivity
+import com.songlan.deepink.ui.local.AddLocalBookEditActivity
 import com.songlan.deepink.ui.local.RequestStoragePermissive
 import com.songlan.deepink.ui.settings.SettingActivity
 
@@ -60,6 +64,13 @@ object AppProfiles {
 
     fun jumpToRequestStoragePermissive(activity: AppCompatActivity) {
         val intent = Intent(activity, RequestStoragePermissive::class.java)
+        activity.startActivity(intent)
+    }
+
+    const val DOCUMENT_URI_STRING = "DOCUMENT_URI_STRING"
+    fun jumpToAddLocalBookEditActivity(activity: AppCompatActivity, documentUri: Uri) {
+        val intent = Intent(activity, AddLocalBookEditActivity::class.java)
+        intent.putExtra(DOCUMENT_URI_STRING, documentUri.toString())
         activity.startActivity(intent)
     }
 

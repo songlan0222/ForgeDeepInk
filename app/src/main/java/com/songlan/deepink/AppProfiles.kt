@@ -4,13 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.documentfile.provider.DocumentFile
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.songlan.deepink.MyApplication.Companion.context
-import com.songlan.deepink.ui.ReadBookActivity
+import com.songlan.deepink.ui.read.ReadBookActivity
 import com.songlan.deepink.ui.local.AddLocalBookActivity
 import com.songlan.deepink.ui.local.AddLocalBookEditActivity
 import com.songlan.deepink.ui.local.RequestStoragePermissive

@@ -8,5 +8,5 @@
     <ImageView
         android:id="@+id/detailsImage"
         android:layout_width="75dp"
-        android:layout_height="150dp" />
+        android:layout_height="120dp" />
 </LinearLayout>

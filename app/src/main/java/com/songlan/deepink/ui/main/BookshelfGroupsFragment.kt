@@ -131,20 +131,16 @@ class BookshelfGroupsFragment : BaseFragment() {
 
             val bookshelf = bookshelfList[position]
 
-            val loadBooksWithBookshelfIdLiveData =
-                DatabaseRepository.loadBooksWithBookshelfId(bookshelf.bookshelfId)
-            loadBooksWithBookshelfIdLiveData.observe(
+            // 加载当前书架书籍信息
+            holder.bookshelfDetails.adapter = DetailsAdapter(arrayListOf())
+            DatabaseRepository.loadBooksWithBookshelfId(bookshelf.bookshelfId).observe(
                 mainActivity,
                 Observer { result ->
                     val books = result.getOrNull()
                     if (books != null) {
                         holder.bookshelfDetails.adapter = DetailsAdapter(books)
-                    } else{
-                        holder.bookshelfDetails.adapter = DetailsAdapter(arrayListOf())
                     }
                 })
-            // 加载当前书架书籍信息
-            // mainActivity.vm.loadBooksWithBookshelfId(bookshelf.bookshelfId)
 
             // 根据配置文件来判定当前书架是否选中
             holder.bookshelfItemChecked.isChecked =

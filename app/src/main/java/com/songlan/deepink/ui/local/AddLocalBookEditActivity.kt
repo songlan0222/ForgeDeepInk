@@ -1,5 +1,6 @@
 package com.songlan.deepink.ui.local
 
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -90,9 +91,6 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
             android.R.id.home -> {
                 finish()
             }
-            R.id.importBtn -> {
-                finish()
-            }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -128,11 +126,14 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v?.id) {
-            R.id.importBtn -> {
+            R.id.regexApplyBtn -> {
+                // 修改Book的章节划分正则
 
             }
-            R.id.regexApplyBtn -> {
-
+            R.id.importBtn -> {
+                val intent = Intent()
+                setResult(RESULT_OK, intent)
+                finish()
             }
         }
     }

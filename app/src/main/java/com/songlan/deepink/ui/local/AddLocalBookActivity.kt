@@ -45,9 +45,6 @@ class AddLocalBookActivity : AppCompatActivity() {
             it.setHomeAsUpIndicator(R.drawable.ic_back)
         }
 
-//        importProgressBar.visibility = View.VISIBLE
-//        localBookList.visibility = View.INVISIBLE
-
         viewModel.loadPersistedFilesLiveData.observe(this, Observer { result ->
             val files = result.getOrNull()
             if (files != null) {

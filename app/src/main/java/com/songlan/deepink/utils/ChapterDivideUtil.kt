@@ -14,23 +14,21 @@ import java.io.*
 
 object ChapterDivideUtil {
 
+    private val CHAPTER_SPLIT_REGEX =
+        Regex("^.*第([0-9]{1,5}|[一二三四五六七八九十百千万亿]{1,5})[章回节部集卷](\\s.{0,24}|$)")
+
     // 遍历小说，获取章节名称
     fun getChapterTitlesFromTxt(documentFileUri: Uri): MutableList<String> {
         val documentInputStream = context.contentResolver.openInputStream(documentFileUri)
         val codeType = documentInputStream?.let { getFileCharsetName(documentInputStream) }
         Log.v("MainTest", "codeType: $codeType")
 
-        val regex = Regex("^.*第([0-9]{1,5}|[一二三四五六七八九十百千万亿]{1,5})[章回节部集卷]\\s.{0,24}")
         val titleList = mutableListOf<String>()
         try {
-            val reader = if (codeType != null) {
-                BufferedReader(InputStreamReader(documentInputStream, codeType))
-            } else {
-                BufferedReader(InputStreamReader(documentInputStream))
-            }
+            val reader = BufferedReader(InputStreamReader(documentInputStream, codeType))
             reader.use {
                 reader.forEachLine { lineContent ->
-                    val matchTitleList = regex.findAll(lineContent)
+                    val matchTitleList = CHAPTER_SPLIT_REGEX.findAll(lineContent)
                     matchTitleList.forEach {
                         Log.d("MainTest", it.value)
                         titleList.add(it.value.trim())
@@ -39,6 +37,8 @@ object ChapterDivideUtil {
             }
         } catch (e: IOException) {
             e.printStackTrace()
+        } finally {
+            Log.d("MainTest", titleList.size.toString())
         }
         return titleList
     }
@@ -52,39 +52,41 @@ object ChapterDivideUtil {
             getFileCharsetName(it)
         }
 
-        val regex = Regex("^.*第([0-9]{1,5}|[一二三四五六七八九十百千万亿]{1,5})[章回节部集卷]\\s.{0,24}")
-        val titleList = mutableListOf<String>()
         try {
-            val reader = if (codeType != null) {
-                BufferedReader(InputStreamReader(documentInputStream, codeType))
-            } else {
-                BufferedReader(InputStreamReader(documentInputStream))
-            }
-
+            val reader = BufferedReader(InputStreamReader(documentInputStream, codeType))
+            mkBookDir()
             reader.use {
                 var index = 0
-                lateinit var output: FileOutputStream
-                lateinit var writer: BufferedWriter
-                lateinit var chapter: Chapter
+                var output: FileOutputStream? = null
+                var writer: BufferedWriter? = null
+                var chapter: Chapter? = null
                 reader.forEachLine { lineContent ->
-                    val isMatches = regex.matches(lineContent)
+                    val isMatches = CHAPTER_SPLIT_REGEX.matches(lineContent)
                     if (isMatches) {
+                        writer?.close()
                         output?.close()
-                        output =
-                            context.openFileOutput(
-                                "book/${book.bookName}/$index.cpt",
-                                Context.MODE_PRIVATE
-                            )
+                        val folderPath = mkChapterDir(book.bookName)
+                        LogUtil.v(msg = "${folderPath}/$index")
+                        index++
+
+                        // 创建章节文件
+                        val file = File("${folderPath}/${index}")
+                        output = FileOutputStream(file)
+
                         chapter?.let {
                             DatabaseRepository.insertChapter(it)
                         }
                         chapter =
-                            Chapter(lineContent, "book/${book.bookName}/$index.cpt", book.bookId)
-                        writer?.close()
+                            Chapter(lineContent, "${folderPath}/$index", book.bookId)
+                        // writer?.close()
                         writer = BufferedWriter(OutputStreamWriter(output))
-                        writer.write(lineContent)
+                        writer?.write(lineContent)
+                        writer?.newLine()
                     } else {
-                        writer.write(lineContent)
+                        // 判断是否为章节前的垃圾信息，如果是的话，还没获取到章节标题
+                        // 此时，先不保存数据
+                        writer?.write(lineContent)
+                        writer?.newLine()
                     }
                 }
                 // 如果output和writer不为空，则关闭
@@ -99,9 +101,24 @@ object ChapterDivideUtil {
         }
     }
 
+    // 创建book文件夹，存放数据
+    private fun mkBookDir() {
+        val folder = File("${context.filesDir.absolutePath}/book")
+        if (!folder.exists()) {
+            folder.mkdirs()
+        }
+    }
+
+    private fun mkChapterDir(bookName: String): String {
+        val folder = File("${context.filesDir.absolutePath}/book/$bookName")
+        if (!folder.exists()) {
+            folder.mkdirs()
+        }
+        return "${context.filesDir.absolutePath}/book/$bookName"
+    }
+
 
     private fun getFileCharsetName(inputStream: InputStream): String? {
-//        val inputStream: InputStream = FileInputStream(fileName)
         val head = ByteArray(3)
         inputStream.read(head)
         var charsetName = "GBK" //或GB2312，即ANSI
@@ -123,9 +140,7 @@ object ChapterDivideUtil {
             head[2].toInt() and 0xff == 0xBF
         )// 0xEFBBBF
             charsetName = "UTF-8" //UTF-8-BOM
-        // inputStream.close()
 
-        //System.out.println(code);
         return charsetName
     }
 

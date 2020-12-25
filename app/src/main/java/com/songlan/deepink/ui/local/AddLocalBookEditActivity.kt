@@ -20,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.AppProfiles.DOCUMENT_URI_STRING
 import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.R
+import com.songlan.deepink.model.Book
+import com.songlan.deepink.utils.ChapterDivideUtil.getChaptersFromTxt
 import kotlinx.android.synthetic.main.activity_add_local_book.toolbar
 import kotlinx.android.synthetic.main.activity_edit_local_book.*
 import java.lang.Exception
@@ -31,6 +33,7 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
     }
     private lateinit var adapter: MyRecyclerViewAdapter
     private lateinit var documentUri: Uri
+    private lateinit var book: Book
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,6 +69,14 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
         chapterNameRecyclerView.visibility = View.INVISIBLE
         progressBar.visibility = View.VISIBLE
 
+        // 创建Book对象
+        book = Book(
+            R.drawable.ic_book_default,
+            documentName.substring(0, lastPointIndex),
+            bookAuthorEditText.text.toString()
+        )
+
+        // 配置LiveData
         viewModel.chapterTitlesLiveData.observe(this, Observer { result ->
             val titles = result.getOrNull()
             if (titles != null) {
@@ -76,6 +87,18 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
                 chapterNameRecyclerView.visibility = View.VISIBLE
                 // 通知数据修改
                 adapter.notifyDataSetChanged()
+            }
+        })
+
+        viewModel.insertBookLiveData.observe(this, Observer { result ->
+            val bookId = result.getOrNull()
+            if (bookId != null) {
+                // 书籍保存成功后，开始章节切割并保存到本地
+                getChaptersFromTxt(documentUri, book)
+
+                val intent = Intent()
+                setResult(RESULT_OK, intent)
+                finish()
             }
         })
 
@@ -131,9 +154,7 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
 
             }
             R.id.importBtn -> {
-                val intent = Intent()
-                setResult(RESULT_OK, intent)
-                finish()
+                viewModel.insertBook(book)
             }
         }
     }

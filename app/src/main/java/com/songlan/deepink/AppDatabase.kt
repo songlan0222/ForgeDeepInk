@@ -12,7 +12,7 @@ import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.model.Chapter
 
 @Database(
-    version = 1,
+    version = 2,
     entities = [Book::class, Bookshelf::class, Chapter::class],
     exportSchema = false
 )
@@ -35,10 +35,13 @@ abstract class AppDatabase : RoomDatabase() {
                 AppDatabase::class.java,
                 "app_database"
             )
-//                .allowMainThreadQueries()
+                .fallbackToDestructiveMigration()
+                //.allowMainThreadQueries()
                 .build().apply {
                     instance = this
                 }
         }
+
+
     }
 }

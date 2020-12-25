@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jcodecraeer.xrecyclerview.ProgressStyle
 import com.jcodecraeer.xrecyclerview.XRecyclerView
+import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.MyApplication
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
@@ -111,7 +112,7 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
 
         mainActivity.vm.insertBookshelfLiveData.observe(mainActivity, Observer { result ->
             val bookshelfId = result.getOrNull()
-            if(bookshelfId != null){
+            if (bookshelfId != null) {
                 mainActivity.vm.loadBookshelfList()
             }
         })
@@ -152,7 +153,7 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
 
     }
 
-    class MyXRecyclerViewAdapter(private val bookList: List<Book>) :
+    inner class MyXRecyclerViewAdapter(private val bookList: List<Book>) :
         RecyclerView.Adapter<MyXRecyclerViewAdapter.ViewHolder>() {
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val bookImage: ImageView = view.findViewById(R.id.bookImage)
@@ -164,7 +165,9 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
                 .inflate(R.layout.item_bookshelf_details_book, parent, false)
             val viewHolder = ViewHolder(view)
             viewHolder.itemView.setOnClickListener {
-
+                val position = viewHolder.adapterPosition
+                val book = bookList[position]
+                AppProfiles.jumpToReadBookActivity(mainActivity, book.bookId)
             }
             viewHolder.itemView.setOnLongClickListener {
                 val position = viewHolder.adapterPosition

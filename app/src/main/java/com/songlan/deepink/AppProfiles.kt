@@ -10,6 +10,7 @@ import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.songlan.deepink.MyApplication.Companion.context
+import com.songlan.deepink.ui.ReadBookActivity
 import com.songlan.deepink.ui.local.AddLocalBookActivity
 import com.songlan.deepink.ui.local.AddLocalBookEditActivity
 import com.songlan.deepink.ui.local.RequestStoragePermissive
@@ -73,6 +74,14 @@ object AppProfiles {
         val intent = Intent(activity, AddLocalBookEditActivity::class.java)
         intent.putExtra(DOCUMENT_URI_STRING, documentUri.toString())
         activity.startActivityForResult(intent, EDIT_PAGE_CODE)
+    }
+
+    // 跳转到阅读界面
+    const val READING_BOOK_ID = "READING_BOOK_ID"
+    fun jumpToReadBookActivity(activity: AppCompatActivity, bookId: Long) {
+        val intent = Intent(activity, ReadBookActivity::class.java)
+        intent.putExtra(READING_BOOK_ID, bookId)
+        activity.startActivity(intent)
     }
 
     // 将数据保存到配置文件中

@@ -31,6 +31,12 @@ object DatabaseRepository {
         Result.success(chapterTitles)
     }
 
+    fun loadChapterWithChapterId(chapterId: Long) = fire(Dispatchers.IO) {
+        val chapter = chapterDao.loadChapter(chapterId)
+        Result.success(chapter)
+    }
+
+
     // 书籍管理方法
     fun insertBook(book: Book) = fire(Dispatchers.IO) {
         val bookId = bookDao?.insertBook(book)

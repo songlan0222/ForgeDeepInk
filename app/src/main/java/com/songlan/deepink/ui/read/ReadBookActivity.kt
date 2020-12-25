@@ -81,7 +81,5 @@ class ReadBookActivity : AppCompatActivity() {
         })
 
         viewModel.loadBook(bookId)
-
-
     }
 }

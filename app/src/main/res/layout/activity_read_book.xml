@@ -6,9 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".ui.read.ReadBookActivity">
 
-    <TextView
-        android:id="@+id/chapterContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <com.songlan.deepink.ui.read.ReadPage
+            android:id="@+id/chapterContent"
+            android:layout_width="match_parent"
+            android:textIsSelectable="true"
+            android:text="达卜纽是个大呆呆"
+            android:layout_height="match_parent" />
+
+<!--    <androidx.viewpager.widget.ViewPager-->
+<!--        android:id="@+id/chapterContent"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_margin="20dp" />-->
 
 </LinearLayout>

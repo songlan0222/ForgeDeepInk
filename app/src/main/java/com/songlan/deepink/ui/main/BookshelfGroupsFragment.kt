@@ -62,15 +62,9 @@ class BookshelfGroupsFragment : BaseFragment() {
                 mainActivity.vm.bookshelfList.clear()
                 mainActivity.vm.bookshelfList.addAll(bookshelfList)
                 bookshelfListAdapter.notifyDataSetChanged()
-                LogUtil.d("MainTest", "获取全部书架时发生意外。")
+                LogUtil.d("MainTest", "获取全部书架成功。")
             } else {
-//                val bookshelfName =
-//                    MyApplication.context.resources.getString(R.string.default_bookshelf)
-//                val bookshelf = Bookshelf(bookshelfName, isFirstChoose = true)
-//                mainActivity.vm.insertBookshelf(bookshelf)
-//                mainActivity.vm.loadCheckedBookshelf()
                 LogUtil.d("MainTest", "获取全部书架时发生意外。")
-                // result.exceptionOrNull()?.printStackTrace()
             }
         })
 
@@ -80,6 +74,16 @@ class BookshelfGroupsFragment : BaseFragment() {
                 mainActivity.vm.loadBookshelfList()
             }
         })
+
+//        mainActivity.vm.loadBooksWithBookshelfIdLiveData.observe(
+//            mainActivity,
+//            Observer { result ->
+//                val books = result.getOrNull()
+//                if (books != null) {
+//                    mainActivity.vm.booksWithBookshelfId.clear()
+//                    mainActivity.vm.booksWithBookshelfId.addAll(books)
+//                }
+//            })
 
         mainActivity.vm.loadBookshelfList()
 
@@ -118,14 +122,30 @@ class BookshelfGroupsFragment : BaseFragment() {
             val holder = ViewHolder(view)
             holder.bookshelfMore.setOnClickListener {
                 val position = holder.adapterPosition
-                // Log.d("MainTest", "current position: $position")
                 showBottomDialog(position)
             }
             return holder
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
             val bookshelf = bookshelfList[position]
+
+            val loadBooksWithBookshelfIdLiveData =
+                DatabaseRepository.loadBooksWithBookshelfId(bookshelf.bookshelfId)
+            loadBooksWithBookshelfIdLiveData.observe(
+                mainActivity,
+                Observer { result ->
+                    val books = result.getOrNull()
+                    if (books != null) {
+                        holder.bookshelfDetails.adapter = DetailsAdapter(books)
+                    } else{
+                        holder.bookshelfDetails.adapter = DetailsAdapter(arrayListOf())
+                    }
+                })
+            // 加载当前书架书籍信息
+            // mainActivity.vm.loadBooksWithBookshelfId(bookshelf.bookshelfId)
+
             // 根据配置文件来判定当前书架是否选中
             holder.bookshelfItemChecked.isChecked =
                 bookshelf.bookshelfId == AppProfiles.getCheckedBookshelfIdFromProfile()
@@ -144,8 +164,7 @@ class BookshelfGroupsFragment : BaseFragment() {
                 saveToProfile(CHECKED_BOOKSHELF_ID, bookshelf.bookshelfId)
             }
             holder.bookshelfName.text = bookshelf.bookshelfName
-            holder.bookshelfDetails.adapter =
-                DetailsAdapter(mainActivity.vm.checkedBookList)
+
             val layoutManager = LinearLayoutManager(requireContext())
             layoutManager.orientation = LinearLayoutManager.HORIZONTAL
             holder.bookshelfDetails.layoutManager = layoutManager

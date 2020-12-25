@@ -1,8 +1,10 @@
 package com.songlan.deepink.ui.main
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import androidx.room.Database
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.repository.DatabaseRepository
@@ -22,13 +24,16 @@ class MainActivityVM : ViewModel() {
     // 数据库获取信息
     private val checkedBookshelfLiveData = MutableLiveData<Long>()
     private val allBookshelfListLiveData = MutableLiveData<Any?>()
+
     private val pDeleteBookshelfLiveData = MutableLiveData<Long>()
     private val pCheckedBookshelfIdLiveData = MutableLiveData<Any?>()
     private val pInsertBookshelfLiveData = MutableLiveData<Bookshelf>()
+    private val pLoadBooksWithBookshelfIdLiveData = MutableLiveData<Long>()
 
     var checkedBookshelf = Bookshelf("默认", true)
     val checkedBookList = ArrayList<Book>()
     val bookshelfList = ArrayList<Bookshelf>()
+    val booksWithBookshelfId = ArrayList<Book>()
 
     val bookshelfLiveData = Transformations.switchMap(checkedBookshelfLiveData) { bookshelfId ->
         DatabaseRepository.loadBookshelf(bookshelfId)
@@ -52,6 +57,11 @@ class MainActivityVM : ViewModel() {
         DatabaseRepository.insertBookshelf(bookshelf)
     }
 
+    val loadBooksWithBookshelfIdLiveData =
+        Transformations.switchMap(pLoadBooksWithBookshelfIdLiveData) { bookshelfId ->
+            DatabaseRepository.loadBooksWithBookshelfId(bookshelfId)
+        }
+
     fun loadCheckedBookshelf(query: Long) {
         checkedBookshelfLiveData.value = query
     }
@@ -72,4 +82,7 @@ class MainActivityVM : ViewModel() {
         pInsertBookshelfLiveData.value = bookshelf
     }
 
+    fun loadBooksWithBookshelfId(bookshelfId: Long) {
+        pLoadBooksWithBookshelfIdLiveData.value = bookshelfId
+    }
 }

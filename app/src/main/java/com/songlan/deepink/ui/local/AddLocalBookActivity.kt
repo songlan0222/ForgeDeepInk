@@ -1,5 +1,6 @@
 package com.songlan.deepink.ui.local
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -44,6 +45,9 @@ class AddLocalBookActivity : AppCompatActivity() {
             it.setHomeAsUpIndicator(R.drawable.ic_back)
         }
 
+//        importProgressBar.visibility = View.VISIBLE
+//        localBookList.visibility = View.INVISIBLE
+
         viewModel.loadPersistedFilesLiveData.observe(this, Observer { result ->
             val files = result.getOrNull()
             if (files != null) {
@@ -54,6 +58,9 @@ class AddLocalBookActivity : AppCompatActivity() {
                 viewModel.persistedFiles.addAll(files)
                 // 当有结果时，才显示搜索框
                 searchLocalFile.visibility = View.VISIBLE
+
+                importProgressBar.visibility = View.GONE
+                localBookList.visibility = View.VISIBLE
                 adapter.notifyDataSetChanged()
             }
         })
@@ -103,6 +110,18 @@ class AddLocalBookActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         // 刷新数据列表
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                AppProfiles.EDIT_PAGE_CODE -> {
+                    importProgressBar.visibility = View.VISIBLE
+                    localBookList.visibility = View.INVISIBLE
+                }
+            }
+        }
     }
 
     inner class MyRecyclerViewAdapter(private val dataList: List<DocumentFile?>) :

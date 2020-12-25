@@ -29,6 +29,7 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
         ViewModelProvider(this).get(AddLocalBookEditActivityVM::class.java)
     }
     private lateinit var adapter: MyRecyclerViewAdapter
+    private lateinit var documentUri: Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
         // 根据传递的字符串，转换成Uri，并根据Uri获取文件
         var documentUriString =
             intent.getStringExtra(DOCUMENT_URI_STRING) ?: throw Exception("获取本地文件失败，请重试")
-        val documentUri = Uri.parse(documentUriString)
+        documentUri = Uri.parse(documentUriString)
         val documentFile = DocumentFile.fromSingleUri(context, documentUri)!!
         v("MainTest", "获取到文件：${documentFile.name}")
 
@@ -60,12 +61,19 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         chapterNameRecyclerView.adapter = adapter
 
+        // 设置列表和进度条的显示
+        chapterNameRecyclerView.visibility = View.INVISIBLE
+        progressBar.visibility = View.VISIBLE
 
         viewModel.chapterTitlesLiveData.observe(this, Observer { result ->
             val titles = result.getOrNull()
             if (titles != null) {
                 viewModel.chapterTitles.clear()
                 viewModel.chapterTitles.addAll(titles)
+                // 设置列表和进度条的显示
+                progressBar.visibility = View.GONE
+                chapterNameRecyclerView.visibility = View.VISIBLE
+                // 通知数据修改
                 adapter.notifyDataSetChanged()
             }
         })
@@ -75,12 +83,14 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
 
         importBtn.setOnClickListener(this)
         regexApplyBtn.setOnClickListener(this)
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> {
+                finish()
+            }
+            R.id.importBtn -> {
                 finish()
             }
         }

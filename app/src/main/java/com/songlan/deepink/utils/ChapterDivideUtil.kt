@@ -20,7 +20,7 @@ object ChapterDivideUtil {
         val codeType = documentInputStream?.let { getFileCharsetName(documentInputStream) }
         Log.v("MainTest", "codeType: $codeType")
 
-        val regex = Regex("^.*第([0-9]{1,5}|[一二三四五六七八九十百千万亿]{1,5})[章回节部集卷].{0,24}")
+        val regex = Regex("^.*第([0-9]{1,5}|[一二三四五六七八九十百千万亿]{1,5})[章回节部集卷]\\s.{0,24}")
         val titleList = mutableListOf<String>()
         try {
             val reader = if (codeType != null) {
@@ -52,7 +52,7 @@ object ChapterDivideUtil {
             getFileCharsetName(it)
         }
 
-        val regex = Regex("^.*第([0-9]{1,5}|[一二三四五六七八九十百千万亿]{1,5})[章回节部集卷].{0,24}")
+        val regex = Regex("^.*第([0-9]{1,5}|[一二三四五六七八九十百千万亿]{1,5})[章回节部集卷]\\s.{0,24}")
         val titleList = mutableListOf<String>()
         try {
             val reader = if (codeType != null) {

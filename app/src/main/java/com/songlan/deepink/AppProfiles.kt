@@ -68,10 +68,11 @@ object AppProfiles {
     }
 
     const val DOCUMENT_URI_STRING = "DOCUMENT_URI_STRING"
+    const val EDIT_PAGE_CODE = 1
     fun jumpToAddLocalBookEditActivity(activity: AppCompatActivity, documentUri: Uri) {
         val intent = Intent(activity, AddLocalBookEditActivity::class.java)
         intent.putExtra(DOCUMENT_URI_STRING, documentUri.toString())
-        activity.startActivity(intent)
+        activity.startActivityForResult(intent, EDIT_PAGE_CODE)
     }
 
     // 将数据保存到配置文件中

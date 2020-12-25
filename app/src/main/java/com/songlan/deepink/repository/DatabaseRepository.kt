@@ -4,6 +4,7 @@ import androidx.lifecycle.liveData
 import androidx.documentfile.provider.DocumentFile
 import com.songlan.deepink.AppDatabase
 import com.songlan.deepink.MyApplication.Companion.context
+import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.model.Chapter
@@ -74,7 +75,7 @@ object DatabaseRepository {
     }
 
     fun loadAllBookshelfs() = fire(Dispatchers.IO) {
-        val bookshelfList = bookshelfDao.loadAllBookshelf()
+        var bookshelfList = bookshelfDao.loadAllBookshelf()
         Result.success(bookshelfList)
     }
 
@@ -97,6 +98,11 @@ object DatabaseRepository {
     fun getCheckedBookshelf() = fire(Dispatchers.IO) {
         val bookshelfId = bookshelfDao.getFirstChooseBookshelf()
         Result.success(bookshelfId)
+    }
+
+    fun getDefaultBookshelf() = fire(Dispatchers.IO) {
+        val bookshelf = bookshelfDao.getDefaultBookshelf()
+        Result.success(bookshelf)
     }
 
     // 本地授权路径管理方法

@@ -61,4 +61,5 @@
     <string name="book_name">书名</string>
     <string name="chapter_regex">章节正则</string>
     <string name="regex_apply">应用</string>
+    <string name="default_bookshelf">默认</string>
 </resources>

@@ -16,8 +16,10 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jcodecraeer.xrecyclerview.ProgressStyle
 import com.jcodecraeer.xrecyclerview.XRecyclerView
+import com.songlan.deepink.MyApplication
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
+import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.ui.search.SearchBookActivity
 import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.fragment_bookshelf_details.*
@@ -88,9 +90,15 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
             if (bookshelf != null) {
                 mainActivity.vm.checkedBookshelf = bookshelf
                 xRecyclerViewAdapter.notifyDataSetChanged()
+                LogUtil.d("MainTest", "获取选中书架成功。")
             } else {
-                LogUtil.d("MainTest", "获取书架时发生意外。")
-                result.exceptionOrNull()?.printStackTrace()
+                val bookshelfName =
+                    MyApplication.context.resources.getString(R.string.default_bookshelf)
+                val bookshelf = Bookshelf(bookshelfName, isFirstChoose = true)
+                mainActivity.vm.insertBookshelf(bookshelf)
+                // mainActivity.vm.getFirstChooseBookshelfId()
+                LogUtil.d("MainTest", "获取选中书架时发生意外。")
+                // result.exceptionOrNull()?.printStackTrace()
             }
         })
 
@@ -98,6 +106,13 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
             val bookshelfId = result.getOrNull()
             if (bookshelfId != null) {
                 mainActivity.vm.loadCheckedBookshelf(bookshelfId)
+            }
+        })
+
+        mainActivity.vm.insertBookshelfLiveData.observe(mainActivity, Observer { result ->
+            val bookshelfId = result.getOrNull()
+            if(bookshelfId != null){
+                mainActivity.vm.loadBookshelfList()
             }
         })
         // 获取书籍

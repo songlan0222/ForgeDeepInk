@@ -19,6 +19,7 @@ import com.songlan.deepink.MyApplication
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
+import com.songlan.deepink.repository.DatabaseRepository
 import com.songlan.deepink.ui.main.base.BaseFragment
 import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.fragment_bookshelf_groups.*
@@ -61,9 +62,15 @@ class BookshelfGroupsFragment : BaseFragment() {
                 mainActivity.vm.bookshelfList.clear()
                 mainActivity.vm.bookshelfList.addAll(bookshelfList)
                 bookshelfListAdapter.notifyDataSetChanged()
-            } else {
                 LogUtil.d("MainTest", "获取全部书架时发生意外。")
-                result.exceptionOrNull()?.printStackTrace()
+            } else {
+//                val bookshelfName =
+//                    MyApplication.context.resources.getString(R.string.default_bookshelf)
+//                val bookshelf = Bookshelf(bookshelfName, isFirstChoose = true)
+//                mainActivity.vm.insertBookshelf(bookshelf)
+//                mainActivity.vm.loadCheckedBookshelf()
+                LogUtil.d("MainTest", "获取全部书架时发生意外。")
+                // result.exceptionOrNull()?.printStackTrace()
             }
         })
 

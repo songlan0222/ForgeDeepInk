@@ -29,5 +29,8 @@ interface BookshelfDao {
     @Query("select bookshelfId from Bookshelf where isFirstChoose = 1")
     fun getFirstChooseBookshelf(): Long
 
+    @Query("select * from bookshelf where bookshelfId = 1")
+    fun getDefaultBookshelf() : Bookshelf
+
 
 }

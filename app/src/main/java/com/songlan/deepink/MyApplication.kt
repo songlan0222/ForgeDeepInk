@@ -15,6 +15,4 @@ class MyApplication : Application() {
         super.onCreate()
         context = applicationContext
     }
-
-
 }

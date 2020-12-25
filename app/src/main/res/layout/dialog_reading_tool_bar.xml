@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="20dp"
+    android:layout_height="wrap_content"
     android:layout_gravity="bottom"
     android:layout_margin="20dp"
     android:background="@drawable/shape_reading_tool_bar"
     android:orientation="vertical">
+
+    <View
+        android:layout_width="36dp"
+        android:layout_height="5dp"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_margin="10dp"
+        android:background="@drawable/shape_horizontal_line" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"

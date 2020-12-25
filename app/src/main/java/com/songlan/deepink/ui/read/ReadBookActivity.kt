@@ -1,10 +1,13 @@
 package com.songlan.deepink.ui.read
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.songlan.deepink.AppProfiles
@@ -14,6 +17,10 @@ import kotlinx.android.synthetic.main.activity_read_book.*
 
 
 class ReadBookActivity : AppCompatActivity() {
+
+    private val viewModel by lazy {
+        ViewModelProvider(this).get(ReadBookActivityVM::class.java)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +42,8 @@ class ReadBookActivity : AppCompatActivity() {
         // 配置工具栏内容
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         // toolbar.inflateMenu(R.menu.menu_read_tool_bar)
-        toolbar.setOnMenuItemClickListener {menuItem->
-            when(menuItem.itemId){
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
 
             }
             true
@@ -48,11 +55,32 @@ class ReadBookActivity : AppCompatActivity() {
             finish()
         }
 
-
+        // 小说内容设置
         chapterContent.setOnClickListener {
             behavior.state = BottomSheetBehavior.STATE_COLLAPSED
             dialog.show()
         }
+
+        viewModel.loadChapterTitleWithBookId.observe(this, Observer { result ->
+            val chapters = result.getOrNull()
+            if (chapters != null) {
+                viewModel.chapterTitles.clear()
+                viewModel.chapterTitles.addAll(chapters)
+            }
+        })
+
+        viewModel.bookLiveData.observe(this, Observer { result ->
+            val book = result.getOrNull()
+            if (book != null) {
+                viewModel.book = book
+                viewModel.loadChapterTitleWithBookId(book.bookId)
+            } else {
+                Log.d("MainTest", "阅读界面：获取书籍失败")
+            }
+
+        })
+
+        viewModel.loadBook(bookId)
 
 
     }

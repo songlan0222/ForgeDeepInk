@@ -26,6 +26,11 @@ object DatabaseRepository {
         Result.success(chapterId)
     }
 
+    fun loadChapterTitleWithBookId(bookId: Long) = fire(Dispatchers.IO) {
+        val chapterTitles = chapterDao.loadChapterTitlesWithBookId(bookId)
+        Result.success(chapterTitles)
+    }
+
     // 书籍管理方法
     fun insertBook(book: Book) = fire(Dispatchers.IO) {
         val bookId = bookDao?.insertBook(book)
@@ -40,6 +45,11 @@ object DatabaseRepository {
     fun loadBooksWithBookshelfId(bookshelfId: Long) = fire(Dispatchers.IO) {
         val bookList = bookDao.loadBookWithBookshelfId(bookshelfId)
         Result.success(bookList)
+    }
+
+    fun loadBookWithBookId(bookId: Long) = fire(Dispatchers.IO) {
+        val book = bookDao.loadBookWithBookId(bookId)
+        Result.success(book)
     }
 
     fun loadAllBooks() = fire(Dispatchers.IO) {

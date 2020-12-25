@@ -26,4 +26,7 @@ interface ChapterDao {
 
     @Query("select * from Chapter where bookId = :bookId")
     fun loadChapterWithBookId(bookId: Long): List<Chapter>
+
+    @Query("select chapterName from chapter where bookId = :bookId")
+    fun loadChapterTitlesWithBookId(bookId: Long): List<String>
 }

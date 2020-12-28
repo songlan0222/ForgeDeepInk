@@ -17,6 +17,6 @@ class BookDirectoryFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cur_page, container, false)
+        return inflater.inflate(R.layout.fragment_book_directory, container, false)
     }
 }

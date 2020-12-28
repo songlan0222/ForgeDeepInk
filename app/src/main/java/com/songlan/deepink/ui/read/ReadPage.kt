@@ -15,10 +15,6 @@ class ReadPage : AppCompatTextView {
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, style: Int) : super(context, attrs, style)
 
-//    init {
-//        LayoutInflater.from(context).inflate(R.layout.view_read_page, this as ViewGroup)
-//    }
-
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
         resize()

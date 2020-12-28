@@ -2,17 +2,20 @@ package com.songlan.deepink.ui.read
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.songlan.deepink.AppProfiles
-import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.R
+import com.songlan.deepink.model.Chapter
 import kotlinx.android.synthetic.main.activity_read_book.*
 
 
@@ -22,6 +25,7 @@ class ReadBookActivity : AppCompatActivity() {
         ViewModelProvider(this).get(ReadBookActivityVM::class.java)
     }
 
+    lateinit var chapterTitleAdapter: MyRecyclerViewAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read_book)
@@ -61,11 +65,12 @@ class ReadBookActivity : AppCompatActivity() {
             dialog.show()
         }
 
-        viewModel.loadChapterTitleWithBookId.observe(this, Observer { result ->
+        viewModel.loadChaptersWithBookId.observe(this, Observer { result ->
             val chapters = result.getOrNull()
             if (chapters != null) {
                 viewModel.chapterTitles.clear()
                 viewModel.chapterTitles.addAll(chapters)
+                chapterTitleAdapter.notifyDataSetChanged()
             }
         })
 
@@ -81,5 +86,38 @@ class ReadBookActivity : AppCompatActivity() {
         })
 
         viewModel.loadBook(bookId)
+
+        chapterTitleAdapter = MyRecyclerViewAdapter(viewModel.chapterTitles)
+
+
     }
+
+
+    inner class MyRecyclerViewAdapter(private val chapterList: List<Chapter>) :
+        RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
+        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_chapter_title, parent, false)
+            val viewHolder = ViewHolder(view)
+            viewHolder.itemView.setOnClickListener {
+                val position = viewHolder.adapterPosition
+                val chapter = chapterList[position]
+            }
+            return viewHolder
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val chapter = chapterList[position]
+
+        }
+
+        override fun getItemCount() = chapterList.size
+
+
+    }
+
 }

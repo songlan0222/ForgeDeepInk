@@ -5,18 +5,65 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
+import com.songlan.deepink.model.Chapter
 
 class BookDirectoryFragment : Fragment() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+
+    private lateinit var readBookActivity: ReadBookActivity
+    lateinit var chapterTitleAdapter: MyRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        if (activity != null) {
+            readBookActivity = activity as ReadBookActivity
+        }
         return inflater.inflate(R.layout.fragment_book_directory, container, false)
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        readBookActivity.viewModel.loadChaptersWithBookId.observe(this, Observer { result ->
+            val chapters = result.getOrNull()
+            if (chapters != null) {
+                readBookActivity.viewModel.chapterTitles.clear()
+                readBookActivity.viewModel.chapterTitles.addAll(chapters)
+                chapterTitleAdapter.notifyDataSetChanged()
+            }
+        })
+        chapterTitleAdapter = MyRecyclerViewAdapter(readBookActivity.viewModel.chapterTitles)
+
+
+    }
+
+    inner class MyRecyclerViewAdapter(private val chapterList: List<Chapter>) :
+        RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
+        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+
+        }
+
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_chapter_title, parent, false)
+            val viewHolder = ViewHolder(view)
+            viewHolder.itemView.setOnClickListener {
+                val position = viewHolder.adapterPosition
+                val chapter = chapterList[position]
+            }
+            return viewHolder
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val chapter = chapterList[position]
+
+        }
+
+        override fun getItemCount() = chapterList.size
     }
 }

@@ -21,11 +21,10 @@ import kotlinx.android.synthetic.main.activity_read_book.*
 
 class ReadBookActivity : AppCompatActivity() {
 
-    private val viewModel by lazy {
+    val viewModel by lazy {
         ViewModelProvider(this).get(ReadBookActivityVM::class.java)
     }
 
-    lateinit var chapterTitleAdapter: MyRecyclerViewAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read_book)
@@ -65,15 +64,6 @@ class ReadBookActivity : AppCompatActivity() {
             dialog.show()
         }
 
-        viewModel.loadChaptersWithBookId.observe(this, Observer { result ->
-            val chapters = result.getOrNull()
-            if (chapters != null) {
-                viewModel.chapterTitles.clear()
-                viewModel.chapterTitles.addAll(chapters)
-                chapterTitleAdapter.notifyDataSetChanged()
-            }
-        })
-
         viewModel.bookLiveData.observe(this, Observer { result ->
             val book = result.getOrNull()
             if (book != null) {
@@ -87,37 +77,8 @@ class ReadBookActivity : AppCompatActivity() {
 
         viewModel.loadBook(bookId)
 
-        chapterTitleAdapter = MyRecyclerViewAdapter(viewModel.chapterTitles)
 
-
-    }
-
-
-    inner class MyRecyclerViewAdapter(private val chapterList: List<Chapter>) :
-        RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
-        inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
-        }
-
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context)
-                .inflate(R.layout.item_chapter_title, parent, false)
-            val viewHolder = ViewHolder(view)
-            viewHolder.itemView.setOnClickListener {
-                val position = viewHolder.adapterPosition
-                val chapter = chapterList[position]
-            }
-            return viewHolder
-        }
-
-        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val chapter = chapterList[position]
-
-        }
-
-        override fun getItemCount() = chapterList.size
 
 
     }
-
 }

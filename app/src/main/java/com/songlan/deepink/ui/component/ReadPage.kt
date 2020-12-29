@@ -1,4 +1,4 @@
-package com.songlan.deepink.ui.read
+package com.songlan.deepink.ui.component
 
 import android.content.Context
 import android.util.AttributeSet

@@ -2,20 +2,22 @@ package com.songlan.deepink.ui.read
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.PagerAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.R
-import com.songlan.deepink.model.Chapter
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_read_book.*
 
 
@@ -24,6 +26,8 @@ class ReadBookActivity : AppCompatActivity() {
     val viewModel by lazy {
         ViewModelProvider(this).get(ReadBookActivityVM::class.java)
     }
+
+    private val fragmentMap = hashMapOf<Int, Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,21 +46,6 @@ class ReadBookActivity : AppCompatActivity() {
         val behavior = BottomSheetBehavior.from(parentView)
         behavior.peekHeight = 730
         parentView.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
-        // 配置工具栏内容
-        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        // toolbar.inflateMenu(R.menu.menu_read_tool_bar)
-        toolbar.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
-
-            }
-            true
-        }
-        toolbar.title = "斗破苍穹"
-
-        toolbar.setNavigationIcon(R.drawable.ic_back)
-        toolbar.setNavigationOnClickListener {
-            finish()
-        }
 
         // 小说内容设置
         chapterContent.setOnClickListener {
@@ -77,8 +66,38 @@ class ReadBookActivity : AppCompatActivity() {
 
         viewModel.loadBook(bookId)
 
+        chapterContent.adapter = ViewPagerAdapter(supportFragmentManager)
+        chapterContent.currentItem = ReadBookActivityVM.DEFAULT_ITEM_ID
 
+    }
 
+    fun changeFragment(id: Int) {
+        chapterContent.setCurrentItem(id, true)
+    }
+
+    // 用于显示小说章节的ViewPager
+    inner class ViewPagerAdapter(fm: FragmentManager) :
+        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        // 划分左中右
+        override fun getCount() = 3
+
+        override fun isViewFromObject(view: View, `object`: Any): Boolean {
+            return view == `object`
+        }
+
+        override fun getItem(position: Int): Fragment =
+            when (position) {
+                0 -> fragmentMap[0] ?: PrePageFragment()
+                1 -> fragmentMap[1] ?: CurPageFragment()
+                else -> fragmentMap[2] ?: LastPageFragment()
+            }
+
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            val fragment = super.instantiateItem(container, position) as Fragment
+            Log.v("MainTest", fragment.toString())
+            fragmentMap[position] = fragment
+            return fragment
+        }
 
     }
 }

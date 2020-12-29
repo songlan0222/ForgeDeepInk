@@ -8,6 +8,7 @@ import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.repository.DatabaseRepository
 
 class ReadBookActivityVM : ViewModel() {
+
     private val pBookLiveData = MutableLiveData<Long>()
     lateinit var book: Book
     val bookLiveData = Transformations.switchMap(pBookLiveData) { bookId ->
@@ -41,5 +42,10 @@ class ReadBookActivityVM : ViewModel() {
 
     fun loadChapterWithChapterId(chapterId: Long) {
         pLoadChapterWithChapterId.value = chapterId
+    }
+
+    companion object {
+        // 小说页默认显示中间页面
+        const val DEFAULT_ITEM_ID = 1
     }
 }

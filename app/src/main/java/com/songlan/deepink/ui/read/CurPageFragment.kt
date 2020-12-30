@@ -11,7 +11,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.fragment_current_page.*
 
-class CurrentPageFragment : Fragment() {
+class CurPageFragment : Fragment() {
 
     private lateinit var readBookActivity: ReadBookActivity
 
@@ -28,20 +28,6 @@ class CurrentPageFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        readPage.setOnClickListener {
-            val view = View.inflate(readBookActivity, R.layout.dialog_reading_tool_bar, null)
-            val dialog = BottomSheetDialog(readBookActivity)
-            dialog.setContentView(view)
-            val parentView = view.parent as View
-            val behavior = BottomSheetBehavior.from(parentView)
-            behavior.peekHeight = 730
-            parentView.setBackgroundColor(
-                ContextCompat.getColor(
-                    readBookActivity,
-                    R.color.transparent
-                )
-            )
-        }
     }
 
 }

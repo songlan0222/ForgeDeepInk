@@ -51,9 +51,28 @@ class ReadBookActivity : AppCompatActivity() {
 
         viewModel.loadBook(bookId)
 
-
+        // 测试VIewPager显示
+        chapterContent.adapter = ReadingPageViewAdapter(supportFragmentManager)
+        chapterContent.currentItem = 1
     }
 
+    inner class ReadingPageViewAdapter(fm: FragmentManager) :
+        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+        override fun getCount() = 1
+
+        override fun getItem(position: Int): Fragment =
+            when (position) {
+                0 -> fragmentMap[0] ?: CurrentPageFragment()
+                1 -> fragmentMap[0] ?: CurrentPageFragment()
+                else -> fragmentMap[0] ?: CurrentPageFragment()
+            }
+
+        override fun instantiateItem(container: ViewGroup, position: Int): Any {
+            val fragment = super.instantiateItem(container, position) as Fragment
+            fragmentMap[position] = fragment
+            return fragment
+        }
 
 
+    }
 }

@@ -46,4 +46,8 @@ class ReadPage : AppCompatTextView {
         val topOfLastLine = height - paddingTop - paddingBottom - lineHeight
         return layout.getLineForVertical(topOfLastLine)
     }
+
+    override fun setOnClickListener(l: OnClickListener?) {
+        super.setOnClickListener(l)
+    }
 }

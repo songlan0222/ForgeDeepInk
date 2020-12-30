@@ -38,21 +38,6 @@ class ReadBookActivity : AppCompatActivity() {
             throw Exception("致命错误：没有获取到小说id")
         }
 
-        // 配置工具栏
-        val view = View.inflate(this, R.layout.dialog_reading_tool_bar, null)
-        val dialog = BottomSheetDialog(this)
-        dialog.setContentView(view)
-        val parentView = view.parent as View
-        val behavior = BottomSheetBehavior.from(parentView)
-        behavior.peekHeight = 730
-        parentView.setBackgroundColor(ContextCompat.getColor(this, R.color.transparent))
-
-        // 小说内容设置
-        chapterContent.setOnClickListener {
-            behavior.state = BottomSheetBehavior.STATE_COLLAPSED
-            dialog.show()
-        }
-
         viewModel.bookLiveData.observe(this, Observer { result ->
             val book = result.getOrNull()
             if (book != null) {
@@ -66,38 +51,9 @@ class ReadBookActivity : AppCompatActivity() {
 
         viewModel.loadBook(bookId)
 
-        chapterContent.adapter = ViewPagerAdapter(supportFragmentManager)
-        chapterContent.currentItem = ReadBookActivityVM.DEFAULT_ITEM_ID
 
     }
 
-    fun changeFragment(id: Int) {
-        chapterContent.setCurrentItem(id, true)
-    }
 
-    // 用于显示小说章节的ViewPager
-    inner class ViewPagerAdapter(fm: FragmentManager) :
-        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-        // 划分左中右
-        override fun getCount() = 3
 
-        override fun isViewFromObject(view: View, `object`: Any): Boolean {
-            return view == `object`
-        }
-
-        override fun getItem(position: Int): Fragment =
-            when (position) {
-                0 -> fragmentMap[0] ?: PrePageFragment()
-                1 -> fragmentMap[1] ?: CurPageFragment()
-                else -> fragmentMap[2] ?: LastPageFragment()
-            }
-
-        override fun instantiateItem(container: ViewGroup, position: Int): Any {
-            val fragment = super.instantiateItem(container, position) as Fragment
-            Log.v("MainTest", fragment.toString())
-            fragmentMap[position] = fragment
-            return fragment
-        }
-
-    }
 }

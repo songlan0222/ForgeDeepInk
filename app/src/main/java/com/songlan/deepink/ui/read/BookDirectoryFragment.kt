@@ -54,8 +54,6 @@ class BookDirectoryFragment : Fragment() {
         toolbar?.setNavigationOnClickListener {
             readBookActivity.finish()
         }
-
-
     }
 
     inner class MyRecyclerViewAdapter(private val chapterList: List<Chapter>) :

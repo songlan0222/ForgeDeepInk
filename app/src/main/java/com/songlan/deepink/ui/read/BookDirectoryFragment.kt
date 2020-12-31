@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Chapter
+import com.songlan.deepink.utils.LogUtils
 
 class BookDirectoryFragment : Fragment() {
 
@@ -24,36 +25,45 @@ class BookDirectoryFragment : Fragment() {
         if (activity != null) {
             readBookActivity = activity as ReadBookActivity
         }
+        LogUtils.v(msg="加载BookDirectoryFragment")
         return inflater.inflate(R.layout.fragment_book_directory, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+    }
 
-        readBookActivity.viewModel.loadChaptersWithBookId.observe(this, Observer { result ->
-            val chapters = result.getOrNull()
-            if (chapters != null) {
-                readBookActivity.viewModel.chapterTitles.clear()
-                readBookActivity.viewModel.chapterTitles.addAll(chapters)
-                chapterTitleAdapter.notifyDataSetChanged()
-            }
-        })
-        chapterTitleAdapter = MyRecyclerViewAdapter(readBookActivity.viewModel.chapterTitles)
+//    override fun onActivityCreated(savedInstanceState: Bundle?) {
+//        super.onActivityCreated(savedInstanceState)
+//        readBookActivity.viewModel.loadChaptersWithBookId.observe(readBookActivity, Observer { result ->
+//            val chapters = result.getOrNull()
+//            if (chapters != null) {
+//                readBookActivity.viewModel.chapterTitles.clear()
+//                readBookActivity.viewModel.chapterTitles.addAll(chapters)
+//                chapterTitleAdapter.notifyDataSetChanged()
+//            }
+//        })
+//        chapterTitleAdapter = MyRecyclerViewAdapter(readBookActivity.viewModel.chapterTitles)
+//
+//        // 配置工具栏内容
+//        val toolbar = view?.findViewById<Toolbar>(R.id.toolbar)
+//        toolbar?.setOnMenuItemClickListener { menuItem ->
+//            when (menuItem.itemId) {
+//
+//            }
+//            true
+//        }
+//        toolbar?.title = "斗破苍穹"
+//
+//        toolbar?.setNavigationIcon(R.drawable.ic_back)
+//        toolbar?.setNavigationOnClickListener {
+//            readBookActivity.finish()
+//        }
+//    }
 
-        // 配置工具栏内容
-        val toolbar = view?.findViewById<Toolbar>(R.id.toolbar)
-        toolbar?.setOnMenuItemClickListener { menuItem ->
-            when (menuItem.itemId) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-            }
-            true
-        }
-        toolbar?.title = "斗破苍穹"
-
-        toolbar?.setNavigationIcon(R.drawable.ic_back)
-        toolbar?.setNavigationOnClickListener {
-            readBookActivity.finish()
-        }
     }
 
     inner class MyRecyclerViewAdapter(private val chapterList: List<Chapter>) :

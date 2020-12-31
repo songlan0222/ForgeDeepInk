@@ -1,15 +1,12 @@
 package com.songlan.deepink.databaseTest
 
-import android.app.Instrumentation
-import android.content.Context
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import com.songlan.deepink.AppDatabase
 import com.songlan.deepink.R
 import com.songlan.deepink.dao.BookDao
-import com.songlan.deepink.dao.BookshelfDao
 import com.songlan.deepink.model.Book
-import com.songlan.deepink.utils.LogUtil
+import com.songlan.deepink.utils.LogUtils
 import io.reactivex.Observable
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -61,16 +58,16 @@ class BookUnitTest {
             R.drawable.ic_book_default, "斗罗大陆", "唐家三少", "唐门外门弟子唐三"
         )
         doWithRxJava(bookDao?.insertBook(book1)).subscribe { bookId ->
-            LogUtil.d("UnitTest", "BookId = $bookId")
+            LogUtils.d("UnitTest", "BookId = $bookId")
         }
     }
 
     @Test
     fun bookTest_LoadAllBooks() {
-        LogUtil.d("UnitTest", "Start Unit Testing")
+        LogUtils.d("UnitTest", "Start Unit Testing")
         doWithRxJava(bookDao?.loadAllBooks()).subscribe() { bookList ->
             bookList?.forEach { book ->
-                LogUtil.e(
+                LogUtils.e(
                     "UnitTest",
                     "书籍编号：${book.bookId}, \n" +
                             "书籍名称：${book.bookName}, \n" +
@@ -85,7 +82,7 @@ class BookUnitTest {
     fun bookTest_LoadBookWithBookshelfId() {
         doWithRxJava(bookDao?.loadBookWithBookshelfId(1)).subscribe { bookList ->
             bookList?.forEach { book ->
-                com.songlan.deepink.utils.LogUtil.d(
+                com.songlan.deepink.utils.LogUtils.d(
                     "UnitTest",
                     "书籍编号：${book.bookId}, \n" +
                             "书籍名称：${book.bookName}, \n" +

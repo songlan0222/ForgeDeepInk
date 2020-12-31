@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -27,6 +28,8 @@ class ReadBookActivity : AppCompatActivity() {
     }
 
     private val fragmentMap = hashMapOf<Int, Fragment>()
+
+    lateinit var bottomFragment : ReadBottomSheetDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,7 +56,58 @@ class ReadBookActivity : AppCompatActivity() {
         // 测试ViewPager显示
         chapterContent.adapter = ReadingPageViewAdapter(supportFragmentManager)
         chapterContent.currentItem = 1
+
+        setBottomSheetDialog()
     }
+
+    private fun setBottomSheetDialog(){
+
+        bottomFragment = ReadBottomSheetDialog.getReadBottomSheetDialog()
+
+
+//        val view = View.inflate(
+//            this,
+//            R.layout.dialog_reading_tool_bar,
+//            null
+//        )
+//        view.layoutParams = ViewGroup.LayoutParams(
+//            ViewGroup.LayoutParams.MATCH_PARENT, getThreeQuarterWindowHeight()
+//        )
+//
+//        dialog = BottomSheetDialog(this)
+//        dialog.setContentView(view)
+//        val parentView = view.parent as View
+//        val behavior = BottomSheetBehavior.from(parentView)
+//        behavior.peekHeight = getQuarterWindowHeight()
+//        parentView.setBackgroundColor(
+//            ContextCompat.getColor(
+//                this,
+//                R.color.transparent
+//            )
+//        )
+//
+
+    }
+    fun showBottomSheetDialog(){
+        showBottomSheetDialogFragment()
+    }
+    fun hideBottomSheetDialog(){
+        hideBottomSheetDialogFragment()
+    }
+
+    fun hideBottomSheetDialogFragment(){
+        if(bottomFragment == null){
+            bottomFragment.dismiss()
+        }
+    }
+
+    fun showBottomSheetDialogFragment(){
+        bottomFragment.show(supportFragmentManager, "bottomSheetDialogFragment")
+    }
+
+
+
+
 
     inner class ReadingPageViewAdapter(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -71,21 +125,6 @@ class ReadBookActivity : AppCompatActivity() {
             fragmentMap[position] = fragment
             return fragment
         }
-
-
     }
 
-//    inner class ToolbarPageViewAdapter(fm: FragmentManager) :
-//        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
-//        override fun getCount() = 3
-//
-//        override fun getItem(position: Int): Fragment {
-//            when(position){
-//                0 -> toolbarViewGroup[0] ?: BookDetailsFragment()
-//                1 -> toolbarViewGroup[1] ?: BookDirectoryFragment()
-//                else -> toolbarViewGroup[2] ?: BookMoreFragment()
-//            }
-//        }
-//
-//    }
 }

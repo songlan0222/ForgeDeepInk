@@ -2,7 +2,7 @@ package com.songlan.deepink.utils
 
 import android.util.Log
 
-object LogUtil {
+object LogUtils {
 
     private const val VERBOSE = 1
     private const val DEBUG = 2

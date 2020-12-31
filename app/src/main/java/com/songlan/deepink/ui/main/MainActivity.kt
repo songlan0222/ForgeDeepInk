@@ -6,11 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.R
 import com.songlan.deepink.ui.main.base.BaseFragment
-import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), BackHandleInterface {

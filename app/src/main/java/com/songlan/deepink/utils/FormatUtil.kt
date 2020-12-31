@@ -7,9 +7,6 @@ import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
-import kotlin.math.floor
-import kotlin.math.ln
-import kotlin.math.pow
 
 object FormatUtil {
 
@@ -30,7 +27,7 @@ object FormatUtil {
 
     // 文件大小格式化方法
     fun getFormatFileSize(length: Long): String {
-        LogUtil.d("MainTest", "文件大小为：$length")
+        LogUtils.d("MainTest", "文件大小为：$length")
         val arr = arrayOf("Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
         var index = 0
         var value = length.toDouble()

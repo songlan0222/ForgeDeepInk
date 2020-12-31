@@ -18,8 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.R
-import com.songlan.deepink.repository.DatabaseRepository
-import com.songlan.deepink.utils.LogUtil
 import kotlinx.android.synthetic.main.activity_request_storage_permissive.*
 
 

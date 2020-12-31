@@ -22,7 +22,7 @@ import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.ui.search.SearchBookActivity
-import com.songlan.deepink.utils.LogUtil
+import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.fragment_bookshelf_details.*
 
 class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
@@ -82,7 +82,7 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
                 mainActivity.vm.checkedBookList.addAll(bookList)
                 xRecyclerViewAdapter.notifyDataSetChanged()
             } else {
-                LogUtil.d("MainTest", "获取书架书籍时发生意外。")
+                LogUtils.d("MainTest", "获取书架书籍时发生意外。")
                 result.exceptionOrNull()?.printStackTrace()
             }
         })
@@ -91,14 +91,14 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
             if (bookshelf != null) {
                 mainActivity.vm.checkedBookshelf = bookshelf
                 xRecyclerViewAdapter.notifyDataSetChanged()
-                LogUtil.d("MainTest", "获取选中书架成功。")
+                LogUtils.d("MainTest", "获取选中书架成功。")
             } else {
                 val bookshelfName =
                     MyApplication.context.resources.getString(R.string.default_bookshelf)
                 val bookshelf = Bookshelf(bookshelfName, isFirstChoose = true)
                 mainActivity.vm.insertBookshelf(bookshelf)
                 // mainActivity.vm.getFirstChooseBookshelfId()
-                LogUtil.d("MainTest", "获取选中书架时发生意外。")
+                LogUtils.d("MainTest", "获取选中书架时发生意外。")
                 // result.exceptionOrNull()?.printStackTrace()
             }
         })

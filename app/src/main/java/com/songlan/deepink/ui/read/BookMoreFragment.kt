@@ -4,20 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.songlan.deepink.R
-import kotlinx.android.synthetic.main.fragment_current_page.*
+import com.songlan.deepink.utils.LogUtils
 
-
-class CurPageFragment : Fragment() {
-
+class BookMoreFragment : Fragment() {
     private lateinit var readBookActivity: ReadBookActivity
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,15 +18,11 @@ class CurPageFragment : Fragment() {
         if (activity != null) {
             readBookActivity = activity as ReadBookActivity
         }
-
-        return inflater.inflate(R.layout.fragment_current_page, container, false)
+        LogUtils.v(msg = "加载BookMoreFragment")
+        return inflater.inflate(R.layout.fragment_book_more, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        readPage.setOnClickListener {
-            readBookActivity.showBottomSheetDialog()
-        }
     }
 }

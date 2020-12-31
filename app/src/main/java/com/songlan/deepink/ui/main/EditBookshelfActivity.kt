@@ -14,7 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Bookshelf
-import com.songlan.deepink.utils.LogUtil
+import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_edit_bookshelf.*
 import java.util.*
 
@@ -41,7 +41,7 @@ class EditBookshelfActivity : AppCompatActivity() {
 
         // 获取进入Activity时对应的参数
         isEditBookshelf = intent.getBooleanExtra("edit_bookshelf", false)
-        LogUtil.d("MainTest", "$isEditBookshelf")
+        LogUtils.d("MainTest", "$isEditBookshelf")
 
         // 绑定observer，用于更新viewModel的数据
         viewModel.checkedBookshelfLiveData.observe(this, Observer { result ->
@@ -174,7 +174,7 @@ class EditBookshelfActivity : AppCompatActivity() {
             viewModel.insertBookshelfLiveData.observe(this, androidx.lifecycle.Observer { result ->
                 val bookshelfId = result.getOrNull()
                 if (bookshelfId != null) {
-                    LogUtil.v("MainTest", "insert_bookshelf_id = $bookshelfId")
+                    LogUtils.v("MainTest", "insert_bookshelf_id = $bookshelfId")
                 }
             })
             viewModel.insertBookshelf(bookshelf)
@@ -182,7 +182,7 @@ class EditBookshelfActivity : AppCompatActivity() {
             viewModel.updateBookshelfLiveData.observe(this, androidx.lifecycle.Observer { result ->
                 val bookshelfId = result.getOrNull()
                 if (bookshelfId != null) {
-                    LogUtil.v("MainTest", "insert_bookshelf_id = $bookshelfId")
+                    LogUtils.v("MainTest", "insert_bookshelf_id = $bookshelfId")
                 }
             })
             viewModel.updateBookshelf(bookshelf)

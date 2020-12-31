@@ -1,13 +1,10 @@
 package com.songlan.deepink.utils
 
-import android.content.Context
 import android.net.Uri
 import android.util.Log
 import com.songlan.deepink.MyApplication.Companion.context
-import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Chapter
-import com.songlan.deepink.model.ChapterContent
 import com.songlan.deepink.repository.DatabaseRepository
 import java.io.*
 
@@ -66,7 +63,7 @@ object ChapterDivideUtil {
                         writer?.close()
                         output?.close()
                         val folderPath = mkChapterDir(book.bookName)
-                        LogUtil.v(msg = "${folderPath}/$index")
+                        LogUtils.v(msg = "${folderPath}/$index")
                         index++
 
                         // 创建章节文件

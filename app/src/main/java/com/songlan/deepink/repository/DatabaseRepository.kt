@@ -7,7 +7,7 @@ import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.model.Chapter
-import com.songlan.deepink.utils.LogUtil
+import com.songlan.deepink.utils.LogUtils
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
@@ -123,8 +123,8 @@ object DatabaseRepository {
     fun loadPersistedUriPermissions() = fire(Dispatchers.IO) {
         val contentResolver = context.contentResolver
         contentResolver.persistedUriPermissions.forEach {
-            LogUtil.v("MainTest", "/${it.uri.path?.replace("/tree/primary:", "")}")
-            LogUtil.v("MainTest", "/${it.uri.encodedPath?.replace("/tree/primary:", "")}")
+            LogUtils.v("MainTest", "/${it.uri.path?.replace("/tree/primary:", "")}")
+            LogUtils.v("MainTest", "/${it.uri.encodedPath?.replace("/tree/primary:", "")}")
         }
         Result.success(contentResolver.persistedUriPermissions)
     }

@@ -15,13 +15,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.AppProfiles.CHECKED_BOOKSHELF_ID
 import com.songlan.deepink.AppProfiles.saveToProfile
-import com.songlan.deepink.MyApplication
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.repository.DatabaseRepository
 import com.songlan.deepink.ui.main.base.BaseFragment
-import com.songlan.deepink.utils.LogUtil
+import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.fragment_bookshelf_groups.*
 
 class BookshelfGroupsFragment : BaseFragment() {
@@ -62,9 +61,9 @@ class BookshelfGroupsFragment : BaseFragment() {
                 mainActivity.vm.bookshelfList.clear()
                 mainActivity.vm.bookshelfList.addAll(bookshelfList)
                 bookshelfListAdapter.notifyDataSetChanged()
-                LogUtil.d("MainTest", "获取全部书架成功。")
+                LogUtils.d("MainTest", "获取全部书架成功。")
             } else {
-                LogUtil.d("MainTest", "获取全部书架时发生意外。")
+                LogUtils.d("MainTest", "获取全部书架时发生意外。")
             }
         })
 

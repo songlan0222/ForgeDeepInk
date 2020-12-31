@@ -4,7 +4,7 @@ import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import com.songlan.deepink.AppDatabase
 import com.songlan.deepink.dao.BookshelfDao
-import com.songlan.deepink.utils.LogUtil
+import com.songlan.deepink.utils.LogUtils
 import io.reactivex.Observable
 import io.reactivex.android.plugins.RxAndroidPlugins
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -48,13 +48,13 @@ class BookshelfUnitTest {
 
     @Test
     fun loadTest_AllBookshelfs() {
-        LogUtil.d(
+        LogUtils.d(
             "UnitTest",
             "loadTest_AllBookshelfs"
         )
         doWithRxJava(bookshelfDao?.loadAllBookshelf()).subscribe { bookshelfList ->
             bookshelfList?.forEach { bookshelf ->
-                LogUtil.d(
+                LogUtils.d(
                     "UnitTest",
                     "name:${bookshelf.bookshelfName} —— id:${bookshelf.bookshelfId}"
                 )

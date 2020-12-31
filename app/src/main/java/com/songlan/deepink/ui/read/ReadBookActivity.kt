@@ -2,13 +2,18 @@ package com.songlan.deepink.ui.read
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.ViewPager
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -45,7 +50,7 @@ class ReadBookActivity : AppCompatActivity() {
 
         viewModel.loadBook(bookId)
 
-        // 测试VIewPager显示
+        // 测试ViewPager显示
         chapterContent.adapter = ReadingPageViewAdapter(supportFragmentManager)
         chapterContent.currentItem = 1
     }
@@ -69,4 +74,18 @@ class ReadBookActivity : AppCompatActivity() {
 
 
     }
+
+//    inner class ToolbarPageViewAdapter(fm: FragmentManager) :
+//        FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+//        override fun getCount() = 3
+//
+//        override fun getItem(position: Int): Fragment {
+//            when(position){
+//                0 -> toolbarViewGroup[0] ?: BookDetailsFragment()
+//                1 -> toolbarViewGroup[1] ?: BookDirectoryFragment()
+//                else -> toolbarViewGroup[2] ?: BookMoreFragment()
+//            }
+//        }
+//
+//    }
 }

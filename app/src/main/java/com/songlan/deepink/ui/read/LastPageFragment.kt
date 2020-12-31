@@ -22,7 +22,7 @@ class LastPageFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_last_page, container, false)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
     }
 }

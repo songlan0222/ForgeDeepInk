@@ -1,5 +1,6 @@
 package com.songlan.deepink.ui.read
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -30,8 +31,41 @@ class CurPageFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         readPage.setOnClickListener {
-            Toast.makeText(readBookActivity, "Test OK", Toast.LENGTH_SHORT)
+            val view = View.inflate(readBookActivity, R.layout.dialog_reading_tool_bar, null)
+            view.layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT, getThreeQuarterWindowHeight()
+            )
+            val dialog = BottomSheetDialog(readBookActivity)
+            dialog.setContentView(view)
+            val parentView = view.parent as View
+            val behavior = BottomSheetBehavior.from(parentView)
+            behavior.peekHeight = getQuarterWindowHeight()
+            parentView.setBackgroundColor(
+                ContextCompat.getColor(
+                    readBookActivity,
+                    R.color.transparent
+                )
+            )
+            dialog.show()
+
+            // 配置工具栏显示内容
+//            val viewPager = view.findViewById<ViewPager>(R.id.viewPager)
+//            viewPager.adapter = ToolbarPageViewAdapter(supportFragmentManager)
         }
+    }
+
+    private fun getThreeQuarterWindowHeight(): Int {
+        val res = resources
+        val displayMatrix = res.displayMetrics
+        val heightPixels = displayMatrix.heightPixels
+        return heightPixels - heightPixels / 4
+    }
+
+    private fun getQuarterWindowHeight(): Int {
+        val res = resources
+        val displayMatrix = res.displayMetrics
+        val heightPixels = displayMatrix.heightPixels
+        return heightPixels / 4
     }
 
 }

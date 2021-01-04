@@ -1,28 +1,20 @@
 package com.songlan.deepink.ui.read
 
-import android.app.Dialog
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import android.widget.LinearLayout
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.songlan.deepink.MyApplication
 import com.songlan.deepink.R
-import com.songlan.deepink.ui.main.BookshelfDetailsFragment
-import com.songlan.deepink.ui.main.BookshelfGroupsFragment
-import com.songlan.deepink.ui.main.BookshelfOthersFragment
-import com.songlan.deepink.ui.main.MainActivity
 import com.songlan.deepink.utils.LogUtils
-import java.lang.Exception
+
 
 class ReadBottomSheetDialog : BottomSheetDialogFragment() {
 
@@ -34,6 +26,7 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
 
     private lateinit var readBookActivity: ReadBookActivity
     private val toolbarFragmentMap = hashMapOf<Int, Fragment>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.BottomSheetDialog)
@@ -86,12 +79,15 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
             }
         }
 
-
         override fun instantiateItem(container: ViewGroup, position: Int): Any {
             val fragment = super.instantiateItem(container, position) as Fragment
             toolbarFragmentMap[position] = fragment
             LogUtils.v("MainTest", "获取页面是：~~~ ${fragment.toString()}")
             return fragment
+        }
+
+        override fun saveState(): Parcelable? {
+            return null
         }
     }
 

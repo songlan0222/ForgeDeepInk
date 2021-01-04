@@ -62,7 +62,9 @@ class ReadBookActivity : AppCompatActivity() {
 
     private fun setBottomSheetDialog(){
 
-        bottomFragment = ReadBottomSheetDialog.getReadBottomSheetDialog()
+        //ReadBottomSheetDialog().show(supportFragmentManager, "ReadBottomSheetDialog")
+        //bottomFragment = ReadBottomSheetDialog.getReadBottomSheetDialog()
+        bottomFragment = ReadBottomSheetDialog.getDialog()
 
 
 //        val view = View.inflate(
@@ -102,6 +104,7 @@ class ReadBookActivity : AppCompatActivity() {
     }
 
     fun showBottomSheetDialogFragment(){
+        //ReadBottomSheetDialog().show(supportFragmentManager, "ReadBottomSheetDialog")
         bottomFragment.show(supportFragmentManager, "bottomSheetDialogFragment")
     }
 

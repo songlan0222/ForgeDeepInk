@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/details"
+        android:icon="@null"
+        android:title="详细" />
+
+    <item
+        android:id="@+id/directory"
+        android:icon="@null"
+        android:title="目录" />
+
+    <item
+        android:id="@+id/more"
+        android:icon="@null"
+        android:title="更多" />
+
+</menu>

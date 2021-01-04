@@ -25,7 +25,7 @@ class BookDirectoryFragment : Fragment() {
         if (activity != null) {
             readBookActivity = activity as ReadBookActivity
         }
-        LogUtils.v(msg="加载BookDirectoryFragment")
+        LogUtils.v(msg = "加载BookDirectoryFragment")
         return inflater.inflate(R.layout.fragment_book_directory, container, false)
     }
 

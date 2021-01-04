@@ -29,7 +29,7 @@ class ReadBookActivity : AppCompatActivity() {
 
     private val fragmentMap = hashMapOf<Int, Fragment>()
 
-    lateinit var bottomFragment : ReadBottomSheetDialog
+    lateinit var bottomFragment: ReadBottomSheetDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,56 +60,27 @@ class ReadBookActivity : AppCompatActivity() {
         setBottomSheetDialog()
     }
 
-    private fun setBottomSheetDialog(){
-
-        //ReadBottomSheetDialog().show(supportFragmentManager, "ReadBottomSheetDialog")
-        //bottomFragment = ReadBottomSheetDialog.getReadBottomSheetDialog()
+    private fun setBottomSheetDialog() {
         bottomFragment = ReadBottomSheetDialog.getDialog()
-
-
-//        val view = View.inflate(
-//            this,
-//            R.layout.dialog_reading_tool_bar,
-//            null
-//        )
-//        view.layoutParams = ViewGroup.LayoutParams(
-//            ViewGroup.LayoutParams.MATCH_PARENT, getThreeQuarterWindowHeight()
-//        )
-//
-//        dialog = BottomSheetDialog(this)
-//        dialog.setContentView(view)
-//        val parentView = view.parent as View
-//        val behavior = BottomSheetBehavior.from(parentView)
-//        behavior.peekHeight = getQuarterWindowHeight()
-//        parentView.setBackgroundColor(
-//            ContextCompat.getColor(
-//                this,
-//                R.color.transparent
-//            )
-//        )
-//
-
     }
-    fun showBottomSheetDialog(){
+
+    fun showBottomSheetDialog() {
         showBottomSheetDialogFragment()
     }
-    fun hideBottomSheetDialog(){
+
+    fun hideBottomSheetDialog() {
         hideBottomSheetDialogFragment()
     }
 
-    fun hideBottomSheetDialogFragment(){
-        if(bottomFragment == null){
+    private fun hideBottomSheetDialogFragment() {
+        if (bottomFragment == null) {
             bottomFragment.dismiss()
         }
     }
 
-    fun showBottomSheetDialogFragment(){
-        //ReadBottomSheetDialog().show(supportFragmentManager, "ReadBottomSheetDialog")
+    private fun showBottomSheetDialogFragment() {
         bottomFragment.show(supportFragmentManager, "bottomSheetDialogFragment")
     }
-
-
-
 
 
     inner class ReadingPageViewAdapter(fm: FragmentManager) :

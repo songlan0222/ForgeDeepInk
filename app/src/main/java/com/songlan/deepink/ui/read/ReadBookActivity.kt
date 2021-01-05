@@ -28,7 +28,6 @@ class ReadBookActivity : AppCompatActivity() {
     }
 
     private val fragmentMap = hashMapOf<Int, Fragment>()
-
     lateinit var bottomFragment: ReadBottomSheetDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -39,6 +38,7 @@ class ReadBookActivity : AppCompatActivity() {
         if (bookId == -1L) {
             throw Exception("致命错误：没有获取到小说id")
         }
+        viewModel.bookId = bookId
 
         viewModel.bookLiveData.observe(this, Observer { result ->
             val book = result.getOrNull()
@@ -51,7 +51,9 @@ class ReadBookActivity : AppCompatActivity() {
 
         })
 
+
         viewModel.loadBook(bookId)
+        viewModel.loadChapterWithChapterId(bookId)
 
         // 测试ViewPager显示
         chapterContent.adapter = ReadingPageViewAdapter(supportFragmentManager)

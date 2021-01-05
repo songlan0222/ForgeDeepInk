@@ -62,4 +62,7 @@
     <string name="chapter_regex">章节正则</string>
     <string name="regex_apply">应用</string>
     <string name="default_bookshelf">默认</string>
+    <string name="details">详细</string>
+    <string name="directory">目录</string>
+    <string name="more">更多</string>
 </resources>

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.LinearLayout
+import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -14,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.songlan.deepink.R
 import com.songlan.deepink.utils.LogUtils
+import kotlinx.android.synthetic.main.dialog_reading_tool_bar.*
 
 
 class ReadBottomSheetDialog : BottomSheetDialogFragment() {
@@ -45,7 +48,6 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         view.layoutParams = ViewGroup.LayoutParams(
             ViewGroup.LayoutParams.MATCH_PARENT, getThreeQuarterWindowHeight()
         )
-
         initView(view)
         return view
     }
@@ -63,8 +65,25 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         val view = dialog?.findViewById<FrameLayout>(R.id.design_bottom_sheet)!!
         val behavior = BottomSheetBehavior.from(view)
         behavior.peekHeight = getQuarterWindowHeight()
-    }
+        val layoutParams = read_toolbar_guide.layoutParams as LinearLayout.LayoutParams
+        layoutParams.bottomMargin = 2 * getQuarterWindowHeight()
+        read_toolbar_guide.layoutParams = layoutParams
 
+        behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
+            override fun onStateChanged(bottomSheet: View, newState: Int) {
+
+            }
+
+            override fun onSlide(bottomSheet: View, slideOffset: Float) {
+                val layoutParams = read_toolbar_guide.layoutParams as LinearLayout.LayoutParams
+                val offset = (getQuarterWindowHeight() * 2 * (1 - slideOffset)).toInt()
+                layoutParams.bottomMargin = offset
+                read_toolbar_guide.layoutParams = layoutParams
+            }
+
+        })
+
+    }
 
     inner class ToolbarPageViewAdapter(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -104,14 +123,5 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         val heightPixels = displayMatrix.heightPixels
         return heightPixels - heightPixels / 4
     }
-
-//    override fun show(manager: FragmentManager, tag: String?) {
-//        try{
-//            manager.beginTransaction().remove(this).commit()
-//            super.show(manager, tag)
-//        } catch (e: Exception){
-//            e.printStackTrace()
-//        }
-//    }
 
 }

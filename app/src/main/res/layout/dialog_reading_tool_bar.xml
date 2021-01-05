@@ -11,7 +11,45 @@
         android:id="@+id/toolbarViewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_gravity="top"
         android:layout_weight="1"
-        android:gravity="top" />
+        />
+
+    <LinearLayout
+        android:id="@+id/read_toolbar_guide"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/detailsBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/details"
+            android:textColor="@drawable/selector_read_toolbar_text" />
+
+        <TextView
+            android:id="@+id/directoryBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/directory"
+            android:textColor="@drawable/selector_read_toolbar_text" />
+
+        <TextView
+            android:id="@+id/moreBtn"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/more"
+            android:textColor="@drawable/selector_read_toolbar_text" />
+
+    </LinearLayout>
+
 </LinearLayout>

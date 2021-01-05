@@ -27,12 +27,12 @@
         android:background="@color/silver" />
 
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <!--<com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:gravity="bottom"
-        app:menu="@menu/menu_reading_tool_bar" />
+        app:menu="@menu/menu_reading_tool_bar" />-->
 
 </LinearLayout>

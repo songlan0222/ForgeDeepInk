@@ -5,12 +5,15 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <!--<com.google.android.material.bottomnavigation.BottomNavigationView
+    <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="@color/transparent"
         android:gravity="bottom"
-        app:menu="@menu/menu_reading_tool_bar" />-->
+        android:textColor="@drawable/selector_read_toolbar_navigation"
+
+        app:menu="@menu/menu_reading_tool_bar" />
 
 </LinearLayout>

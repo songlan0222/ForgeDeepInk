@@ -71,6 +71,7 @@ object ChapterDivideUtil {
                         output = FileOutputStream(file)
 
                         chapter?.let {
+                            LogUtils.v(msg="保存当前章节：${it.chapterId} 书籍Id为：${it.bookId}")
                             DatabaseRepository.insertChapter(it)
                         }
                         chapter =
@@ -88,6 +89,7 @@ object ChapterDivideUtil {
                 }
                 // 如果output和writer不为空，则关闭
                 chapter?.let {
+                    LogUtils.v(msg="保存当前章节：${it.chapterId} 书籍Id为：${it.bookId}")
                     DatabaseRepository.insertChapter(it)
                 }
                 writer?.close()

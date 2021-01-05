@@ -166,7 +166,7 @@ class BookshelfDetailsFragment : Fragment(), XRecyclerView.LoadingListener {
             val viewHolder = ViewHolder(view)
             viewHolder.itemView.setOnClickListener {
                 val position = viewHolder.adapterPosition
-                val book = bookList[position]
+                val book = bookList[position-1]
                 AppProfiles.jumpToReadBookActivity(mainActivity, book.bookId)
             }
             viewHolder.itemView.setOnLongClickListener {

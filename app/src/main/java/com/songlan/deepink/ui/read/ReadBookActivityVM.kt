@@ -13,39 +13,34 @@ import com.songlan.deepink.repository.DatabaseRepository
 
 class ReadBookActivityVM : ViewModel() {
 
-    // 获取打开图书的id值
-    var bookId = -1L
-
+    // 根据bookId获取书籍内容
     private val pBookLiveData = MutableLiveData<Long>()
     lateinit var book: Book
     val bookLiveData = Transformations.switchMap(pBookLiveData) { bookId ->
         DatabaseRepository.loadBookWithBookId(bookId)
     }
-
     fun loadBook(bookId: Long) {
         pBookLiveData.value = bookId
     }
 
+    // 根据bookId获取书籍章节信息列表
     private val pLoadChapterTitleWithBookId = MutableLiveData<Long>()
     val chapterTitles = ArrayList<Chapter>()
     val loadChaptersWithBookId =
         Transformations.switchMap(pLoadChapterTitleWithBookId) { bookId ->
             DatabaseRepository.loadChaptersWithBookId(bookId)
         }
-
     fun loadChapterTitleWithBookId(bookId: Long) {
         pLoadChapterTitleWithBookId.value = bookId
     }
 
-
+    // 根据chapterId获取章节内容
     private val pLoadChapterWithChapterId = MutableLiveData<Long>()
     lateinit var chapter: Chapter
     val loadChapterWithChapterIdLiveData =
         Transformations.switchMap(pLoadChapterWithChapterId) { chapterId ->
             DatabaseRepository.loadChapterWithChapterId(chapterId)
         }
-
-
     fun loadChapterWithChapterId(chapterId: Long) {
         pLoadChapterWithChapterId.value = chapterId
     }

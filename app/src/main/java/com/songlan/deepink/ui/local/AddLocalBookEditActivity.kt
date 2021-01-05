@@ -93,6 +93,7 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
         viewModel.insertBookLiveData.observe(this, Observer { result ->
             val bookId = result.getOrNull()
             if (bookId != null) {
+                book.bookId = bookId
                 // 书籍保存成功后，开始章节切割并保存到本地
                 getChaptersFromTxt(documentUri, book)
 

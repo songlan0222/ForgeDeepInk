@@ -21,6 +21,7 @@ object DatabaseRepository {
     // 章节管理方法
     fun insertChapter(chapter: Chapter) = fire(Dispatchers.IO) {
         val chapterId = chapterDao.insertChapter(chapter)
+        LogUtils.v(msg = "chapterId: $chapterId bookId: ${chapter.bookId}")
         Result.success(chapterId)
     }
 

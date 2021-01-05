@@ -11,8 +11,7 @@
         android:id="@+id/toolbarViewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        />
+        android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/read_toolbar_guide"
@@ -26,9 +25,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="center"
             android:text="@string/details"
-            android:textColor="@drawable/selector_read_toolbar_text" />
+            android:textColor="@drawable/selector_read_toolbar_text"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/directoryBtn"
@@ -36,9 +37,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="center"
             android:text="@string/directory"
-            android:textColor="@drawable/selector_read_toolbar_text" />
+            android:textColor="@drawable/selector_read_toolbar_text"
+            android:textSize="16sp" />
 
         <TextView
             android:id="@+id/moreBtn"
@@ -46,9 +49,11 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="1"
+            android:clickable="true"
             android:gravity="center"
             android:text="@string/more"
-            android:textColor="@drawable/selector_read_toolbar_text" />
+            android:textColor="@drawable/selector_read_toolbar_text"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

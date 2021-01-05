@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -57,6 +58,32 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         val toolbarViewPager = rootView.findViewById<ViewPager>(R.id.toolbarViewPager)
         toolbarViewPager.adapter = ToolbarPageViewAdapter(this.childFragmentManager)
         toolbarViewPager.currentItem = 1
+
+        // 配置导航栏
+        val detailsBtn = rootView.findViewById<TextView>(R.id.detailsBtn)
+        val directoryBtn = rootView.findViewById<TextView>(R.id.directoryBtn)
+        val moreBtn = rootView.findViewById<TextView>(R.id.moreBtn)
+        detailsBtn.setOnClickListener {
+            detailsBtn.isSelected = true
+            directoryBtn.isSelected = false
+            moreBtn.isSelected = false
+            changePageFragment(PAGE_DETAILS)
+        }
+        directoryBtn.setOnClickListener {
+            detailsBtn.isSelected = false
+            directoryBtn.isSelected = true
+            moreBtn.isSelected = false
+            changePageFragment(PAGE_DIRECTORY)
+        }
+        moreBtn.setOnClickListener {
+            detailsBtn.isSelected = false
+            directoryBtn.isSelected = false
+            moreBtn.isSelected = true
+            changePageFragment(PAGE_MORE)
+        }
+        // 初始化时，设置目录页面为选中页面
+        directoryBtn.isSelected = true
+
     }
 
     override fun onStart() {
@@ -80,13 +107,17 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
                 layoutParams.bottomMargin = offset
                 read_toolbar_guide.layoutParams = layoutParams
             }
-
         })
 
     }
 
+    private val PAGE_DETAILS = 0
+    private val PAGE_DIRECTORY = 1
+    private val PAGE_MORE = 2
+
     inner class ToolbarPageViewAdapter(fm: FragmentManager) :
         FragmentStatePagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
         override fun getCount() = 3
 
         override fun getItem(position: Int): Fragment {
@@ -108,6 +139,11 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         override fun saveState(): Parcelable? {
             return null
         }
+    }
+
+
+    private fun changePageFragment(pageNum: Int) {
+        toolbarViewPager.currentItem = pageNum
     }
 
     private fun getQuarterWindowHeight(): Int {

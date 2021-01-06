@@ -47,6 +47,7 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.dialog_reading_tool_bar, container, false)
         view.layoutParams = ViewGroup.LayoutParams(
+            // 与界面同宽，但是高度只有总高度的3/4
             ViewGroup.LayoutParams.MATCH_PARENT, getThreeQuarterWindowHeight()
         )
         initView(view)
@@ -91,9 +92,9 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         // 拿到系统的 bottom_sheet
         val view = dialog?.findViewById<FrameLayout>(R.id.design_bottom_sheet)!!
         val behavior = BottomSheetBehavior.from(view)
-        behavior.peekHeight = getQuarterWindowHeight()
+        behavior.peekHeight = 2*getQuarterWindowHeight()
         val layoutParams = read_toolbar_guide.layoutParams as LinearLayout.LayoutParams
-        layoutParams.bottomMargin = 2 * getQuarterWindowHeight()
+        layoutParams.bottomMargin = 1 * getQuarterWindowHeight()
         read_toolbar_guide.layoutParams = layoutParams
 
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
@@ -103,7 +104,7 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 val layoutParams = read_toolbar_guide.layoutParams as LinearLayout.LayoutParams
-                val offset = (getQuarterWindowHeight() * 2 * (1 - slideOffset)).toInt()
+                val offset = (getQuarterWindowHeight() * 1 * (1 - slideOffset)).toInt()
                 layoutParams.bottomMargin = offset
                 read_toolbar_guide.layoutParams = layoutParams
             }

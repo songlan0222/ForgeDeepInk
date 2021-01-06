@@ -49,10 +49,10 @@ class ReadBookActivity : AppCompatActivity() {
             val book = result.getOrNull()
             if (book != null) {
                 viewModel.book = book
-                Log.d("MainTest", "获取到图书: ${book.bookName}")
+                LogUtils.d("MainTest", "获取到图书: ${book.bookName}")
                 viewModel.loadChapterTitleWithBookId(book.bookId)
             } else {
-                Log.d("MainTest", "阅读界面：获取书籍失败")
+                LogUtils.d("MainTest", "阅读界面：获取书籍失败")
             }
         })
 

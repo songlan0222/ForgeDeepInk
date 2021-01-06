@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.size
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,7 +42,7 @@ class BookDirectoryFragment : Fragment() {
             }
             true
         }
-        toolbar?.title = "斗破苍穹"
+        toolbar?.title = readBookActivity.viewModel.book.bookName
 
         toolbar?.setNavigationIcon(R.drawable.ic_back)
         toolbar?.setNavigationOnClickListener {
@@ -50,8 +51,5 @@ class BookDirectoryFragment : Fragment() {
 
         chapterTitleList.layoutManager = LinearLayoutManager(readBookActivity)
         chapterTitleList.adapter = readBookActivity.chapterTitleAdapter
-
     }
-
-
 }

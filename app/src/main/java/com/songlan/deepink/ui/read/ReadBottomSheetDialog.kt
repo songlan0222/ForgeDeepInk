@@ -23,9 +23,14 @@ import kotlinx.android.synthetic.main.dialog_reading_tool_bar.*
 class ReadBottomSheetDialog : BottomSheetDialogFragment() {
 
     companion object {
-        private val readBottomSheetDialog: ReadBottomSheetDialog? = null
+        private var readBottomSheetDialog: ReadBottomSheetDialog? = null
 
-        fun getDialog() = ReadBottomSheetDialog()
+        fun getDialog(): ReadBottomSheetDialog {
+            if (readBottomSheetDialog == null) {
+                readBottomSheetDialog = ReadBottomSheetDialog()
+            }
+            return readBottomSheetDialog!!
+        }
     }
 
     private lateinit var readBookActivity: ReadBookActivity
@@ -43,7 +48,7 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val view = inflater.inflate(R.layout.dialog_reading_tool_bar, container, false)
         view.layoutParams = ViewGroup.LayoutParams(
@@ -92,14 +97,18 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         // 拿到系统的 bottom_sheet
         val view = dialog?.findViewById<FrameLayout>(R.id.design_bottom_sheet)!!
         val behavior = BottomSheetBehavior.from(view)
-        behavior.peekHeight = 2*getQuarterWindowHeight()
+        behavior.peekHeight = 2 * getQuarterWindowHeight()
         val layoutParams = read_toolbar_guide.layoutParams as LinearLayout.LayoutParams
         layoutParams.bottomMargin = 1 * getQuarterWindowHeight()
         read_toolbar_guide.layoutParams = layoutParams
 
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
-
+                if (newState == BottomSheetBehavior.STATE_HIDDEN) {
+                    // 如果隐藏状态，则销毁readBottomSheetDialog
+                    readBottomSheetDialog?.dismiss()
+                    readBottomSheetDialog = null
+                }
             }
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
@@ -109,7 +118,11 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
                 read_toolbar_guide.layoutParams = layoutParams
             }
         })
+    }
 
+    override fun show(manager: FragmentManager, tag: String?) {
+        if(!this.isAdded)
+            super.show(manager, tag)
     }
 
     private val PAGE_DETAILS = 0

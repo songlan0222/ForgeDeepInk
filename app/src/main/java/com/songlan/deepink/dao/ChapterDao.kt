@@ -29,4 +29,7 @@ interface ChapterDao {
 
     @Query("select * from chapter where bookId = :bookId")
     fun loadChaptersWithBookId(bookId: Long): List<Chapter>
+
+    @Query("select * from Chapter where bookId = :bookId order by chapterId ASC LIMIT 1")
+    fun getFirstChapterWithBookId(bookId: Long): Chapter
 }

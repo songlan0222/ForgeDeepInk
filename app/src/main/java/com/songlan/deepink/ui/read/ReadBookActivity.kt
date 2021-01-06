@@ -1,28 +1,21 @@
 package com.songlan.deepink.ui.read
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.utils.LogUtils
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_read_book.*
 
 
@@ -45,33 +38,71 @@ class ReadBookActivity : AppCompatActivity() {
             throw Exception("致命错误：没有获取到小说id")
         }
 
+        // 获取书籍
         viewModel.bookLiveData.observe(this, Observer { result ->
             val book = result.getOrNull()
             if (book != null) {
                 viewModel.book = book
                 LogUtils.d("MainTest", "获取到图书: ${book.bookName}")
-                viewModel.loadChapterTitleWithBookId(book.bookId)
+                viewModel.loadChaptersWithBookId(book.bookId)
             } else {
                 LogUtils.d("MainTest", "阅读界面：获取书籍失败")
             }
         })
 
-        viewModel.loadChaptersWithBookId.observe(this, Observer { result ->
+        // 获取章节列表
+        viewModel.loadChaptersWithBookIdLiveData.observe(this, Observer { result ->
             val chapters = result.getOrNull()
             if (chapters != null) {
-                LogUtils.v(msg="获取章节信息成功，章节数目为：${chapters.size}")
-                viewModel.chapterTitles.clear()
-                viewModel.chapterTitles.addAll(chapters)
+                LogUtils.v(msg = "获取章节信息成功，章节数目为：${chapters.size}")
+                viewModel.loadChaptersWithBookId.clear()
+                viewModel.loadChaptersWithBookId.addAll(chapters)
+
+                // 获取到章节列表后，判断book.readingChapterId是否为最初值
+                LogUtils.v(msg = "当前书籍正在阅读的章节为：${viewModel.book.readingChapterId}")
+                if (viewModel.book.readingChapterId == -1L) {
+                    // 获取小说的第一章
+                    viewModel.getFirstChapterWithBookId(bookId)
+                } else {
+                    viewModel.loadReadingChapter(viewModel.book.readingChapterId)
+                }
                 chapterTitleAdapter.notifyDataSetChanged()
-            } else{
-                LogUtils.v(msg="获取章节信息失败")
+            } else {
+                LogUtils.v(msg = "获取章节信息失败")
             }
         })
 
-        chapterTitleAdapter = MyRecyclerViewAdapter(viewModel.chapterTitles)
+        viewModel.getFirstChapterWithBookIdLiveData.observe(this, Observer { result ->
+            val firstChapter = result.getOrNull()
+            if (firstChapter != null) {
+                LogUtils.v(msg = "获取到的第一个章节为：${firstChapter.chapterName}id:${firstChapter.chapterId}")
+                viewModel.book.readingChapterId = firstChapter.chapterId
+                viewModel.updateBook(viewModel.book)
+                chapterTitleAdapter.notifyDataSetChanged()
+            }
+        })
 
+        viewModel.loadReadingChapterLiveData.observe(this, Observer { result ->
+            val chapter = result.getOrNull()
+            if (chapter != null) {
+                LogUtils.v(msg = "获取正在阅读的章节信息成功，章节名为：${chapter.chapterName}")
+                viewModel.readingChapter = chapter
+                chapterTitleAdapter.notifyDataSetChanged()
+            } else {
+                LogUtils.v(msg = "获取正在阅读的章节信息失败")
+            }
+        })
+
+        viewModel.updateBookLiveData.observe(this, Observer { result ->
+            val res = result.getOrNull()
+            if (res != null) {
+                viewModel.loadBook(bookId)
+                viewModel.loadReadingChapter(viewModel.book.readingChapterId)
+            }
+        })
 
         viewModel.loadBook(bookId)
+        chapterTitleAdapter = MyRecyclerViewAdapter(viewModel.loadChaptersWithBookId)
 
         // 测试ViewPager显示
         chapterContent.adapter = ReadingPageViewAdapter(supportFragmentManager)
@@ -80,6 +111,7 @@ class ReadBookActivity : AppCompatActivity() {
         setBottomSheetDialog()
     }
 
+    // 配置底部弹窗
     private fun setBottomSheetDialog() {
         bottomFragment = ReadBottomSheetDialog.getDialog()
     }
@@ -88,16 +120,15 @@ class ReadBookActivity : AppCompatActivity() {
         showBottomSheetDialogFragment()
     }
 
-    fun hideBottomSheetDialog() {
-        hideBottomSheetDialogFragment()
-    }
-
-    private fun hideBottomSheetDialogFragment() {
-        if (bottomFragment == null) {
-            bottomFragment.dismiss()
+    /*    fun hideBottomSheetDialog() {
+            hideBottomSheetDialogFragment()
         }
-    }
 
+        private fun hideBottomSheetDialogFragment() {
+            if (bottomFragment == null) {
+                bottomFragment.dismiss()
+            }
+        }*/
     private fun showBottomSheetDialogFragment() {
         bottomFragment.show(supportFragmentManager, "bottomSheetDialogFragment")
     }
@@ -125,6 +156,9 @@ class ReadBookActivity : AppCompatActivity() {
     // 章节列表的Adapter
     inner class MyRecyclerViewAdapter(private val chapterList: List<Chapter>) :
         RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
+
+        private val holderList = arrayListOf<ViewHolder>()
+
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val chapterTitle: TextView = view.findViewById<TextView>(R.id.chapterTitle)
         }
@@ -137,15 +171,34 @@ class ReadBookActivity : AppCompatActivity() {
                 val position = viewHolder.adapterPosition
                 val chapter = chapterList[position]
             }
+            viewHolder.itemView.setOnClickListener {
+                chapterListSelected(viewHolder)
+            }
+            holderList.add(viewHolder)
             return viewHolder
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val chapter = chapterList[position]
             holder.chapterTitle.text = chapter.chapterName
+            holder.chapterTitle.isSelected = false
+            if (chapter == viewModel.readingChapter) {
+                holder.chapterTitle.isSelected = true
+            }
         }
 
         override fun getItemCount() = chapterList.size
+
+        private fun chapterListSelected(holder: ViewHolder) {
+            // 点击时，更换正在阅读的章节
+            if (!holder.chapterTitle.isSelected) {
+                holderList.forEach { holder ->
+                    if (holder.chapterTitle.isSelected)
+                        holder.chapterTitle.isSelected = false
+                }
+                holder.chapterTitle.isSelected = true
+            }
+        }
     }
 
 }

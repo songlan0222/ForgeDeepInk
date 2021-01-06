@@ -96,7 +96,6 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
             if (chapterId != null) {
                 LogUtils.v(msg = "添加章节成功，章节id为：$chapterId")
             }
-
         })
 
         viewModel.insertBookLiveData.observe(this, Observer { result ->

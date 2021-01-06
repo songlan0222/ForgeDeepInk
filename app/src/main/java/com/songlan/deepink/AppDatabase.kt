@@ -12,7 +12,7 @@ import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.model.Chapter
 
 @Database(
-    version = 4,
+    version = 1,
     entities = [Book::class, Bookshelf::class, Chapter::class],
     exportSchema = false
 )

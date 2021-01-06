@@ -62,7 +62,6 @@ object ChapterDivideUtil {
                         writer?.close()
                         output?.close()
                         val folderPath = mkChapterDir(book.bookName)
-                        // LogUtils.v(msg = "${folderPath}/$index")
                         index++
 
                         // 创建章节文件
@@ -88,8 +87,7 @@ object ChapterDivideUtil {
                 }
                 // 如果output和writer不为空，则关闭
                 chapter?.let {
-//                    LogUtils.v(msg="保存当前章节：${it.chapterId} 书籍Id为：${it.bookId}")
-                    DatabaseRepository.insertChapter(it)
+                    vm.insertChapter(it)
                 }
                 writer?.close()
                 output?.close()

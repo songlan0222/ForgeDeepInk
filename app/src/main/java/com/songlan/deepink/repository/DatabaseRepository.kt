@@ -36,6 +36,11 @@ object DatabaseRepository {
         Result.success(chapter)
     }
 
+    fun getFirstChapterWithBookId(bookId:Long) = fire(Dispatchers.IO){
+        val chapter = chapterDao.getFirstChapterWithBookId(bookId)
+        Result.success(chapter)
+    }
+
 
     // 书籍管理方法
     fun insertBook(book: Book) = fire(Dispatchers.IO) {

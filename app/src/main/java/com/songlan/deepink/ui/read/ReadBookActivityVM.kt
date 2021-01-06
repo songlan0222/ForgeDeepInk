@@ -1,9 +1,5 @@
 package com.songlan.deepink.ui.read
 
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
@@ -25,15 +21,15 @@ class ReadBookActivityVM : ViewModel() {
     }
 
     // 根据bookId获取书籍章节信息列表
-    private val pLoadChapterTitleWithBookId = MutableLiveData<Long>()
-    val chapterTitles = ArrayList<Chapter>()
-    val loadChaptersWithBookId =
-        Transformations.switchMap(pLoadChapterTitleWithBookId) { bookId ->
+    private val pLoadChaptersWithBookIdLiveData = MutableLiveData<Long>()
+    val loadChaptersWithBookId = ArrayList<Chapter>()
+    val loadChaptersWithBookIdLiveData =
+        Transformations.switchMap(pLoadChaptersWithBookIdLiveData) { bookId ->
             DatabaseRepository.loadChaptersWithBookId(bookId)
         }
 
-    fun loadChapterTitleWithBookId(bookId: Long) {
-        pLoadChapterTitleWithBookId.value = bookId
+    fun loadChaptersWithBookId(bookId: Long) {
+        pLoadChaptersWithBookIdLiveData.value = bookId
     }
 
     // 根据chapterId获取章节内容
@@ -48,8 +44,42 @@ class ReadBookActivityVM : ViewModel() {
         pLoadChapterWithChapterId.value = chapterId
     }
 
+    // 根据章节id获取的章节
+    private val pLoadReadingChapterLiveData = MutableLiveData<Long>()
+    lateinit var readingChapter: Chapter
+    val loadReadingChapterLiveData =
+        Transformations.switchMap(pLoadReadingChapterLiveData) { chapterId ->
+            DatabaseRepository.loadChapterWithChapterId(chapterId)
+        }
+    fun loadReadingChapter(chapterId: Long) {
+        pLoadReadingChapterLiveData.value = chapterId
+    }
+
+
+    // 更新书籍信息
+    private val pUpdateBookLiveData = MutableLiveData<Book>()
+    val updateBookLiveData = Transformations.switchMap(pUpdateBookLiveData) { book ->
+        DatabaseRepository.updateBook(book)
+    }
+
+    fun updateBook(book: Book) {
+        pUpdateBookLiveData.value = book
+    }
+
+    private val pGetFirstChapterWithBookIdLiveData = MutableLiveData<Long>()
+    val getFirstChapterWithBookIdLiveData =
+        Transformations.switchMap(pGetFirstChapterWithBookIdLiveData) { bookId ->
+            DatabaseRepository.getFirstChapterWithBookId(bookId)
+        }
+
+    fun getFirstChapterWithBookId(bookId: Long) {
+        pGetFirstChapterWithBookIdLiveData.value = bookId
+    }
+
     companion object {
         // 小说页默认显示中间页面
         const val DEFAULT_ITEM_ID = 1
     }
+
+    //private val pSelectedChapter =
 }

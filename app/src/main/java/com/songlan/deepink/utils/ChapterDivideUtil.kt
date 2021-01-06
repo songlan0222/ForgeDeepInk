@@ -27,7 +27,7 @@ object ChapterDivideUtil {
                 reader.forEachLine { lineContent ->
                     val matchTitleList = CHAPTER_SPLIT_REGEX.findAll(lineContent)
                     matchTitleList.forEach {
-                        Log.d("MainTest", it.value)
+                        // Log.d("MainTest", it.value)
                         titleList.add(it.value.trim())
                     }
                 }
@@ -41,8 +41,6 @@ object ChapterDivideUtil {
     }
 
     // 导入小说，进行章节切分
-    // val book = Book(R.drawable.ic_book_default, bookName)
-    // val bookId = DatabaseRepository.insertBook(book).observe()
     fun getChaptersFromTxt(documentFileUri: Uri, book: Book) {
         val documentInputStream = context.contentResolver.openInputStream(documentFileUri)
         val codeType = documentInputStream?.let {
@@ -63,7 +61,7 @@ object ChapterDivideUtil {
                         writer?.close()
                         output?.close()
                         val folderPath = mkChapterDir(book.bookName)
-                        LogUtils.v(msg = "${folderPath}/$index")
+                        // LogUtils.v(msg = "${folderPath}/$index")
                         index++
 
                         // 创建章节文件
@@ -71,7 +69,7 @@ object ChapterDivideUtil {
                         output = FileOutputStream(file)
 
                         chapter?.let {
-                            LogUtils.v(msg="保存当前章节：${it.chapterId} 书籍Id为：${it.bookId}")
+                            LogUtils.v(msg="保存当前章节：${it.chapterName} 书籍Id为：${it.bookId}")
                             DatabaseRepository.insertChapter(it)
                         }
                         chapter =
@@ -89,7 +87,7 @@ object ChapterDivideUtil {
                 }
                 // 如果output和writer不为空，则关闭
                 chapter?.let {
-                    LogUtils.v(msg="保存当前章节：${it.chapterId} 书籍Id为：${it.bookId}")
+//                    LogUtils.v(msg="保存当前章节：${it.chapterId} 书籍Id为：${it.bookId}")
                     DatabaseRepository.insertChapter(it)
                 }
                 writer?.close()

@@ -7,27 +7,27 @@ import com.songlan.deepink.model.Book
 interface BookDao {
 
     @Insert
-    fun insertBook(book: Book): Long
+    suspend fun insertBook(book: Book): Long
 
     @Update
-    fun updateBook(book: Book)
+    suspend fun updateBook(book: Book)
 
     @Query("select * from Book where bookId = :bookId")
-    fun loadBookWithBookId(bookId: Long): Book
+    suspend fun loadBookWithBookId(bookId: Long): Book
 
     @Query("select * from Book where 1 = 1")
-    fun loadAllBooks(): List<Book>
+    suspend fun loadAllBooks(): List<Book>
 
     @Query("select * from Book where bookshelfId = :bookshelfId")
-    fun loadBookWithBookshelfId(bookshelfId: Long): List<Book>
+    suspend fun loadBookWithBookshelfId(bookshelfId: Long): List<Book>
 
     @Delete
-    fun deleteBook(book: Book)
+    suspend fun deleteBook(book: Book)
 
     @Query("delete from Book where bookshelfId = :bookshelfId")
-    fun deleteBookWithBookshelfId(bookshelfId: Long): Int
+    suspend fun deleteBookWithBookshelfId(bookshelfId: Long): Int
 
     @Query("delete from Book where 1=1")
-    fun deleteAllBooks(): Int
+    suspend fun deleteAllBooks(): Int
 
 }

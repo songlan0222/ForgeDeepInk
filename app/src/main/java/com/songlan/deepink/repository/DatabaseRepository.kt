@@ -26,6 +26,7 @@ object DatabaseRepository {
     }
 
     fun loadChaptersWithBookId(bookId: Long) = fire(Dispatchers.IO) {
+        LogUtils.v(msg = "正在获取章节信息，书籍bookId为: $bookId")
         val chapterTitles = chapterDao.loadChaptersWithBookId(bookId)
         Result.success(chapterTitles)
     }

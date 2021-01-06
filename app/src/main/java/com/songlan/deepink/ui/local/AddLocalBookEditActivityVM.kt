@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import androidx.room.Database
 import com.songlan.deepink.model.Book
+import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.repository.ChapterRepository
 import com.songlan.deepink.repository.DatabaseRepository
 
@@ -29,6 +30,16 @@ class AddLocalBookEditActivityVM : ViewModel() {
 
     fun insertBook(book: Book) {
         pInsertBookLiveData.value = book
+    }
+
+    private val pChapterLiveData = MutableLiveData<Chapter>()
+    val chapterLiveData = Transformations.switchMap(pChapterLiveData) { chapter ->
+        DatabaseRepository.insertChapter(chapter)
+
+    }
+
+    fun insertChapter(chapter: Chapter) {
+        pChapterLiveData.value = chapter
     }
 
 }

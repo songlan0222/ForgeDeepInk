@@ -19,6 +19,7 @@ class ReadBookActivityVM : ViewModel() {
     val bookLiveData = Transformations.switchMap(pBookLiveData) { bookId ->
         DatabaseRepository.loadBookWithBookId(bookId)
     }
+
     fun loadBook(bookId: Long) {
         pBookLiveData.value = bookId
     }
@@ -30,6 +31,7 @@ class ReadBookActivityVM : ViewModel() {
         Transformations.switchMap(pLoadChapterTitleWithBookId) { bookId ->
             DatabaseRepository.loadChaptersWithBookId(bookId)
         }
+
     fun loadChapterTitleWithBookId(bookId: Long) {
         pLoadChapterTitleWithBookId.value = bookId
     }
@@ -41,6 +43,7 @@ class ReadBookActivityVM : ViewModel() {
         Transformations.switchMap(pLoadChapterWithChapterId) { chapterId ->
             DatabaseRepository.loadChapterWithChapterId(chapterId)
         }
+
     fun loadChapterWithChapterId(chapterId: Long) {
         pLoadChapterWithChapterId.value = chapterId
     }

@@ -7,14 +7,14 @@ import com.songlan.deepink.model.BookSrc
 interface BookSrcDao {
 
     @Insert
-    suspend fun insertBookSrc(bookSrc: BookSrc)
+    fun insertBookSrc(bookSrc: BookSrc)
 
     @Update
-    suspend fun updateBookSrc(bookSrc: BookSrc)
+    fun updateBookSrc(bookSrc: BookSrc)
 
     @Delete
-    suspend fun deleteBookSrc(bookSrc: BookSrc)
+    fun deleteBookSrc(bookSrc: BookSrc)
 
     @Query("delete from BookSrc where bookSrcId = :bookSrcId")
-    suspend fun deleteBookSrcWithId(bookSrcId: Long)
+    fun deleteBookSrcWithId(bookSrcId: Long)
 }

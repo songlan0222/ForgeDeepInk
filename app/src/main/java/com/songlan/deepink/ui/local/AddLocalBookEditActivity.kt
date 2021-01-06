@@ -22,6 +22,7 @@ import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.utils.ChapterDivideUtil.getChaptersFromTxt
+import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_add_local_book.toolbar
 import kotlinx.android.synthetic.main.activity_edit_local_book.*
 import java.lang.Exception
@@ -90,12 +91,20 @@ class AddLocalBookEditActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
 
+        viewModel.chapterLiveData.observe(this, Observer { result ->
+            val chapterId = result.getOrNull()
+            if (chapterId != null) {
+                LogUtils.v(msg = "添加章节成功，章节id为：$chapterId")
+            }
+
+        })
+
         viewModel.insertBookLiveData.observe(this, Observer { result ->
             val bookId = result.getOrNull()
             if (bookId != null) {
                 book.bookId = bookId
                 // 书籍保存成功后，开始章节切割并保存到本地
-                getChaptersFromTxt(documentUri, book)
+                getChaptersFromTxt(viewModel, documentUri, book)
 
                 val intent = Intent()
                 setResult(RESULT_OK, intent)

@@ -6,6 +6,7 @@ import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.repository.DatabaseRepository
+import com.songlan.deepink.ui.local.AddLocalBookEditActivityVM
 import java.io.*
 
 
@@ -41,7 +42,7 @@ object ChapterDivideUtil {
     }
 
     // 导入小说，进行章节切分
-    fun getChaptersFromTxt(documentFileUri: Uri, book: Book) {
+    fun getChaptersFromTxt(vm: AddLocalBookEditActivityVM, documentFileUri: Uri, book: Book) {
         val documentInputStream = context.contentResolver.openInputStream(documentFileUri)
         val codeType = documentInputStream?.let {
             getFileCharsetName(it)
@@ -70,7 +71,7 @@ object ChapterDivideUtil {
 
                         chapter?.let {
                             LogUtils.v(msg="保存当前章节：${it.chapterName} 书籍Id为：${it.bookId}")
-                            DatabaseRepository.insertChapter(it)
+                            vm.insertChapter(it)
                         }
                         chapter =
                             Chapter(lineContent, "${folderPath}/$index", book.bookId)

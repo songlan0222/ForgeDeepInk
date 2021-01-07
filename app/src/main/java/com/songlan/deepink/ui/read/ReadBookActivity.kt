@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager.widget.ViewPager
 import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Chapter
@@ -19,6 +20,7 @@ import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_read_book.*
 import kotlinx.android.synthetic.main.fragment_current_page.*
 import kotlinx.android.synthetic.main.fragment_last_page.*
+import java.lang.StringBuilder
 
 
 class ReadBookActivity : AppCompatActivity() {
@@ -30,6 +32,9 @@ class ReadBookActivity : AppCompatActivity() {
     private val fragmentMap = hashMapOf<Int, Fragment>()
     lateinit var bottomFragment: ReadBottomSheetDialog
     lateinit var chapterTitleAdapter: MyRecyclerViewAdapter
+    lateinit var readPageAdapter: ReadingPageViewAdapter
+    private lateinit var pageList: ArrayList<String>
+    private var curPageNum = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,9 +107,7 @@ class ReadBookActivity : AppCompatActivity() {
                 LogUtils.v(msg = "获取正在阅读章节内容成功")
                 viewModel.readingChapterContent = content
                 curReadPage.text = content
-                curReadPage.resize()
-                val charNum = curReadPage.getCharNum()
-                lastReadPage.text = content.substring(charNum)
+                pageList = getPageList()
             }
         })
         // 更新书籍正在阅读的章节id
@@ -121,11 +124,86 @@ class ReadBookActivity : AppCompatActivity() {
         chapterTitleAdapter = MyRecyclerViewAdapter(viewModel.loadChaptersWithBookId)
 
         // 测试ViewPager显示
-        chapterContent.adapter = ReadingPageViewAdapter(supportFragmentManager)
+        readPageAdapter = ReadingPageViewAdapter(supportFragmentManager)
+        chapterContent.adapter = readPageAdapter
         chapterContent.currentItem = 1
         // 配置底部弹窗
         setBottomSheetDialog()
+
+        chapterContent.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int,
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    0 -> {
+                        chapterContent.setCurrentItem(1, false)
+                        curReadPage.text = getPageContent(curPageNum-1)
+                    }
+                    2 -> {
+                        chapterContent.setCurrentItem(1, false)
+                        curReadPage.text = getPageContent(curPageNum+1)
+                    }
+                    else -> {
+
+                    }
+                }
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+        })
     }
+
+    private fun getPageList(): ArrayList<String> {
+        curReadPage.resize()
+        val charNum = curReadPage.getCharNum()
+        var i = 0
+        var content = viewModel.readingChapterContent.substring(charNum)
+        val pageList = arrayListOf<String>()
+        while (i < viewModel.readingChapterContent.length) {
+            var pageContent: String
+            if(charNum > content.length){
+                pageContent = content
+                // content = content.substring(charNum)
+            }else{
+                pageContent = content.substring(0, charNum)
+                content = content.substring(charNum)
+
+            }
+            pageList.add(pageContent)
+            i += charNum
+            if(i > viewModel.readingChapterContent.length){
+                i = viewModel.readingChapterContent.length
+            }
+        }
+        return pageList
+    }
+
+    fun getPageContent(pageNum: Int): String {
+        curPageNum = pageNum
+        return pageList[pageNum]
+    }
+
+    /*private fun swapFragment(pos0: Int, pos1: Int, pos2: Int) {
+        if (fragmentMap.isNotEmpty()) {
+            val fragment0 = fragmentMap[0]!!
+            val fragment1 = fragmentMap[1]!!
+            val fragment2 = fragmentMap[2]!!
+
+            fragmentMap[pos0] = fragment0
+            fragmentMap[pos1] = fragment1
+            fragmentMap[pos2] = fragment2
+
+            readPageAdapter.notifyDataSetChanged()
+        }
+    }*/
 
     /* 加载章节内容 */
     private fun loadChapterContent(chapter: Chapter) {

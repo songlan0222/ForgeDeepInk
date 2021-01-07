@@ -28,7 +28,7 @@ class CurPageFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        readPage.setOnClickListener {
+        curReadPage.setOnClickListener {
             readBookActivity.showBottomSheetDialog()
         }
     }

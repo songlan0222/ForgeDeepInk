@@ -18,6 +18,7 @@ import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_read_book.*
 import kotlinx.android.synthetic.main.fragment_current_page.*
+import kotlinx.android.synthetic.main.fragment_last_page.*
 
 
 class ReadBookActivity : AppCompatActivity() {
@@ -100,7 +101,10 @@ class ReadBookActivity : AppCompatActivity() {
             if (content != null) {
                 LogUtils.v(msg = "获取正在阅读章节内容成功")
                 viewModel.readingChapterContent = content
-                readPage.text = content
+                curReadPage.text = content
+                curReadPage.resize()
+                val charNum = curReadPage.getCharNum()
+                lastReadPage.text = content.substring(charNum)
             }
         })
         // 更新书籍正在阅读的章节id

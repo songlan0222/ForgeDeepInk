@@ -5,7 +5,9 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Chapter
+import com.songlan.deepink.repository.ChapterRepository
 import com.songlan.deepink.repository.DatabaseRepository
+import java.lang.StringBuilder
 
 class ReadBookActivityVM : ViewModel() {
 
@@ -51,6 +53,7 @@ class ReadBookActivityVM : ViewModel() {
         Transformations.switchMap(pLoadReadingChapterLiveData) { chapterId ->
             DatabaseRepository.loadChapterWithChapterId(chapterId)
         }
+
     fun loadReadingChapter(chapterId: Long) {
         pLoadReadingChapterLiveData.value = chapterId
     }
@@ -74,6 +77,18 @@ class ReadBookActivityVM : ViewModel() {
 
     fun getFirstChapterWithBookId(bookId: Long) {
         pGetFirstChapterWithBookIdLiveData.value = bookId
+    }
+
+    // 获取章节内容
+    private val pGetChapterContentLiveData = MutableLiveData<Chapter>()
+    var readingChapterContent = StringBuilder()
+    val getChapterContentLiveData =
+        Transformations.switchMap(pGetChapterContentLiveData) { chapter ->
+            ChapterRepository.getChapterContent(chapter)
+        }
+
+    fun getChapterContent(chapter: Chapter) {
+        pGetChapterContentLiveData.value = chapter
     }
 
     companion object {

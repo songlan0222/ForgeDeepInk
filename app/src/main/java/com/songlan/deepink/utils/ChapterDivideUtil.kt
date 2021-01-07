@@ -2,12 +2,15 @@ package com.songlan.deepink.utils
 
 import android.net.Uri
 import android.util.Log
+import androidx.core.net.toUri
 import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.repository.DatabaseRepository
 import com.songlan.deepink.ui.local.AddLocalBookEditActivityVM
 import java.io.*
+import java.lang.Exception
+import java.lang.StringBuilder
 
 
 object ChapterDivideUtil {
@@ -69,7 +72,7 @@ object ChapterDivideUtil {
                         output = FileOutputStream(file)
 
                         chapter?.let {
-                            LogUtils.v(msg="保存当前章节：${it.chapterName} 书籍Id为：${it.bookId}")
+                            LogUtils.v(msg = "保存当前章节：${it.chapterName} 书籍Id为：${it.bookId}")
                             vm.insertChapter(it)
                         }
                         chapter =
@@ -97,6 +100,31 @@ object ChapterDivideUtil {
         }
     }
 
+    // 获取章节内容
+    fun getChapterContent(chapter: Chapter): StringBuilder {
+
+        val contentPath = chapter.contentPath
+        LogUtils.v(msg = "当前章节路径: $contentPath")
+        LogUtils.v(msg = "章节文件是否存在：${File(contentPath).exists()}")
+        val content = StringBuilder()
+        try {
+            val file = File(contentPath)
+            val input = file.inputStream()
+            val reader = BufferedReader(InputStreamReader(input))
+            reader.use {
+                reader.forEachLine {
+                    content.append(it).append("\n")
+                }
+            }
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+        return content
+
+
+    }
+
+
     // 创建book文件夹，存放数据
     private fun mkBookDir() {
         val folder = File("${context.filesDir.absolutePath}/book")
@@ -105,6 +133,7 @@ object ChapterDivideUtil {
         }
     }
 
+    // 创建章节的存放目录
     private fun mkChapterDir(bookName: String): String {
         val folder = File("${context.filesDir.absolutePath}/book/$bookName")
         if (!folder.exists()) {
@@ -113,7 +142,7 @@ object ChapterDivideUtil {
         return "${context.filesDir.absolutePath}/book/$bookName"
     }
 
-
+    // 获取Text的编码方式
     private fun getFileCharsetName(inputStream: InputStream): String? {
         val head = ByteArray(3)
         inputStream.read(head)

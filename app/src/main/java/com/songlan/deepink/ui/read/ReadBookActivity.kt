@@ -17,6 +17,7 @@ import com.songlan.deepink.R
 import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_read_book.*
+import kotlinx.android.synthetic.main.fragment_current_page.*
 
 
 class ReadBookActivity : AppCompatActivity() {
@@ -38,6 +39,7 @@ class ReadBookActivity : AppCompatActivity() {
             throw Exception("致命错误：没有获取到小说id")
         }
 
+        /* 数据加载 */
         // 获取书籍
         viewModel.bookLiveData.observe(this, Observer { result ->
             val book = result.getOrNull()
@@ -49,7 +51,6 @@ class ReadBookActivity : AppCompatActivity() {
                 LogUtils.d("MainTest", "阅读界面：获取书籍失败")
             }
         })
-
         // 获取章节列表
         viewModel.loadChaptersWithBookIdLiveData.observe(this, Observer { result ->
             val chapters = result.getOrNull()
@@ -71,7 +72,7 @@ class ReadBookActivity : AppCompatActivity() {
                 LogUtils.v(msg = "获取章节信息失败")
             }
         })
-
+        // 获取小说的第一章
         viewModel.getFirstChapterWithBookIdLiveData.observe(this, Observer { result ->
             val firstChapter = result.getOrNull()
             if (firstChapter != null) {
@@ -81,18 +82,28 @@ class ReadBookActivity : AppCompatActivity() {
                 chapterTitleAdapter.notifyDataSetChanged()
             }
         })
-
+        // 获取正在阅读的章节
         viewModel.loadReadingChapterLiveData.observe(this, Observer { result ->
             val chapter = result.getOrNull()
             if (chapter != null) {
                 LogUtils.v(msg = "获取正在阅读的章节信息成功，章节名为：${chapter.chapterName}")
                 viewModel.readingChapter = chapter
+                viewModel.getChapterContent(chapter)
                 chapterTitleAdapter.notifyDataSetChanged()
             } else {
                 LogUtils.v(msg = "获取正在阅读的章节信息失败")
             }
         })
-
+        // 观察章节内容是否变化
+        viewModel.getChapterContentLiveData.observe(this, Observer { result ->
+            val content = result.getOrNull()
+            if (content != null) {
+                LogUtils.v(msg = "获取正在阅读章节内容成功")
+                viewModel.readingChapterContent = content
+                readPage.text = content
+            }
+        })
+        // 更新书籍正在阅读的章节id
         viewModel.updateBookLiveData.observe(this, Observer { result ->
             val res = result.getOrNull()
             if (res != null) {
@@ -101,17 +112,23 @@ class ReadBookActivity : AppCompatActivity() {
             }
         })
 
+        /* 数据配置 */
         viewModel.loadBook(bookId)
         chapterTitleAdapter = MyRecyclerViewAdapter(viewModel.loadChaptersWithBookId)
 
         // 测试ViewPager显示
         chapterContent.adapter = ReadingPageViewAdapter(supportFragmentManager)
         chapterContent.currentItem = 1
-
+        // 配置底部弹窗
         setBottomSheetDialog()
     }
 
-    // 配置底部弹窗
+    /* 加载章节内容 */
+    private fun loadChapterContent(chapter: Chapter) {
+
+    }
+
+    /* 底部弹窗设置 */
     private fun setBottomSheetDialog() {
         bottomFragment = ReadBottomSheetDialog.getDialog()
     }
@@ -120,15 +137,6 @@ class ReadBookActivity : AppCompatActivity() {
         showBottomSheetDialogFragment()
     }
 
-    /*    fun hideBottomSheetDialog() {
-            hideBottomSheetDialogFragment()
-        }
-
-        private fun hideBottomSheetDialogFragment() {
-            if (bottomFragment == null) {
-                bottomFragment.dismiss()
-            }
-        }*/
     private fun showBottomSheetDialogFragment() {
         bottomFragment.show(supportFragmentManager, "bottomSheetDialogFragment")
     }

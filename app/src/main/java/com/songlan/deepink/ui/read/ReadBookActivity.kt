@@ -2,6 +2,7 @@ package com.songlan.deepink.ui.read
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -20,6 +21,7 @@ import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_read_book.*
 import kotlinx.android.synthetic.main.fragment_current_page.*
 import kotlinx.android.synthetic.main.fragment_last_page.*
+import kotlinx.android.synthetic.main.fragment_pre_page.*
 import java.lang.StringBuilder
 
 
@@ -136,78 +138,90 @@ class ReadBookActivity : AppCompatActivity() {
                 positionOffset: Float,
                 positionOffsetPixels: Int,
             ) {
-
             }
 
             override fun onPageSelected(position: Int) {
                 when (position) {
+                    1 -> {
+                        setPageContent()
+                    }
                     0 -> {
+                        curPageNum--
+                        LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
+                        if(curPageNum <= 0){
+                            curPageNum = 0
+                            // setPageContent()
+                        }
                         chapterContent.setCurrentItem(1, false)
-                        curReadPage.text = getPageContent(curPageNum-1)
                     }
                     2 -> {
+                        curPageNum++
+                        LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
+                        if(curPageNum >= pageList.size){
+                            curPageNum = pageList.size-1
+                            // setPageContent()
+                        }
                         chapterContent.setCurrentItem(1, false)
-                        curReadPage.text = getPageContent(curPageNum+1)
-                    }
-                    else -> {
-
                     }
                 }
             }
 
             override fun onPageScrollStateChanged(state: Int) {
-
             }
         })
     }
 
+
+
+    /* 加载章节内容 */
+    // 按字数对章节分页
     private fun getPageList(): ArrayList<String> {
         curReadPage.resize()
         val charNum = curReadPage.getCharNum()
         var i = 0
-        var content = viewModel.readingChapterContent.substring(charNum)
+        var content = viewModel.readingChapterContent.toString()
         val pageList = arrayListOf<String>()
         while (i < viewModel.readingChapterContent.length) {
             var pageContent: String
-            if(charNum > content.length){
+            if (charNum > content.length) {
                 pageContent = content
                 // content = content.substring(charNum)
-            }else{
+            } else {
                 pageContent = content.substring(0, charNum)
                 content = content.substring(charNum)
-
             }
             pageList.add(pageContent)
             i += charNum
-            if(i > viewModel.readingChapterContent.length){
+            if (i > viewModel.readingChapterContent.length) {
                 i = viewModel.readingChapterContent.length
             }
         }
         return pageList
     }
 
-    fun getPageContent(pageNum: Int): String {
-        curPageNum = pageNum
-        return pageList[pageNum]
-    }
-
-    /*private fun swapFragment(pos0: Int, pos1: Int, pos2: Int) {
-        if (fragmentMap.isNotEmpty()) {
-            val fragment0 = fragmentMap[0]!!
-            val fragment1 = fragmentMap[1]!!
-            val fragment2 = fragmentMap[2]!!
-
-            fragmentMap[pos0] = fragment0
-            fragmentMap[pos1] = fragment1
-            fragmentMap[pos2] = fragment2
-
-            readPageAdapter.notifyDataSetChanged()
+    private fun setPageContent(){
+        if(curPageNum == 0){
+            curReadPage.text = pageList[curPageNum]
+            if(pageList.size > curPageNum)
+                lastReadPage.text = pageList[curPageNum + 1]
+            else{
+                // 无后续内容
+            }
         }
-    }*/
-
-    /* 加载章节内容 */
-    private fun loadChapterContent(chapter: Chapter) {
-
+        // 如果内容已到最后
+        else if(curPageNum >= pageList.size - 1){
+            curPageNum = pageList.size - 1
+            curReadPage.text = pageList[curPageNum]
+            if(curPageNum > 0){
+                preReadPage.text = pageList[curPageNum - 1]
+            }
+        }
+        // 正常情况下
+        else{
+            preReadPage.text = pageList[curPageNum - 1]
+            curReadPage.text = pageList[curPageNum]
+            lastReadPage.text = pageList[curPageNum + 1]
+        }
     }
 
     /* 底部弹窗设置 */

@@ -198,6 +198,7 @@ class ReadBookActivity : AppCompatActivity() {
         return pageList
     }
 
+    // 为页面填充小说内容
     private fun setPageContent() {
         if (curPageNum == 0) {
             // 前一页清空
@@ -236,10 +237,28 @@ class ReadBookActivity : AppCompatActivity() {
         showBottomSheetDialogFragment()
     }
 
+    fun hideBottomSheetDialog() {
+        hideBottomSheetDialogFragment()
+    }
+
     private fun showBottomSheetDialogFragment() {
         bottomFragment.show(supportFragmentManager, "bottomSheetDialogFragment")
     }
 
+    private fun hideBottomSheetDialogFragment() {
+        bottomFragment?.dismiss()
+    }
+
+    /* 切花章节 */
+    fun changeReadingChapter(chapter: Chapter) {
+        changeChapter(chapter)
+    }
+
+    private fun changeChapter(chapter: Chapter) {
+        viewModel.loadReadingChapter(chapter.chapterId)
+        viewModel.book.readingChapterId = chapter.chapterId
+        viewModel.updateBook(viewModel.book)
+    }
 
     // 书籍翻页功能的Adapter
     inner class ReadingPageViewAdapter(fm: FragmentManager) :
@@ -277,9 +296,12 @@ class ReadBookActivity : AppCompatActivity() {
             viewHolder.itemView.setOnClickListener {
                 val position = viewHolder.adapterPosition
                 val chapter = chapterList[position]
-            }
-            viewHolder.itemView.setOnClickListener {
+                // 选中内容切换
                 chapterListSelected(viewHolder)
+                // 隐藏工具栏
+                hideBottomSheetDialogFragment()
+                // 切换章节
+                changeReadingChapter(chapter)
             }
             holderList.add(viewHolder)
             return viewHolder

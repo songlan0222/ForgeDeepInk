@@ -35,16 +35,16 @@ class ReadBookActivityVM : ViewModel() {
     }
 
     // 根据chapterId获取章节内容
-    private val pLoadChapterWithChapterId = MutableLiveData<Long>()
-    lateinit var chapter: Chapter
-    val loadChapterWithChapterIdLiveData =
-        Transformations.switchMap(pLoadChapterWithChapterId) { chapterId ->
-            DatabaseRepository.loadChapterWithChapterId(chapterId)
-        }
-
-    fun loadChapterWithChapterId(chapterId: Long) {
-        pLoadChapterWithChapterId.value = chapterId
-    }
+//    private val pLoadChapterWithChapterId = MutableLiveData<Long>()
+//    lateinit var chapter: Chapter
+//    val loadChapterWithChapterIdLiveData =
+//        Transformations.switchMap(pLoadChapterWithChapterId) { chapterId ->
+//            DatabaseRepository.loadChapterWithChapterId(chapterId)
+//        }
+//
+//    fun loadChapterWithChapterId(chapterId: Long) {
+//        pLoadChapterWithChapterId.value = chapterId
+//    }
 
     // 根据章节id获取的章节
     private val pLoadReadingChapterLiveData = MutableLiveData<Long>()
@@ -81,14 +81,36 @@ class ReadBookActivityVM : ViewModel() {
 
     // 获取章节内容
     private val pGetChapterContentLiveData = MutableLiveData<Chapter>()
+    private val pPreChapterLiveData = MutableLiveData<Chapter>()
+    private val pNextChapterLiveData = MutableLiveData<Chapter>()
+
+    var preChapter = StringBuilder()
     var readingChapterContent = StringBuilder()
+    var nextChapter = StringBuilder()
+
+    val preChapterLiveData = Transformations.switchMap(pGetChapterContentLiveData) { chapter ->
+        ChapterRepository.getChapterContent(chapter)
+    }
     val getChapterContentLiveData =
         Transformations.switchMap(pGetChapterContentLiveData) { chapter ->
             ChapterRepository.getChapterContent(chapter)
         }
+    val nextChapterLiveData = Transformations.switchMap(pGetChapterContentLiveData) { chapter ->
+        ChapterRepository.getChapterContent(chapter)
+    }
 
     fun getChapterContent(chapter: Chapter) {
         pGetChapterContentLiveData.value = chapter
+        val index = loadChaptersWithBookId.indexOf(chapter)
+        if (index == 0) {
+            pPreChapterLiveData.value = null
+        }
+        if (index == loadChaptersWithBookId.size - 1) {
+            pNextChapterLiveData.value = null
+        }
+        pPreChapterLiveData.value = loadChaptersWithBookId[index - 1]
+        pNextChapterLiveData.value = loadChaptersWithBookId[index + 1]
+
     }
 
     companion object {

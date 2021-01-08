@@ -36,7 +36,11 @@ class ReadBookActivity : AppCompatActivity() {
     lateinit var chapterTitleAdapter: MyRecyclerViewAdapter
     lateinit var readPageAdapter: ReadingPageViewAdapter
     private lateinit var pageList: ArrayList<String>
+    private lateinit var preChapterPageList: ArrayList<String>
+    private lateinit var nextChapterPageList: ArrayList<String>
     private var curPageNum = 0
+    private var hasPreChapter = false
+    private var hasNextChapter = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -102,6 +106,28 @@ class ReadBookActivity : AppCompatActivity() {
                 LogUtils.v(msg = "获取正在阅读的章节信息失败")
             }
         })
+        // 获取上一章
+        viewModel.preChapterLiveData.observe(this, Observer { result ->
+            val content = result.getOrNull()
+            if (content != null) {
+                hasPreChapter = true
+                viewModel.preChapter = content
+                preChapterPageList = getPageList(content)
+            } else {
+                hasPreChapter = false
+            }
+        })
+        // 获取下一章
+        viewModel.nextChapterLiveData.observe(this, Observer { result ->
+            val content = result.getOrNull()
+            if (content != null) {
+                hasNextChapter = true
+                viewModel.nextChapter = content
+                nextChapterPageList = getPageList(content)
+            } else {
+                hasNextChapter = false
+            }
+        })
         // 观察章节内容是否变化
         viewModel.getChapterContentLiveData.observe(this, Observer { result ->
             val content = result.getOrNull()
@@ -109,7 +135,7 @@ class ReadBookActivity : AppCompatActivity() {
                 LogUtils.v(msg = "获取正在阅读章节内容成功")
                 viewModel.readingChapterContent = content
                 curReadPage.text = content
-                pageList = getPageList()
+                pageList = getPageList(content)
             }
         })
         // 更新书籍正在阅读的章节id
@@ -150,7 +176,6 @@ class ReadBookActivity : AppCompatActivity() {
                         LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
                         if (curPageNum <= 0) {
                             curPageNum = 0
-                            // setPageContent()
                         }
                         chapterContent.setCurrentItem(1, false)
                     }
@@ -159,7 +184,6 @@ class ReadBookActivity : AppCompatActivity() {
                         LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
                         if (curPageNum >= pageList.size) {
                             curPageNum = pageList.size - 1
-                            // setPageContent()
                         }
                         chapterContent.setCurrentItem(1, false)
                     }
@@ -174,11 +198,11 @@ class ReadBookActivity : AppCompatActivity() {
 
     /* 加载章节内容 */
     // 按字数对章节分页
-    private fun getPageList(): ArrayList<String> {
+    private fun getPageList(content: StringBuilder): ArrayList<String> {
         curReadPage.resize()
         val charNum = curReadPage.getCharNum()
         var i = 0
-        var content = viewModel.readingChapterContent.toString()
+        var content = content.toString()
         val pageList = arrayListOf<String>()
         while (i < viewModel.readingChapterContent.length) {
             var pageContent: String
@@ -249,7 +273,7 @@ class ReadBookActivity : AppCompatActivity() {
         bottomFragment?.dismiss()
     }
 
-    /* 切花章节 */
+    /* 通过导航栏，切换章节 */
     fun changeReadingChapter(chapter: Chapter) {
         changeChapter(chapter)
     }
@@ -258,6 +282,15 @@ class ReadBookActivity : AppCompatActivity() {
         viewModel.loadReadingChapter(chapter.chapterId)
         viewModel.book.readingChapterId = chapter.chapterId
         viewModel.updateBook(viewModel.book)
+    }
+
+    /* 翻页时，切换章节*/
+    fun toPreChapter() {
+        pageList.addAll(0, preChapterPageList)
+    }
+
+    fun toNextChapter() {
+        pageList.addAll(nextChapterPageList)
     }
 
     // 书籍翻页功能的Adapter

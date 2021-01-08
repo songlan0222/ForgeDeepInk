@@ -148,7 +148,7 @@ class ReadBookActivity : AppCompatActivity() {
                     0 -> {
                         curPageNum--
                         LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
-                        if(curPageNum <= 0){
+                        if (curPageNum <= 0) {
                             curPageNum = 0
                             // setPageContent()
                         }
@@ -157,8 +157,8 @@ class ReadBookActivity : AppCompatActivity() {
                     2 -> {
                         curPageNum++
                         LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
-                        if(curPageNum >= pageList.size){
-                            curPageNum = pageList.size-1
+                        if (curPageNum >= pageList.size) {
+                            curPageNum = pageList.size - 1
                             // setPageContent()
                         }
                         chapterContent.setCurrentItem(1, false)
@@ -170,7 +170,6 @@ class ReadBookActivity : AppCompatActivity() {
             }
         })
     }
-
 
 
     /* 加载章节内容 */
@@ -199,25 +198,29 @@ class ReadBookActivity : AppCompatActivity() {
         return pageList
     }
 
-    private fun setPageContent(){
-        if(curPageNum == 0){
+    private fun setPageContent() {
+        if (curPageNum == 0) {
+            // 前一页清空
+            preReadPage.text = ""
             curReadPage.text = pageList[curPageNum]
-            if(pageList.size > curPageNum)
+            if (pageList.size > curPageNum)
                 lastReadPage.text = pageList[curPageNum + 1]
-            else{
+            else {
                 // 无后续内容
             }
         }
         // 如果内容已到最后
-        else if(curPageNum >= pageList.size - 1){
+        else if (curPageNum >= pageList.size - 1) {
             curPageNum = pageList.size - 1
             curReadPage.text = pageList[curPageNum]
-            if(curPageNum > 0){
+            if (curPageNum > 0) {
                 preReadPage.text = pageList[curPageNum - 1]
             }
+            // 后一页清空
+            lastReadPage.text = ""
         }
         // 正常情况下
-        else{
+        else {
             preReadPage.text = pageList[curPageNum - 1]
             curReadPage.text = pageList[curPageNum]
             lastReadPage.text = pageList[curPageNum + 1]

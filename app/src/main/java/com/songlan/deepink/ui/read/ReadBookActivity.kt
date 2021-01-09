@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -34,9 +36,9 @@ class ReadBookActivity : AppCompatActivity() {
     lateinit var bottomFragment: ReadBottomSheetDialog
     lateinit var chapterTitleAdapter: MyRecyclerViewAdapter
     lateinit var readPageAdapter: ReadingPageViewAdapter
-    private lateinit var pageList: MutableList<String>
-    private lateinit var preChapterPageList: MutableList<String>
-    private lateinit var nextChapterPageList: MutableList<String>
+    private var pageList = mutableListOf<String>()
+    private var preChapterPageList = mutableListOf<String>()
+    private var nextChapterPageList = mutableListOf<String>()
     private var curPageNum = 0
     private var hasPreChapter = false
     private var hasNextChapter = false
@@ -113,7 +115,8 @@ class ReadBookActivity : AppCompatActivity() {
             if (content != null) {
                 hasPreChapter = true
                 viewModel.preChapter = content
-                preChapterPageList = getPageList(content)
+                preChapterPageList.clear()
+                preChapterPageList.addAll(getPageList(content))
             } else {
                 hasPreChapter = false
             }
@@ -124,7 +127,8 @@ class ReadBookActivity : AppCompatActivity() {
             if (content != null) {
                 hasNextChapter = true
                 viewModel.nextChapter = content
-                nextChapterPageList = getPageList(content)
+                nextChapterPageList.clear()
+                nextChapterPageList.addAll(getPageList(content))
             } else {
                 hasNextChapter = false
             }
@@ -136,7 +140,8 @@ class ReadBookActivity : AppCompatActivity() {
                 LogUtils.v(msg = "获取正在阅读章节内容成功")
                 viewModel.readingChapterContent = content
                 curReadPage.text = content
-                pageList = getPageList(content)
+                pageList.clear()
+                pageList.addAll(getPageList(content))
             }
         })
         // 更新书籍正在阅读的章节id
@@ -181,17 +186,11 @@ class ReadBookActivity : AppCompatActivity() {
                     0 -> {
                         curPageNum--
                         LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
-//                        if (curPageNum <= 0) {
-//                            curPageNum = 0
-//                        }
                         chapterContent.setCurrentItem(1, false)
                     }
                     2 -> {
                         curPageNum++
                         LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
-//                        if (curPageNum >= pageList.size) {
-//                            curPageNum = pageList.size - 1
-//                        }
                         chapterContent.setCurrentItem(1, false)
                     }
                 }
@@ -260,31 +259,44 @@ class ReadBookActivity : AppCompatActivity() {
         }
         // 如果翻页后进入下一章
         else if (curPageNum >= pageList.size) {
-            // 获取下一章
-            preChapterPageList.clear()
-            preChapterPageList.addAll(pageList)
+            if (nextChapterPageList.isNullOrEmpty()) {
+                curPageNum = pageList.size - 1
+            } else {
+                // 获取下一章
+                preChapterPageList.clear()
+                preChapterPageList.addAll(pageList)
 
-            pageList.clear()
-            pageList.addAll(nextChapterPageList)
-            curPageNum = 0
+                pageList.clear()
+                pageList.addAll(nextChapterPageList)
+                curPageNum = 0
 
-            setPageContent()
-            toNextChapter()
+                setPageContent()
+                nextChapterPageList.clear()
+                toNextChapter()
+            }
         }
         // 如果翻页后进入上一章
         else if (curPageNum < 0) {
 
-            nextChapterPageList.clear()
-            nextChapterPageList.addAll(pageList)
+            if (preChapterPageList.isNullOrEmpty()) {
+                curPageNum = 0
+                Toast.makeText(this, R.string.no_pre_chapter, Toast.LENGTH_SHORT).show()
+            } else {
+                nextChapterPageList.clear()
+                nextChapterPageList.addAll(pageList)
 
-            // 替换当前页
-            pageList.clear()
-            pageList.addAll(preChapterPageList)
-            curPageNum = preChapterPageList.size - 1
+                // 替换当前页
+                pageList.clear()
+                pageList.addAll(preChapterPageList)
+                curPageNum = preChapterPageList.size - 1
 
-            // 标记为返回上一章
-            setPageContent()
-            toPreChapter()
+
+                // 标记为返回上一章
+                setPageContent()
+                preChapterPageList.clear()
+                toPreChapter()
+            }
+
         }
         // 正常情况下
         else {

@@ -65,4 +65,5 @@
     <string name="details">详细</string>
     <string name="directory">目录</string>
     <string name="more">更多</string>
+    <string name="no_pre_chapter">很抱歉，已翻到最前页。</string>
 </resources>

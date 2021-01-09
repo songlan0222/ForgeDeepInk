@@ -149,6 +149,7 @@ class ReadBookActivity : AppCompatActivity() {
             if (res != null) {
                 viewModel.loadBook(bookId)
                 viewModel.loadReadingChapter(viewModel.book.readingChapterId)
+                chapterTitleAdapter.notifyDataSetChanged()
             }
         })
         viewModel.updateBookWithoutJumpLiveData.observe(this, Observer { result ->
@@ -253,9 +254,9 @@ class ReadBookActivity : AppCompatActivity() {
         else if (curPageNum == pageList.size - 1) {
             preReadPage.text = pageList[curPageNum - 1]
             curReadPage.text = pageList[curPageNum]
-            if(nextChapterPageList.isNullOrEmpty()){
+            if (nextChapterPageList.isNullOrEmpty()) {
                 nextReadPage.text = ""
-            }else{
+            } else {
                 nextReadPage.text = nextChapterPageList[0]
             }
         }
@@ -338,6 +339,7 @@ class ReadBookActivity : AppCompatActivity() {
 
     private fun changeChapter(chapter: Chapter) {
         viewModel.loadReadingChapter(chapter.chapterId)
+        curPageNum = 0
         viewModel.book.readingChapterId = chapter.chapterId
         viewModel.updateBook(viewModel.book)
     }
@@ -397,7 +399,7 @@ class ReadBookActivity : AppCompatActivity() {
             viewHolder.itemView.setOnClickListener {
                 val position = viewHolder.adapterPosition
                 val chapter = chapterList[position]
-                // 选中内容切换
+                // 界面上，选中内容切换
                 chapterListSelected(viewHolder)
                 // 隐藏工具栏
                 hideBottomSheetDialogFragment()
@@ -412,7 +414,7 @@ class ReadBookActivity : AppCompatActivity() {
             val chapter = chapterList[position]
             holder.chapterTitle.text = chapter.chapterName
             holder.chapterTitle.isSelected = false
-            if (chapter == viewModel.readingChapter) {
+            if (chapter.chapterId == viewModel.book.readingChapterId) {
                 holder.chapterTitle.isSelected = true
             }
         }
@@ -420,7 +422,7 @@ class ReadBookActivity : AppCompatActivity() {
         override fun getItemCount() = chapterList.size
 
         private fun chapterListSelected(holder: ViewHolder) {
-            // 点击时，更换正在阅读的章节
+            // 点击时，变更目录中的选中项
             if (!holder.chapterTitle.isSelected) {
                 holderList.forEach { holder ->
                     if (holder.chapterTitle.isSelected)

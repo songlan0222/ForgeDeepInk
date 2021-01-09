@@ -116,19 +116,6 @@ class ReadBookActivityVM : ViewModel() {
 
     fun getChapterContent() {
         pGetChapterContentLiveData.value = readingChapter
-        /*val index = loadChaptersWithBookId.indexOf(readingChapter)
-        // 配置上一章
-        if (index == 0) {
-            pPreChapterLiveData.value = null
-        } else {
-            pPreChapterLiveData.value = loadChaptersWithBookId[index - 1]
-        }
-        // 配置下一章
-        if (index == loadChaptersWithBookId.size - 1) {
-            pNextChapterLiveData.value = null
-        } else {
-            pNextChapterLiveData.value = loadChaptersWithBookId[index + 1]
-        }*/
     }
 
     fun getPreChapterContent() {

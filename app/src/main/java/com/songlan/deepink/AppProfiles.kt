@@ -96,4 +96,9 @@ object AppProfiles {
         editor.apply()
     }
 
+    /**
+     * 阅读界面配置信息
+     */
+    
+
 }

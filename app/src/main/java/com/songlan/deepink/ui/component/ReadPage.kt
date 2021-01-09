@@ -2,13 +2,7 @@ package com.songlan.deepink.ui.component
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.widget.AppCompatTextView
-import com.songlan.deepink.R
 
 
 class ReadPage : AppCompatTextView {
@@ -43,8 +37,12 @@ class ReadPage : AppCompatTextView {
     /**
      * 获取页面内可容纳最大字数
      */
-    fun getCharMaxNum(){
-
+    fun getPageCharNum(content: String): Int {
+        val tempText = this.text
+        this.text = content
+        val charNum = getCharNum()
+        this.text = tempText
+        return charNum
     }
 
     /**

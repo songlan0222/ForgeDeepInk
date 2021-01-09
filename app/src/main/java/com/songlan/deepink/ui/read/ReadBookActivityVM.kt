@@ -131,6 +131,10 @@ class ReadBookActivityVM : ViewModel() {
         }
     }
 
+    /**
+     * 点开章节时的起始位置，默认为 0
+     */
+    var contentNextStartIndex = 0
     companion object {
         // 小说页默认显示中间页面
         const val DEFAULT_ITEM_ID = 1

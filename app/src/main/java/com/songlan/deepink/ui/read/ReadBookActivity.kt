@@ -201,22 +201,20 @@ class ReadBookActivity : AppCompatActivity() {
     /* 加载章节内容 */
     // 按字数对章节分页
     private fun getPageList(content: StringBuilder): MutableList<String> {
-        curReadPage.resize()
-        val charNum = curReadPage.getCharNum()
         var i = 0
         val contentStrLen = content.toString().length
         var tempContent = content.toString()
         val pageList = mutableListOf<String>()
         while (i < contentStrLen) {
             var pageContent: String
-            // 如果当前字数比页面可容纳字数少时
-            if (charNum > tempContent.length) {
-                pageContent = tempContent
-            } else {
-                pageContent = tempContent.substring(0, charNum)
-                tempContent = tempContent.substring(charNum)
-            }
+            // 获取本页可填充字数
+            val charNum = curReadPage.getPageCharNum(tempContent)
+            // 如果当前字数比页面可填充
+            pageContent = tempContent.substring(0, charNum)
             pageList.add(pageContent)
+            // 切割已分配文字
+            tempContent = tempContent.substring(charNum)
+
             i += charNum
             if (i > contentStrLen) {
                 i = contentStrLen
@@ -304,6 +302,36 @@ class ReadBookActivity : AppCompatActivity() {
         }
 
     }
+
+    // 获取下一章的内容：通过配置角标，实时获取对应的页面信息
+//    private fun setNextPageContent() {
+//        if (viewModel.contentNextStartIndex >= viewModel.readingChapterContent.length) {
+//            // 获取下一章内容
+//            getNextChapter()
+//            // 再次设置当前页内容
+//            setNextPageContent()
+//        } else {
+//            curReadPage.text =
+//                viewModel.readingChapterContent.substring(viewModel.contentNextStartIndex)
+//            val charNum = curReadPage.resize()
+//            // 更新起始位置
+//            viewModel.contentNextStartIndex += charNum
+//        }
+//    }
+
+//    private fun setPrePageContent() {
+//        if (viewModel.contentNextStartIndex < 0) {
+//            getPreChapter()
+//            setPrePageContent()
+//        } else {
+//            // 先将文字逆序
+//            val reverseContent = viewModel.readingChapterContent.reverse()
+//            var curCharNum = curReadPage.resize()
+//            val preStartIndex = viewModel.contentNextStartIndex - curCharNum
+//            val cutContent = reverseContent.substring()
+//            curReadPage.text = viewModel.readingChapterContent.substring()
+//        }
+//    }
 
     /* 底部弹窗设置 */
     private fun setBottomSheetDialog() {

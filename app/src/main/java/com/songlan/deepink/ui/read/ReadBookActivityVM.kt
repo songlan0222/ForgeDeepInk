@@ -60,7 +60,7 @@ class ReadBookActivityVM : ViewModel() {
 
     // 更新书籍信息
     private val pUpdateBookLiveData = MutableLiveData<Book>()
-    private val pUpdateBookWithJumpLiveData = MutableLiveData<Book>()
+    private val pUpdateBookWithoutJumpLiveData = MutableLiveData<Book>()
     val updateBookLiveData = Transformations.switchMap(pUpdateBookLiveData) { book ->
         DatabaseRepository.updateBook(book)
     }
@@ -70,12 +70,12 @@ class ReadBookActivityVM : ViewModel() {
     }
 
     val updateBookWithoutJumpLiveData =
-        Transformations.switchMap(pUpdateBookWithJumpLiveData) { book ->
+        Transformations.switchMap(pUpdateBookWithoutJumpLiveData) { book ->
             DatabaseRepository.updateBook(book)
         }
 
     fun updateBookWithoutJump(book: Book) {
-        pUpdateBookWithJumpLiveData.value = book
+        pUpdateBookWithoutJumpLiveData.value = book
     }
 
     private val pGetFirstChapterWithBookIdLiveData = MutableLiveData<Long>()

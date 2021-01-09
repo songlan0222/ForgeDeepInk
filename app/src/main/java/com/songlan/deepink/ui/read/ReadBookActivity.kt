@@ -149,7 +149,7 @@ class ReadBookActivity : AppCompatActivity() {
         })
         viewModel.updateBookWithoutJumpLiveData.observe(this, Observer { result ->
             val res = result.getOrNull()
-            if(res != null){
+            if (res != null) {
                 LogUtils.v(msg = "已记录正在阅读的章节id")
             }
         })
@@ -253,21 +253,9 @@ class ReadBookActivity : AppCompatActivity() {
         }
         // 如果翻页后是最后一页
         else if (curPageNum == pageList.size - 1) {
-//            if (!isToPre) {
-//                preReadPage.text = pageList[curPageNum - 1]
-//                curReadPage.text = pageList[curPageNum]
-//                // 后一页填充
-//                if (nextChapterPageList.isEmpty()) {
-//                    nextReadPage.text = ""
-//                } else {
-//                    nextReadPage.text = nextChapterPageList[0]
-//                }
-//                curReadPage.text = pageList[curPageNum]
-//            } else {
-                preReadPage.text = pageList[curPageNum - 1]
-                curReadPage.text = pageList[curPageNum]
-                nextReadPage.text = nextChapterPageList[0]
-//            }
+            preReadPage.text = pageList[curPageNum - 1]
+            curReadPage.text = pageList[curPageNum]
+            nextReadPage.text = nextChapterPageList[0]
 
         }
         // 如果翻页后进入下一章
@@ -336,7 +324,7 @@ class ReadBookActivity : AppCompatActivity() {
     private fun changeChapter(chapter: Chapter) {
         viewModel.loadReadingChapter(chapter.chapterId)
         viewModel.book.readingChapterId = chapter.chapterId
-        viewModel.updateBookWithoutJump(viewModel.book)
+        viewModel.updateBook(viewModel.book)
     }
 
     /* 翻页时，切换章节*/
@@ -353,7 +341,7 @@ class ReadBookActivity : AppCompatActivity() {
         // 修改正在阅读的章节,如果能进入下一章，则一定存在下一章
         viewModel.book.readingChapterId = viewModel.getNextChapterId()!!
         // 保存正在阅读的章节
-        viewModel.updateBook(viewModel.book)
+        viewModel.updateBookWithoutJump(viewModel.book)
         // 获取下一章内容
         viewModel.getNextChapterContent()
     }

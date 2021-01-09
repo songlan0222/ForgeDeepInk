@@ -253,8 +253,11 @@ class ReadBookActivity : AppCompatActivity() {
         else if (curPageNum == pageList.size - 1) {
             preReadPage.text = pageList[curPageNum - 1]
             curReadPage.text = pageList[curPageNum]
-            nextReadPage.text = nextChapterPageList[0]
-
+            if(nextChapterPageList.isNullOrEmpty()){
+                nextReadPage.text = ""
+            }else{
+                nextReadPage.text = nextChapterPageList[0]
+            }
         }
         // 如果翻页后进入下一章
         else if (curPageNum >= pageList.size) {

@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.songlan.deepink.R
 import kotlinx.android.synthetic.main.fragment_current_page.*
+import kotlinx.android.synthetic.main.fragment_last_page.*
+import kotlinx.android.synthetic.main.fragment_pre_page.*
 
 
 class CurPageFragment : Fragment() {
@@ -31,5 +33,14 @@ class CurPageFragment : Fragment() {
         curReadPage.setOnClickListener {
             readBookActivity.showBottomSheetDialog()
         }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initReadPage()
+    }
+
+    private fun initReadPage(){
+        curReadPage.text = ""
     }
 }

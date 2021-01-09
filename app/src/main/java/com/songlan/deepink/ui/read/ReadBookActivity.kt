@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -199,8 +198,8 @@ class ReadBookActivity : AppCompatActivity() {
             override fun onPageScrollStateChanged(state: Int) {
             }
         })
-    }
 
+    }
 
     /* 加载章节内容 */
     // 按字数对章节分页
@@ -261,6 +260,7 @@ class ReadBookActivity : AppCompatActivity() {
         else if (curPageNum >= pageList.size) {
             if (nextChapterPageList.isNullOrEmpty()) {
                 curPageNum = pageList.size - 1
+                Toast.makeText(this, R.string.no_next_chapter, Toast.LENGTH_SHORT).show()
             } else {
                 // 获取下一章
                 preChapterPageList.clear()
@@ -367,7 +367,7 @@ class ReadBookActivity : AppCompatActivity() {
             when (position) {
                 0 -> fragmentMap[0] ?: PrePageFragment()
                 1 -> fragmentMap[1] ?: CurPageFragment()
-                else -> fragmentMap[2] ?: LastPageFragment()
+                else -> fragmentMap[2] ?: NextPageFragment()
             }
 
         override fun instantiateItem(container: ViewGroup, position: Int): Any {

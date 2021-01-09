@@ -6,8 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.songlan.deepink.R
+import kotlinx.android.synthetic.main.fragment_last_page.*
+import kotlinx.android.synthetic.main.fragment_pre_page.*
 
-class LastPageFragment : Fragment() {
+class NextPageFragment : Fragment() {
 
     private lateinit var readBookActivity: ReadBookActivity
 
@@ -24,5 +26,14 @@ class LastPageFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initReadPage()
+    }
+
+    private fun initReadPage(){
+        nextReadPage.text = ""
     }
 }

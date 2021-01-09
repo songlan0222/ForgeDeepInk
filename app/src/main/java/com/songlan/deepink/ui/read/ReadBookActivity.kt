@@ -145,7 +145,12 @@ class ReadBookActivity : AppCompatActivity() {
             if (res != null) {
                 viewModel.loadBook(bookId)
                 viewModel.loadReadingChapter(viewModel.book.readingChapterId)
-
+            }
+        })
+        viewModel.updateBookWithoutJumpLiveData.observe(this, Observer { result ->
+            val res = result.getOrNull()
+            if(res != null){
+                LogUtils.v(msg = "已记录正在阅读的章节id")
             }
         })
 
@@ -248,21 +253,21 @@ class ReadBookActivity : AppCompatActivity() {
         }
         // 如果翻页后是最后一页
         else if (curPageNum == pageList.size - 1) {
-            if (!isToPre) {
-                preReadPage.text = pageList[curPageNum - 1]
-                curReadPage.text = pageList[curPageNum]
-                // 后一页填充
-                if (nextChapterPageList.isEmpty()) {
-                    nextReadPage.text = ""
-                } else {
-                    nextReadPage.text = nextChapterPageList[0]
-                }
-                curReadPage.text = pageList[curPageNum]
-            } else {
+//            if (!isToPre) {
+//                preReadPage.text = pageList[curPageNum - 1]
+//                curReadPage.text = pageList[curPageNum]
+//                // 后一页填充
+//                if (nextChapterPageList.isEmpty()) {
+//                    nextReadPage.text = ""
+//                } else {
+//                    nextReadPage.text = nextChapterPageList[0]
+//                }
+//                curReadPage.text = pageList[curPageNum]
+//            } else {
                 preReadPage.text = pageList[curPageNum - 1]
                 curReadPage.text = pageList[curPageNum]
                 nextReadPage.text = nextChapterPageList[0]
-            }
+//            }
 
         }
         // 如果翻页后进入下一章
@@ -276,7 +281,7 @@ class ReadBookActivity : AppCompatActivity() {
             curPageNum = 0
 
             setPageContent()
-            viewModel.getNextChapterContent()
+            toNextChapter()
         }
         // 如果翻页后进入上一章
         else if (curPageNum < 0) {
@@ -290,9 +295,8 @@ class ReadBookActivity : AppCompatActivity() {
             curPageNum = preChapterPageList.size - 1
 
             // 标记为返回上一章
-            setPageContent(true)
-            // 获取上一章
-            viewModel.getPreChapterContent()
+            setPageContent()
+            toPreChapter()
         }
         // 正常情况下
         else {
@@ -302,36 +306,6 @@ class ReadBookActivity : AppCompatActivity() {
         }
 
     }
-
-    // 获取下一章的内容：通过配置角标，实时获取对应的页面信息
-//    private fun setNextPageContent() {
-//        if (viewModel.contentNextStartIndex >= viewModel.readingChapterContent.length) {
-//            // 获取下一章内容
-//            getNextChapter()
-//            // 再次设置当前页内容
-//            setNextPageContent()
-//        } else {
-//            curReadPage.text =
-//                viewModel.readingChapterContent.substring(viewModel.contentNextStartIndex)
-//            val charNum = curReadPage.resize()
-//            // 更新起始位置
-//            viewModel.contentNextStartIndex += charNum
-//        }
-//    }
-
-//    private fun setPrePageContent() {
-//        if (viewModel.contentNextStartIndex < 0) {
-//            getPreChapter()
-//            setPrePageContent()
-//        } else {
-//            // 先将文字逆序
-//            val reverseContent = viewModel.readingChapterContent.reverse()
-//            var curCharNum = curReadPage.resize()
-//            val preStartIndex = viewModel.contentNextStartIndex - curCharNum
-//            val cutContent = reverseContent.substring()
-//            curReadPage.text = viewModel.readingChapterContent.substring()
-//        }
-//    }
 
     /* 底部弹窗设置 */
     private fun setBottomSheetDialog() {
@@ -362,16 +336,26 @@ class ReadBookActivity : AppCompatActivity() {
     private fun changeChapter(chapter: Chapter) {
         viewModel.loadReadingChapter(chapter.chapterId)
         viewModel.book.readingChapterId = chapter.chapterId
-        viewModel.updateBook(viewModel.book)
+        viewModel.updateBookWithoutJump(viewModel.book)
     }
 
     /* 翻页时，切换章节*/
-    fun toPreChapter() {
-        pageList.addAll(0, preChapterPageList)
+    private fun toPreChapter() {
+        // 修改正在阅读的章节,如果能进入上一章，则一定存在上一章
+        viewModel.book.readingChapterId = viewModel.getPreChapterId()!!
+        // 保存正在阅读的章节
+        viewModel.updateBookWithoutJump(viewModel.book)
+        // 获取上一章内容
+        viewModel.getPreChapterContent()
     }
 
-    fun toNextChapter() {
-        pageList.addAll(nextChapterPageList)
+    private fun toNextChapter() {
+        // 修改正在阅读的章节,如果能进入下一章，则一定存在下一章
+        viewModel.book.readingChapterId = viewModel.getNextChapterId()!!
+        // 保存正在阅读的章节
+        viewModel.updateBook(viewModel.book)
+        // 获取下一章内容
+        viewModel.getNextChapterContent()
     }
 
     // 书籍翻页功能的Adapter

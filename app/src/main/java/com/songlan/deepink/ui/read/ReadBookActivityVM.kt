@@ -60,12 +60,22 @@ class ReadBookActivityVM : ViewModel() {
 
     // 更新书籍信息
     private val pUpdateBookLiveData = MutableLiveData<Book>()
+    private val pUpdateBookWithJumpLiveData = MutableLiveData<Book>()
     val updateBookLiveData = Transformations.switchMap(pUpdateBookLiveData) { book ->
         DatabaseRepository.updateBook(book)
     }
 
     fun updateBook(book: Book) {
         pUpdateBookLiveData.value = book
+    }
+
+    val updateBookWithoutJumpLiveData =
+        Transformations.switchMap(pUpdateBookWithJumpLiveData) { book ->
+            DatabaseRepository.updateBook(book)
+        }
+
+    fun updateBookWithoutJump(book: Book) {
+        pUpdateBookWithJumpLiveData.value = book
     }
 
     private val pGetFirstChapterWithBookIdLiveData = MutableLiveData<Long>()
@@ -80,8 +90,8 @@ class ReadBookActivityVM : ViewModel() {
 
     // 获取章节内容
     private val pGetChapterContentLiveData = MutableLiveData<Chapter>()
-    private val pPreChapterLiveData = MutableLiveData<Chapter>()
-    private val pNextChapterLiveData = MutableLiveData<Chapter>()
+    private val pPreChapterLiveData = MutableLiveData<Chapter?>()
+    private val pNextChapterLiveData = MutableLiveData<Chapter?>()
 
     var preChapter = StringBuilder()
     var readingChapterContent = StringBuilder()
@@ -89,7 +99,9 @@ class ReadBookActivityVM : ViewModel() {
 
     val preChapterLiveData =
         Transformations.switchMap(pPreChapterLiveData) { chapter ->
-            ChapterRepository.getChapterContent(chapter)
+            chapter?.let {
+                ChapterRepository.getChapterContent(chapter)
+            }
         }
     val curChapterLiveData =
         Transformations.switchMap(pGetChapterContentLiveData) { chapter ->
@@ -97,18 +109,24 @@ class ReadBookActivityVM : ViewModel() {
         }
     val nextChapterLiveData =
         Transformations.switchMap(pNextChapterLiveData) { chapter ->
-            ChapterRepository.getChapterContent(chapter)
+            chapter?.let {
+                ChapterRepository.getChapterContent(chapter)
+            }
         }
 
     fun getChapterContent() {
         pGetChapterContentLiveData.value = readingChapter
-        /*val index = loadChaptersWithBookId.indexOf(chapter)
+        /*val index = loadChaptersWithBookId.indexOf(readingChapter)
+        // 配置上一章
         if (index == 0) {
             pPreChapterLiveData.value = null
-        } else if (index == loadChaptersWithBookId.size - 1) {
-            pNextChapterLiveData.value = null
         } else {
             pPreChapterLiveData.value = loadChaptersWithBookId[index - 1]
+        }
+        // 配置下一章
+        if (index == loadChaptersWithBookId.size - 1) {
+            pNextChapterLiveData.value = null
+        } else {
             pNextChapterLiveData.value = loadChaptersWithBookId[index + 1]
         }*/
     }
@@ -131,10 +149,14 @@ class ReadBookActivityVM : ViewModel() {
         }
     }
 
+    fun getNextChapterId() = pNextChapterLiveData.value?.chapterId
+    fun getPreChapterId() = pPreChapterLiveData.value?.chapterId
+
     /**
      * 点开章节时的起始位置，默认为 0
      */
     var contentNextStartIndex = 0
+
     companion object {
         // 小说页默认显示中间页面
         const val DEFAULT_ITEM_ID = 1

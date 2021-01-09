@@ -347,7 +347,8 @@ class ReadBookActivity : AppCompatActivity() {
     /* 翻页时，切换章节*/
     private fun toPreChapter() {
         // 修改正在阅读的章节,如果能进入上一章，则一定存在上一章
-        viewModel.book.readingChapterId = viewModel.getPreChapterId()!!
+        viewModel.book.readingChapterId = viewModel.getPreChapterId()
+        chapterTitleAdapter.notifyDataSetChanged()
         // 保存正在阅读的章节
         viewModel.updateBookWithoutJump(viewModel.book)
         // 获取上一章内容
@@ -356,7 +357,8 @@ class ReadBookActivity : AppCompatActivity() {
 
     private fun toNextChapter() {
         // 修改正在阅读的章节,如果能进入下一章，则一定存在下一章
-        viewModel.book.readingChapterId = viewModel.getNextChapterId()!!
+        viewModel.book.readingChapterId = viewModel.getNextChapterId()
+        chapterTitleAdapter.notifyDataSetChanged()
         // 保存正在阅读的章节
         viewModel.updateBookWithoutJump(viewModel.book)
         // 获取下一章内容

@@ -136,8 +136,8 @@ class ReadBookActivityVM : ViewModel() {
         }
     }
 
-    fun getNextChapterId() = pNextChapterLiveData.value?.chapterId
-    fun getPreChapterId() = pPreChapterLiveData.value?.chapterId
+    fun getNextChapterId() = book.readingChapterId + 1
+    fun getPreChapterId() = book.readingChapterId - 1
 
     /**
      * 点开章节时的起始位置，默认为 0

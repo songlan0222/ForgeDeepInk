@@ -41,6 +41,13 @@ class ReadPage : AppCompatTextView {
     }
 
     /**
+     * 获取页面内可容纳最大字数
+     */
+    fun getCharMaxNum(){
+
+    }
+
+    /**
      * 获取当前页总行数
      */
     fun getLineNum(): Int {
@@ -49,7 +56,5 @@ class ReadPage : AppCompatTextView {
         return layout.getLineForVertical(topOfLastLine)
     }
 
-    override fun setOnClickListener(l: OnClickListener?) {
-        super.setOnClickListener(l)
-    }
+
 }

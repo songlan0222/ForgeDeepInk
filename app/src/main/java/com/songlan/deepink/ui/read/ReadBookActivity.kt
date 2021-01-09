@@ -2,7 +2,6 @@ package com.songlan.deepink.ui.read
 
 import android.os.Bundle
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
@@ -35,9 +34,9 @@ class ReadBookActivity : AppCompatActivity() {
     lateinit var bottomFragment: ReadBottomSheetDialog
     lateinit var chapterTitleAdapter: MyRecyclerViewAdapter
     lateinit var readPageAdapter: ReadingPageViewAdapter
-    private lateinit var pageList: ArrayList<String>
-    private lateinit var preChapterPageList: ArrayList<String>
-    private lateinit var nextChapterPageList: ArrayList<String>
+    private lateinit var pageList: MutableList<String>
+    private lateinit var preChapterPageList: MutableList<String>
+    private lateinit var nextChapterPageList: MutableList<String>
     private var curPageNum = 0
     private var hasPreChapter = false
     private var hasNextChapter = false
@@ -100,7 +99,9 @@ class ReadBookActivity : AppCompatActivity() {
             if (chapter != null) {
                 LogUtils.v(msg = "获取正在阅读的章节信息成功，章节名为：${chapter.chapterName}")
                 viewModel.readingChapter = chapter
-                viewModel.getChapterContent(chapter)
+                viewModel.getChapterContent()
+                viewModel.getPreChapterContent()
+                viewModel.getNextChapterContent()
                 chapterTitleAdapter.notifyDataSetChanged()
             } else {
                 LogUtils.v(msg = "获取正在阅读的章节信息失败")
@@ -128,8 +129,8 @@ class ReadBookActivity : AppCompatActivity() {
                 hasNextChapter = false
             }
         })
-        // 观察章节内容是否变化
-        viewModel.getChapterContentLiveData.observe(this, Observer { result ->
+        // 获取当前章
+        viewModel.curChapterLiveData.observe(this, Observer { result ->
             val content = result.getOrNull()
             if (content != null) {
                 LogUtils.v(msg = "获取正在阅读章节内容成功")
@@ -144,6 +145,7 @@ class ReadBookActivity : AppCompatActivity() {
             if (res != null) {
                 viewModel.loadBook(bookId)
                 viewModel.loadReadingChapter(viewModel.book.readingChapterId)
+
             }
         })
 
@@ -174,17 +176,17 @@ class ReadBookActivity : AppCompatActivity() {
                     0 -> {
                         curPageNum--
                         LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
-                        if (curPageNum <= 0) {
-                            curPageNum = 0
-                        }
+//                        if (curPageNum <= 0) {
+//                            curPageNum = 0
+//                        }
                         chapterContent.setCurrentItem(1, false)
                     }
                     2 -> {
                         curPageNum++
                         LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
-                        if (curPageNum >= pageList.size) {
-                            curPageNum = pageList.size - 1
-                        }
+//                        if (curPageNum >= pageList.size) {
+//                            curPageNum = pageList.size - 1
+//                        }
                         chapterContent.setCurrentItem(1, false)
                     }
                 }
@@ -198,58 +200,109 @@ class ReadBookActivity : AppCompatActivity() {
 
     /* 加载章节内容 */
     // 按字数对章节分页
-    private fun getPageList(content: StringBuilder): ArrayList<String> {
+    private fun getPageList(content: StringBuilder): MutableList<String> {
         curReadPage.resize()
         val charNum = curReadPage.getCharNum()
         var i = 0
-        var content = content.toString()
-        val pageList = arrayListOf<String>()
-        while (i < viewModel.readingChapterContent.length) {
+        val contentStrLen = content.toString().length
+        var tempContent = content.toString()
+        val pageList = mutableListOf<String>()
+        while (i < contentStrLen) {
             var pageContent: String
-            if (charNum > content.length) {
-                pageContent = content
-                // content = content.substring(charNum)
+            // 如果当前字数比页面可容纳字数少时
+            if (charNum > tempContent.length) {
+                pageContent = tempContent
             } else {
-                pageContent = content.substring(0, charNum)
-                content = content.substring(charNum)
+                pageContent = tempContent.substring(0, charNum)
+                tempContent = tempContent.substring(charNum)
             }
             pageList.add(pageContent)
             i += charNum
-            if (i > viewModel.readingChapterContent.length) {
-                i = viewModel.readingChapterContent.length
+            if (i > contentStrLen) {
+                i = contentStrLen
             }
         }
         return pageList
     }
 
     // 为页面填充小说内容
-    private fun setPageContent() {
+    private fun setPageContent(isToPre: Boolean = false) {
+        LogUtils.v(msg = "curPageNum: $curPageNum")
+        // 如果翻页后是第0页
         if (curPageNum == 0) {
-            // 前一页清空
-            preReadPage.text = ""
             curReadPage.text = pageList[curPageNum]
+            // 判断是否存在上一章，如果存在，加载上一章最后一页
+            if (preChapterPageList.isEmpty()) {
+                preReadPage.text = ""
+            } else {
+                preReadPage.text = preChapterPageList[preChapterPageList.size - 1]
+            }
+
             if (pageList.size > curPageNum)
-                lastReadPage.text = pageList[curPageNum + 1]
+                if (nextChapterPageList.isEmpty()) {
+                    nextReadPage.text = pageList[curPageNum + 1]
+                } else {
+                    nextReadPage.text = nextChapterPageList[0]
+                }
             else {
                 // 无后续内容
             }
         }
-        // 如果内容已到最后
-        else if (curPageNum >= pageList.size - 1) {
-            curPageNum = pageList.size - 1
-            curReadPage.text = pageList[curPageNum]
-            if (curPageNum > 0) {
+        // 如果翻页后是最后一页
+        else if (curPageNum == pageList.size - 1) {
+            if (!isToPre) {
                 preReadPage.text = pageList[curPageNum - 1]
+                curReadPage.text = pageList[curPageNum]
+                // 后一页填充
+                if (nextChapterPageList.isEmpty()) {
+                    nextReadPage.text = ""
+                } else {
+                    nextReadPage.text = nextChapterPageList[0]
+                }
+                curReadPage.text = pageList[curPageNum]
+            } else {
+                preReadPage.text = pageList[curPageNum - 1]
+                curReadPage.text = pageList[curPageNum]
+                nextReadPage.text = nextChapterPageList[0]
             }
-            // 后一页清空
-            lastReadPage.text = ""
+
+        }
+        // 如果翻页后进入下一章
+        else if (curPageNum >= pageList.size) {
+            // 获取下一章
+            preChapterPageList.clear()
+            preChapterPageList.addAll(pageList)
+
+            pageList.clear()
+            pageList.addAll(nextChapterPageList)
+            curPageNum = 0
+
+            setPageContent()
+            viewModel.getNextChapterContent()
+        }
+        // 如果翻页后进入上一章
+        else if (curPageNum < 0) {
+
+            nextChapterPageList.clear()
+            nextChapterPageList.addAll(pageList)
+
+            // 替换当前页
+            pageList.clear()
+            pageList.addAll(preChapterPageList)
+            curPageNum = preChapterPageList.size - 1
+
+            // 标记为返回上一章
+            setPageContent(true)
+            // 获取上一章
+            viewModel.getPreChapterContent()
         }
         // 正常情况下
         else {
             preReadPage.text = pageList[curPageNum - 1]
+            nextReadPage.text = pageList[curPageNum + 1]
             curReadPage.text = pageList[curPageNum]
-            lastReadPage.text = pageList[curPageNum + 1]
         }
+
     }
 
     /* 底部弹窗设置 */

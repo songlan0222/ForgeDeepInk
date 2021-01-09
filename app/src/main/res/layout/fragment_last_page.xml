@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <com.songlan.deepink.ui.component.ReadPage
-        android:id="@+id/lastReadPage"
+        android:id="@+id/nextReadPage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="后一页" />

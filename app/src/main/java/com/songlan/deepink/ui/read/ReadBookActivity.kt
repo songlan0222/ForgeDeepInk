@@ -37,6 +37,7 @@ class ReadBookActivity : AppCompatActivity() {
     lateinit var readPageAdapter: ReadingPageViewAdapter
 
     inner class ChapterContent(val startCharIndex: Long, val content: String)
+
     private var pageList = mutableListOf<ChapterContent>()
     private var preChapterPageList = mutableListOf<ChapterContent>()
     private var nextChapterPageList = mutableListOf<ChapterContent>()
@@ -236,15 +237,16 @@ class ReadBookActivity : AppCompatActivity() {
     /**
      * 跳转到正在阅读的页面
      */
-    private fun jumpToReadingPage(){
+    private fun jumpToReadingPage() {
         pageList.forEachIndexed { index, chapterContent ->
-            if(chapterContent.startCharIndex == viewModel.book.startCharIndex){
+            if (chapterContent.startCharIndex == viewModel.book.startCharIndex) {
                 curPageNum = index
-                LogUtils.v(msg="curPageNum ChangeTo : $curPageNum")
+                LogUtils.v(msg = "curPageNum ChangeTo : $curPageNum")
                 setPageContent()
             }
         }
     }
+
     // 为页面填充小说内容
     private fun setPageContent(isToPre: Boolean = false) {
         LogUtils.v(msg = "curPageNum: $curPageNum")
@@ -333,33 +335,8 @@ class ReadBookActivity : AppCompatActivity() {
 
     }
 
-    /* 底部弹窗设置 */
-    private fun setBottomSheetDialog() {
-        bottomFragment = ReadBottomSheetDialog.getDialog()
-    }
-
-    fun showBottomSheetDialog() {
-        showBottomSheetDialogFragment()
-    }
-
-    fun hideBottomSheetDialog() {
-        hideBottomSheetDialogFragment()
-    }
-
-    private fun showBottomSheetDialogFragment() {
-        bottomFragment.show(supportFragmentManager, "bottomSheetDialogFragment")
-    }
-
-    private fun hideBottomSheetDialogFragment() {
-        bottomFragment?.dismiss()
-    }
-
     /* 通过导航栏，切换章节 */
-    fun changeReadingChapter(chapter: Chapter) {
-        changeChapter(chapter)
-    }
-
-    private fun changeChapter(chapter: Chapter) {
+    private fun changeReadingChapter(chapter: Chapter) {
         viewModel.loadReadingChapter(chapter.chapterId)
         curPageNum = 0
         viewModel.book.readingChapterId = chapter.chapterId
@@ -367,14 +344,14 @@ class ReadBookActivity : AppCompatActivity() {
         viewModel.updateBook(viewModel.book)
     }
 
-    private fun changePage(){
+    private inline fun changePage() {
         viewModel.book.startCharIndex = pageList[curPageNum].startCharIndex
         LogUtils.v(msg = "翻页成功，当前页为：$curPageNum, 起始char为：${pageList[curPageNum].startCharIndex}")
         viewModel.updateBookWithoutJump(viewModel.book)
     }
 
     /* 翻页时，切换章节*/
-    private fun toPreChapter() {
+    private inline fun toPreChapter() {
         // 修改正在阅读的章节,如果能进入上一章，则一定存在上一章
         viewModel.book.readingChapterId = viewModel.getPreChapterId()
         viewModel.book.startCharIndex = pageList[curPageNum].startCharIndex
@@ -386,7 +363,7 @@ class ReadBookActivity : AppCompatActivity() {
         viewModel.getPreChapterContent()
     }
 
-    private fun toNextChapter() {
+    private inline fun toNextChapter() {
         // 修改正在阅读的章节,如果能进入下一章，则一定存在下一章
         viewModel.book.readingChapterId = viewModel.getNextChapterId()
         viewModel.book.startCharIndex = pageList[curPageNum].startCharIndex
@@ -396,6 +373,27 @@ class ReadBookActivity : AppCompatActivity() {
         viewModel.updateBookWithoutJump(viewModel.book)
         // 获取下一章内容
         viewModel.getNextChapterContent()
+    }
+
+    /* 底部弹窗设置 */
+    private fun setBottomSheetDialog() {
+        bottomFragment = ReadBottomSheetDialog.getDialog()
+    }
+
+    fun showBottomSheetDialog() {
+        showBottomSheetDialogFragment()
+    }
+
+    private fun showBottomSheetDialogFragment() {
+        bottomFragment.show(supportFragmentManager, "bottomSheetDialogFragment")
+    }
+
+    fun hideBottomSheetDialog() {
+        hideBottomSheetDialogFragment()
+    }
+
+    private fun hideBottomSheetDialogFragment() {
+        bottomFragment?.dismiss()
     }
 
     // 书籍翻页功能的Adapter
@@ -437,7 +435,7 @@ class ReadBookActivity : AppCompatActivity() {
                 // 界面上，选中内容切换
                 chapterListSelected(viewHolder)
                 // 隐藏工具栏
-                hideBottomSheetDialogFragment()
+                hideBottomSheetDialog()
                 // 切换章节
                 changeReadingChapter(chapter)
             }
@@ -467,5 +465,4 @@ class ReadBookActivity : AppCompatActivity() {
             }
         }
     }
-
 }

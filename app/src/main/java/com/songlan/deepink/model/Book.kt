@@ -19,6 +19,7 @@ data class Book(
     var regex: String = "^.*/s第(.{1,5})[章回节部集卷].{0,24}",
     var bookshelfId: Long = 1,
     var readingChapterId: Long = -1L,
+    var startChar : Long = 0L,
 ) {
     @PrimaryKey(autoGenerate = true)
     var bookId: Long = 0

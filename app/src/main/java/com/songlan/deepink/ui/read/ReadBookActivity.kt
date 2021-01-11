@@ -35,9 +35,11 @@ class ReadBookActivity : AppCompatActivity() {
     lateinit var bottomFragment: ReadBottomSheetDialog
     lateinit var chapterTitleAdapter: MyRecyclerViewAdapter
     lateinit var readPageAdapter: ReadingPageViewAdapter
-    private var pageList = mutableListOf<String>()
-    private var preChapterPageList = mutableListOf<String>()
-    private var nextChapterPageList = mutableListOf<String>()
+
+    inner class ChapterContent(val startCharIndex: Long, val content: String)
+    private var pageList = mutableListOf<ChapterContent>()
+    private var preChapterPageList = mutableListOf<ChapterContent>()
+    private var nextChapterPageList = mutableListOf<ChapterContent>()
     private var curPageNum = 0
     private var hasPreChapter = false
     private var hasNextChapter = false
@@ -113,7 +115,7 @@ class ReadBookActivity : AppCompatActivity() {
             val content = result.getOrNull()
             if (content != null) {
                 hasPreChapter = true
-                viewModel.preChapter = content
+                // viewModel.preChapter = content
                 preChapterPageList.clear()
                 preChapterPageList.addAll(getPageList(content))
             } else {
@@ -125,7 +127,7 @@ class ReadBookActivity : AppCompatActivity() {
             val content = result.getOrNull()
             if (content != null) {
                 hasNextChapter = true
-                viewModel.nextChapter = content
+                // viewModel.nextChapter = content
                 nextChapterPageList.clear()
                 nextChapterPageList.addAll(getPageList(content))
             } else {
@@ -138,9 +140,10 @@ class ReadBookActivity : AppCompatActivity() {
             if (content != null) {
                 LogUtils.v(msg = "获取正在阅读章节内容成功")
                 viewModel.readingChapterContent = content
-                curReadPage.text = content
+                // curReadPage.text = content
                 pageList.clear()
                 pageList.addAll(getPageList(content))
+                jumpToReadingPage()
             }
         })
         // 更新书籍正在阅读的章节id
@@ -204,18 +207,21 @@ class ReadBookActivity : AppCompatActivity() {
 
     /* 加载章节内容 */
     // 按字数对章节分页
-    private fun getPageList(content: StringBuilder): MutableList<String> {
+    private fun getPageList(content: StringBuilder): MutableList<ChapterContent> {
+
         var i = 0
         val contentStrLen = content.toString().length
         var tempContent = content.toString()
-        val pageList = mutableListOf<String>()
+        val pageList = mutableListOf<ChapterContent>()
         while (i < contentStrLen) {
             var pageContent: String
             // 获取本页可填充字数
             val charNum = curReadPage.getPageCharNum(tempContent)
             // 如果当前字数比页面可填充
             pageContent = tempContent.substring(0, charNum)
-            pageList.add(pageContent)
+
+            val chapterContent = ChapterContent(i.toLong(), pageContent)
+            pageList.add(chapterContent)
             // 切割已分配文字
             tempContent = tempContent.substring(charNum)
 
@@ -227,38 +233,54 @@ class ReadBookActivity : AppCompatActivity() {
         return pageList
     }
 
+    /**
+     * 跳转到正在阅读的页面
+     */
+    private fun jumpToReadingPage(){
+        pageList.forEachIndexed { index, chapterContent ->
+            if(chapterContent.startCharIndex == viewModel.book.startCharIndex){
+                curPageNum = index
+                LogUtils.v(msg="curPageNum ChangeTo : $curPageNum")
+                setPageContent()
+            }
+        }
+    }
     // 为页面填充小说内容
     private fun setPageContent(isToPre: Boolean = false) {
         LogUtils.v(msg = "curPageNum: $curPageNum")
         // 如果翻页后是第0页
         if (curPageNum == 0) {
-            curReadPage.text = pageList[curPageNum]
+            curReadPage.text = pageList[curPageNum].content
             // 判断是否存在上一章，如果存在，加载上一章最后一页
             if (preChapterPageList.isEmpty()) {
                 preReadPage.text = ""
             } else {
-                preReadPage.text = preChapterPageList[preChapterPageList.size - 1]
+                preReadPage.text = preChapterPageList[preChapterPageList.size - 1].content
             }
 
             if (pageList.size > curPageNum)
                 if (nextChapterPageList.isEmpty()) {
-                    nextReadPage.text = pageList[curPageNum + 1]
+                    nextReadPage.text = pageList[curPageNum + 1].content
                 } else {
-                    nextReadPage.text = nextChapterPageList[0]
+                    nextReadPage.text = nextChapterPageList[0].content
                 }
             else {
                 // 无后续内容
             }
+
+            changePage()
         }
         // 如果翻页后是最后一页
         else if (curPageNum == pageList.size - 1) {
-            preReadPage.text = pageList[curPageNum - 1]
-            curReadPage.text = pageList[curPageNum]
+            preReadPage.text = pageList[curPageNum - 1].content
+            curReadPage.text = pageList[curPageNum].content
             if (nextChapterPageList.isNullOrEmpty()) {
                 nextReadPage.text = ""
             } else {
-                nextReadPage.text = nextChapterPageList[0]
+                nextReadPage.text = nextChapterPageList[0].content
             }
+
+            changePage()
         }
         // 如果翻页后进入下一章
         else if (curPageNum >= pageList.size) {
@@ -294,7 +316,6 @@ class ReadBookActivity : AppCompatActivity() {
                 pageList.addAll(preChapterPageList)
                 curPageNum = preChapterPageList.size - 1
 
-
                 // 标记为返回上一章
                 setPageContent()
                 preChapterPageList.clear()
@@ -304,9 +325,10 @@ class ReadBookActivity : AppCompatActivity() {
         }
         // 正常情况下
         else {
-            preReadPage.text = pageList[curPageNum - 1]
-            nextReadPage.text = pageList[curPageNum + 1]
-            curReadPage.text = pageList[curPageNum]
+            preReadPage.text = pageList[curPageNum - 1].content
+            nextReadPage.text = pageList[curPageNum + 1].content
+            curReadPage.text = pageList[curPageNum].content
+            changePage()
         }
 
     }
@@ -341,13 +363,22 @@ class ReadBookActivity : AppCompatActivity() {
         viewModel.loadReadingChapter(chapter.chapterId)
         curPageNum = 0
         viewModel.book.readingChapterId = chapter.chapterId
+        viewModel.book.startCharIndex = 0
         viewModel.updateBook(viewModel.book)
+    }
+
+    private fun changePage(){
+        viewModel.book.startCharIndex = pageList[curPageNum].startCharIndex
+        LogUtils.v(msg = "翻页成功，当前页为：$curPageNum, 起始char为：${pageList[curPageNum].startCharIndex}")
+        viewModel.updateBookWithoutJump(viewModel.book)
     }
 
     /* 翻页时，切换章节*/
     private fun toPreChapter() {
         // 修改正在阅读的章节,如果能进入上一章，则一定存在上一章
         viewModel.book.readingChapterId = viewModel.getPreChapterId()
+        viewModel.book.startCharIndex = pageList[curPageNum].startCharIndex
+        LogUtils.v(msg = "翻页成功，当前页为：$curPageNum, 起始char为：${pageList[curPageNum].startCharIndex}")
         chapterTitleAdapter.notifyDataSetChanged()
         // 保存正在阅读的章节
         viewModel.updateBookWithoutJump(viewModel.book)
@@ -358,6 +389,8 @@ class ReadBookActivity : AppCompatActivity() {
     private fun toNextChapter() {
         // 修改正在阅读的章节,如果能进入下一章，则一定存在下一章
         viewModel.book.readingChapterId = viewModel.getNextChapterId()
+        viewModel.book.startCharIndex = pageList[curPageNum].startCharIndex
+        LogUtils.v(msg = "翻页成功，当前页为：$curPageNum, 起始char为：${pageList[curPageNum].startCharIndex}")
         chapterTitleAdapter.notifyDataSetChanged()
         // 保存正在阅读的章节
         viewModel.updateBookWithoutJump(viewModel.book)

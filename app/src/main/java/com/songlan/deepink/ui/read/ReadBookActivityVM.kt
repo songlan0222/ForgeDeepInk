@@ -136,8 +136,25 @@ class ReadBookActivityVM : ViewModel() {
         }
     }
 
+    /**
+     * 获取前后章节的chapterId
+     */
     fun getNextChapterId() = book.readingChapterId + 1
     fun getPreChapterId() = book.readingChapterId - 1
+
+    /**
+     * 正在阅读位置的起始字符序号
+     */
+    private val pStartCharIndexLiveData = MutableLiveData<Long>()
+    var startCharIndex: Long = 0
+    val startCharIndexLiveData = Transformations.switchMap(pStartCharIndexLiveData) { index ->
+        book.startCharIndex = index
+        DatabaseRepository.updateBook(book)
+    }
+
+    fun updateStartCharIndex(index: Long) {
+        pStartCharIndexLiveData.value = index
+    }
 
     /**
      * 点开章节时的起始位置，默认为 0

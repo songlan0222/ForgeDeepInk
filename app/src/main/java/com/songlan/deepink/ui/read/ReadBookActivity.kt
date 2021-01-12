@@ -31,6 +31,7 @@ class ReadBookActivity : AppCompatActivity() {
         ViewModelProvider(this).get(ReadBookActivityVM::class.java)
     }
 
+    private var bookId = -1L
     private val fragmentMap = hashMapOf<Int, Fragment>()
     lateinit var bottomFragment: ReadBottomSheetDialog
     lateinit var chapterTitleAdapter: MyRecyclerViewAdapter
@@ -49,12 +50,52 @@ class ReadBookActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read_book)
 
-        val bookId = intent.getLongExtra(AppProfiles.READING_BOOK_ID, -1)
-        if (bookId == -1L) {
-            throw Exception("致命错误：没有获取到小说id")
-        }
+        // 获取点开书籍的相关信息
+        getIntentData()
+        // 绑定VM中LiveData数据的监听
+        bindVMLiveData()
 
-        /* 数据加载 */
+        // 将数据绑定到组件上
+        setDataToUI()
+        // 配置底部弹窗
+        setBottomSheetDialog()
+
+        chapterContent.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int,
+            ) {
+            }
+
+            override fun onPageSelected(position: Int) {
+                when (position) {
+                    1 -> {
+                        setPageContent()
+                    }
+                    0 -> {
+                        curPageNum--
+                        LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
+                        chapterContent.setCurrentItem(1, false)
+                    }
+                    2 -> {
+                        curPageNum++
+                        LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
+                        chapterContent.setCurrentItem(1, false)
+                    }
+                }
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+        })
+
+    }
+
+    /**
+     * 绑定VM中LiveData数据的监听
+     */
+    private inline fun bindVMLiveData(){
         // 获取书籍
         viewModel.bookLiveData.observe(this, Observer { result ->
             val book = result.getOrNull()
@@ -162,8 +203,22 @@ class ReadBookActivity : AppCompatActivity() {
                 LogUtils.v(msg = "已记录正在阅读的章节id")
             }
         })
+    }
 
-        /* 数据配置 */
+    /**
+     * 获取点开书籍的相关信息
+     */
+    private inline fun getIntentData(){
+        bookId = intent.getLongExtra(AppProfiles.READING_BOOK_ID, -1)
+        if (bookId == -1L) {
+            throw Exception("致命错误：没有获取到小说id")
+        }
+    }
+
+    /**
+     * 将数据绑定到组件上
+     */
+    private inline fun setDataToUI(){
         viewModel.loadBook(bookId)
         chapterTitleAdapter = MyRecyclerViewAdapter(viewModel.loadChaptersWithBookId)
 
@@ -171,39 +226,6 @@ class ReadBookActivity : AppCompatActivity() {
         readPageAdapter = ReadingPageViewAdapter(supportFragmentManager)
         chapterContent.adapter = readPageAdapter
         chapterContent.currentItem = 1
-        // 配置底部弹窗
-        setBottomSheetDialog()
-
-        chapterContent.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int,
-            ) {
-            }
-
-            override fun onPageSelected(position: Int) {
-                when (position) {
-                    1 -> {
-                        setPageContent()
-                    }
-                    0 -> {
-                        curPageNum--
-                        LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
-                        chapterContent.setCurrentItem(1, false)
-                    }
-                    2 -> {
-                        curPageNum++
-                        LogUtils.v(msg = "翻页中：curPageNum=$curPageNum")
-                        chapterContent.setCurrentItem(1, false)
-                    }
-                }
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-            }
-        })
-
     }
 
     /* 加载章节内容 */

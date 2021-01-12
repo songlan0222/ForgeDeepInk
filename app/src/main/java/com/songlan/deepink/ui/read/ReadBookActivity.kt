@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.songlan.deepink.AppProfiles
@@ -19,6 +20,7 @@ import com.songlan.deepink.R
 import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_read_book.*
+import kotlinx.android.synthetic.main.fragment_book_directory.*
 import kotlinx.android.synthetic.main.fragment_current_page.*
 import kotlinx.android.synthetic.main.fragment_last_page.*
 import kotlinx.android.synthetic.main.fragment_pre_page.*
@@ -95,7 +97,7 @@ class ReadBookActivity : AppCompatActivity() {
     /**
      * 绑定VM中LiveData数据的监听
      */
-    private inline fun bindVMLiveData(){
+    private inline fun bindVMLiveData() {
         // 获取书籍
         viewModel.bookLiveData.observe(this, Observer { result ->
             val book = result.getOrNull()
@@ -208,7 +210,7 @@ class ReadBookActivity : AppCompatActivity() {
     /**
      * 获取点开书籍的相关信息
      */
-    private inline fun getIntentData(){
+    private inline fun getIntentData() {
         bookId = intent.getLongExtra(AppProfiles.READING_BOOK_ID, -1)
         if (bookId == -1L) {
             throw Exception("致命错误：没有获取到小说id")
@@ -218,7 +220,7 @@ class ReadBookActivity : AppCompatActivity() {
     /**
      * 将数据绑定到组件上
      */
-    private inline fun setDataToUI(){
+    private inline fun setDataToUI() {
         viewModel.loadBook(bookId)
         chapterTitleAdapter = MyRecyclerViewAdapter(viewModel.loadChaptersWithBookId)
 
@@ -438,10 +440,11 @@ class ReadBookActivity : AppCompatActivity() {
     }
 
     // 章节列表的Adapter
-    inner class MyRecyclerViewAdapter(private val chapterList: List<Chapter>) :
+    inner class MyRecyclerViewAdapter(val chapterList: List<Chapter>) :
         RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
 
         private val holderList = arrayListOf<ViewHolder>()
+        private var selectedPosition: Int = 0
 
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
             val chapterTitle: TextView = view.findViewById<TextView>(R.id.chapterTitle)
@@ -471,6 +474,7 @@ class ReadBookActivity : AppCompatActivity() {
             holder.chapterTitle.isSelected = false
             if (chapter.chapterId == viewModel.book.readingChapterId) {
                 holder.chapterTitle.isSelected = true
+                selectedPosition = position
             }
         }
 
@@ -484,7 +488,10 @@ class ReadBookActivity : AppCompatActivity() {
                         holder.chapterTitle.isSelected = false
                 }
                 holder.chapterTitle.isSelected = true
+                selectedPosition = holderList.indexOf(holder)
             }
         }
+
+        fun getSelectedPosition() = selectedPosition
     }
 }

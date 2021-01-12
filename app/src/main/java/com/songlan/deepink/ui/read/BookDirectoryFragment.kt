@@ -19,10 +19,12 @@ import kotlinx.android.synthetic.main.fragment_book_directory.*
 class BookDirectoryFragment : Fragment() {
 
     private lateinit var readBookActivity: ReadBookActivity
+    private lateinit var manager: LinearLayoutManager
+    private lateinit var adapter: ReadBookActivity.MyRecyclerViewAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         if (activity != null) {
             readBookActivity = activity as ReadBookActivity
@@ -49,7 +51,34 @@ class BookDirectoryFragment : Fragment() {
             readBookActivity.finish()
         }
 
-        chapterTitleList.layoutManager = LinearLayoutManager(readBookActivity)
-        chapterTitleList.adapter = readBookActivity.chapterTitleAdapter
+        manager = LinearLayoutManager(readBookActivity)
+        adapter = readBookActivity.chapterTitleAdapter
+        chapterTitleList.layoutManager = manager
+        chapterTitleList.adapter = adapter
+
+        var position = 0
+        adapter.chapterList.forEachIndexed{index, chapter->
+            if(chapter.chapterId == readBookActivity.viewModel.book.readingChapterId){
+                position = index
+            }
+        }
+        moveToPosition(manager, position)
+    }
+
+    private fun moveToPosition(manager: LinearLayoutManager, position: Int) {
+        val firstItemPosition = manager.findFirstVisibleItemPosition()
+        val lastItemPosition = manager.findLastVisibleItemPosition()
+        when {
+            position <= firstItemPosition -> {
+                chapterTitleList.scrollToPosition(position)
+            }
+            position <= lastItemPosition -> {
+                val top = chapterTitleList.getChildAt(position - firstItemPosition).top
+                chapterTitleList.scrollBy(0, top)
+            }
+            else -> {
+                chapterTitleList.scrollToPosition(position)
+            }
+        }
     }
 }

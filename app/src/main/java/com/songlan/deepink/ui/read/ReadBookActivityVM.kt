@@ -7,6 +7,8 @@ import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.repository.ChapterRepository
 import com.songlan.deepink.repository.DatabaseRepository
+import com.songlan.deepink.repository.ProfileRepository
+import com.songlan.deepink.utils.ReadPageProfileUtil
 import java.lang.StringBuilder
 
 class ReadBookActivityVM : ViewModel() {
@@ -143,23 +145,29 @@ class ReadBookActivityVM : ViewModel() {
     fun getPreChapterId() = book.readingChapterId - 1
 
     /**
-     * 正在阅读位置的起始字符序号
+     * 获取ReadPage参数
      */
-    private val pStartCharIndexLiveData = MutableLiveData<Long>()
-    var startCharIndex: Long = 0
-    val startCharIndexLiveData = Transformations.switchMap(pStartCharIndexLiveData) { index ->
-        book.startCharIndex = index
-        DatabaseRepository.updateBook(book)
+    private val pLoadReadPageProfileLiveData = MutableLiveData<Any>()
+    val loadReadPageProfile = mutableMapOf<String, Float>()
+    val loadReadPageProfileLiveData = Transformations.switchMap(pLoadReadPageProfileLiveData) {
+        ProfileRepository.loadReadPageProfile()
     }
-
-    fun updateStartCharIndex(index: Long) {
-        pStartCharIndexLiveData.value = index
+    fun loadReadPageProfile() {
+        pLoadReadPageProfileLiveData.value = pLoadChaptersWithBookIdLiveData.value
     }
 
     /**
-     * 点开章节时的起始位置，默认为 0
+     * 保存ReadPage参数
      */
-    var contentNextStartIndex = 0
+    private val pSaveReadPageProfileLiveData = MutableLiveData<Map<String, Float>>()
+    lateinit var saveReadPageProfile : Map<String, Float>
+    val saveReadPageProfileLiveData = Transformations.switchMap(pSaveReadPageProfileLiveData){map->
+        ProfileRepository.saveReadPageProfile(map)
+    }
+    fun saveReadPageProfile(map: Map<String, Float>){
+        pSaveReadPageProfileLiveData.value = map
+    }
+
 
     companion object {
         // 小说页默认显示中间页面

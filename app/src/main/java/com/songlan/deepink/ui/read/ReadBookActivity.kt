@@ -51,12 +51,12 @@ class ReadBookActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read_book)
-
+        // 设置ReadPage的显示参数
+        setReadPage()
         // 获取点开书籍的相关信息
         getIntentData()
         // 绑定VM中LiveData数据的监听
         bindVMLiveData()
-
         // 将数据绑定到组件上
         setDataToUI()
         // 配置底部弹窗
@@ -91,7 +91,21 @@ class ReadBookActivity : AppCompatActivity() {
             override fun onPageScrollStateChanged(state: Int) {
             }
         })
+    }
 
+    /**
+     * 设置ReadPage的显示参数
+     */
+    private inline fun setReadPage() {
+        viewModel.loadReadPageProfileLiveData.observe(this, Observer { result ->
+
+        })
+    }
+
+    private fun getReadPageProfile(): HashMap<String, Int> {
+        val resultMap = hashMapOf<String, Int>()
+
+        return resultMap
     }
 
     /**

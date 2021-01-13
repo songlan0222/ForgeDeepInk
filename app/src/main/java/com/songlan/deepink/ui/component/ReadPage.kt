@@ -3,6 +3,8 @@ package com.songlan.deepink.ui.component
 import android.content.Context
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
+import com.songlan.deepink.utils.ReadPageProfileUtil
+import kotlinx.android.synthetic.main.activity_setting.view.*
 
 
 class ReadPage : AppCompatTextView {
@@ -52,6 +54,13 @@ class ReadPage : AppCompatTextView {
         val layout = layout
         val topOfLastLine = height - paddingTop - paddingBottom - lineHeight
         return layout.getLineForVertical(topOfLastLine)
+    }
+
+    fun setReadPageParameters(map: Map<String, Float>){
+        textSize = map[ReadPageProfileUtil.LINE_MARGIN]?:14F
+        textScaleX = map[ReadPageProfileUtil.LINE_MARGIN]?:0F
+        setLineSpacing(10F, map[ReadPageProfileUtil.LINE_MARGIN]?:0F)
+        // 添加段间距设置方法
     }
 
 

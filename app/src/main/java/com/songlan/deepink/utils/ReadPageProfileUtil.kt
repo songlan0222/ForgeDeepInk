@@ -6,10 +6,10 @@ import java.io.File
 
 object ReadPageProfileUtil {
     private const val READ_PAGE_PROFILE = "READ_PAGE_PROFILE"
-    private const val FONT_SIZE = "FONT_SIZE"
-    private const val FONT_MARGIN = "FONT_MARGIN"
-    private const val LINE_MARGIN = "LINE_MARGIN"
-    private const val PARAGRAPH_MARGIN = "PARAGRAPH_MARGIN"
+    const val FONT_SIZE = "FONT_SIZE"
+    const val FONT_MARGIN = "FONT_MARGIN"
+    const val LINE_MARGIN = "LINE_MARGIN"
+    const val PARAGRAPH_MARGIN = "PARAGRAPH_MARGIN"
 
     /**
      * 初始化ReadPage的基本信息

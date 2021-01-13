@@ -52,7 +52,7 @@ class ReadBookActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read_book)
         // 设置ReadPage的显示参数
-        setReadPage()
+        bindReadPageLiveData()
         // 获取点开书籍的相关信息
         getIntentData()
         // 绑定VM中LiveData数据的监听
@@ -96,16 +96,23 @@ class ReadBookActivity : AppCompatActivity() {
     /**
      * 设置ReadPage的显示参数
      */
-    private inline fun setReadPage() {
+    private inline fun bindReadPageLiveData() {
         viewModel.loadReadPageProfileLiveData.observe(this, Observer { result ->
-
+            val map = result.getOrNull()
+            if (map != null) {
+                viewModel.loadReadPageProfile.clear()
+                viewModel.loadReadPageProfile.putAll(map)
+            }
         })
-    }
 
-    private fun getReadPageProfile(): HashMap<String, Int> {
-        val resultMap = hashMapOf<String, Int>()
-
-        return resultMap
+        viewModel.saveReadPageProfileLiveData.observe(this, Observer { result ->
+            val isSaved = result.getOrNull()
+            if (isSaved != null) {
+                LogUtils.v(msg = "ReadPage配置信息保存成功")
+                // 重新加载数据
+                viewModel.loadReadPageProfile()
+            }
+        })
     }
 
     /**

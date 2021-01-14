@@ -27,6 +27,7 @@ object ReadPageProfileUtil {
      * 获取ReadPage的配置信息
      */
     fun loadReadPageProfile(): MutableMap<String, Float> {
+        LogUtils.v(msg="加载ReadPage配置信息中，in ReadPageProfileUtil")
         val prefs = MyApplication.context.getSharedPreferences(READ_PAGE_PROFILE, Context.MODE_PRIVATE)
         val resultMap = mutableMapOf<String, Float>()
         resultMap[FONT_SIZE] = prefs.getFloat(FONT_SIZE, 14F)

@@ -3,6 +3,7 @@ package com.songlan.deepink.repository
 import android.content.Context
 import androidx.lifecycle.liveData
 import com.songlan.deepink.MyApplication.Companion.context
+import com.songlan.deepink.utils.LogUtils
 import com.songlan.deepink.utils.ReadPageProfileUtil
 import kotlinx.coroutines.Dispatchers
 import java.io.File
@@ -12,6 +13,7 @@ import kotlin.coroutines.CoroutineContext
 object ProfileRepository {
 
     fun loadReadPageProfile() = fire(Dispatchers.IO) {
+        LogUtils.v(msg="加载ReadPage配置信息中，in ProfileRepository")
         val loadReadPageProfile = ReadPageProfileUtil.loadReadPageProfile()
         Result.success(loadReadPageProfile)
     }

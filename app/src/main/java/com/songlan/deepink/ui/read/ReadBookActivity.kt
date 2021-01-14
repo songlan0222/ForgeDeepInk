@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.songlan.deepink.AppProfiles
@@ -20,7 +19,6 @@ import com.songlan.deepink.R
 import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_read_book.*
-import kotlinx.android.synthetic.main.fragment_book_directory.*
 import kotlinx.android.synthetic.main.fragment_current_page.*
 import kotlinx.android.synthetic.main.fragment_last_page.*
 import kotlinx.android.synthetic.main.fragment_pre_page.*
@@ -100,8 +98,13 @@ class ReadBookActivity : AppCompatActivity() {
         viewModel.loadReadPageProfileLiveData.observe(this, Observer { result ->
             val map = result.getOrNull()
             if (map != null) {
+                map.forEach{
+                    LogUtils.v(msg = "${it.key} = ${it.value}")
+                }
                 viewModel.loadReadPageProfile.clear()
                 viewModel.loadReadPageProfile.putAll(map)
+                LogUtils.v(msg="加载ReadPage配置信息成功")
+                curReadPage.setProfile(viewModel.loadReadPageProfile)
             }
         })
 
@@ -113,6 +116,8 @@ class ReadBookActivity : AppCompatActivity() {
                 viewModel.loadReadPageProfile()
             }
         })
+
+        viewModel.loadReadPageProfile()
     }
 
     /**

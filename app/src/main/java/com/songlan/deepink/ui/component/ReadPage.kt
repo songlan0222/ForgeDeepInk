@@ -7,6 +7,9 @@ import android.text.style.ImageSpan
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.R
 import com.songlan.deepink.utils.ReadPageProfileUtil
 
@@ -16,6 +19,8 @@ class ReadPage : AppCompatTextView {
     constructor(context: Context) : super(context)
     constructor(context: Context, attrs: AttributeSet?) : super(context, attrs)
     constructor(context: Context, attrs: AttributeSet?, style: Int) : super(context, attrs, style)
+
+    private lateinit var profileMap : Map<String, Float>
 
     override fun onLayout(changed: Boolean, left: Int, top: Int, right: Int, bottom: Int) {
         super.onLayout(changed, left, top, right, bottom)
@@ -31,6 +36,18 @@ class ReadPage : AppCompatTextView {
         val newContent = oldContent.subSequence(0, getCharNum())
         text = newContent
         return oldContent.length - newContent.length
+    }
+
+    private var paragraphSpacing = 1
+    fun setProfile(map: Map<String, Float>){
+        profileMap = map
+        paragraphSpacing = map.getValue(ReadPageProfileUtil.PARAGRAPH_MARGIN).toInt()
+    }
+    override fun setText(text: CharSequence?, type: BufferType?) {
+        super.setText(text, type)
+        if (this::profileMap.isInitialized) {
+            // setParagraphSpacing(paragraphSpacing)
+        }
     }
 
     /**
@@ -61,14 +78,6 @@ class ReadPage : AppCompatTextView {
     }
 
     /**
-     * 设置ReadPage的text，同时设置对应的显示格式
-     */
-    fun setText(content: String, map: Map<String, Float>){
-        text = content
-        setReadPageParameters(map)
-    }
-
-    /**
      * 设置字体大小，字间距，行间距
      */
     private fun setReadPageParameters(map: Map<String, Float>) {
@@ -76,14 +85,14 @@ class ReadPage : AppCompatTextView {
         textScaleX = map[ReadPageProfileUtil.LINE_MARGIN] ?: 0F
         setLineSpacing(10F, map[ReadPageProfileUtil.LINE_MARGIN] ?: 0F)
         // 添加段间距设置方法
-        setParagraphSpacing(map[ReadPageProfileUtil.PARAGRAPH_MARGIN]?.toInt()?:1)
+        setParagraphSpacing(map[ReadPageProfileUtil.PARAGRAPH_MARGIN]?.toInt() ?: 1)
     }
 
     /**
      * 设置段间距
      */
-    private fun setParagraphSpacing(paragraphSpacing: Int){
-        if(!text.contains("\n")){
+    private fun setParagraphSpacing(paragraphSpacing: Int) {
+        if (!text.contains("\n")) {
             return
         }
         text = text.toString().replace("\n", "\n\r")
@@ -92,10 +101,10 @@ class ReadPage : AppCompatTextView {
         //记录每个段落开始的index，第一段没有，从第二段开始
         val nextParagraphBeginIndexes = arrayListOf<Int>()
         nextParagraphBeginIndexes.add(previousIndex)
-        while(previousIndex != -1){
+        while (previousIndex != -1) {
             val nextIndex = text.indexOf("\n\r", previousIndex + 2)
             previousIndex = nextIndex
-            if(previousIndex != -1){
+            if (previousIndex != -1) {
                 nextParagraphBeginIndexes.add(previousIndex)
             }
         }
@@ -112,13 +121,14 @@ class ReadPage : AppCompatTextView {
 
         for (index in nextParagraphBeginIndexes) {
             // \r在String中占一个index
-            spanString.setSpan(ImageSpan(rectangle), index + 1, index + 2, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+            spanString.setSpan(ImageSpan(rectangle),
+                index + 1,
+                index + 2,
+                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
         }
 
         text = spanString
     }
-
-
 
 
 }

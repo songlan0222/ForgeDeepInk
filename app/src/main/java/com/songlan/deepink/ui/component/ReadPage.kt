@@ -60,15 +60,29 @@ class ReadPage : AppCompatTextView {
         return layout.getLineForVertical(topOfLastLine)
     }
 
-    fun setReadPageParameters(map: Map<String, Float>) {
+    /**
+     * 设置ReadPage的text，同时设置对应的显示格式
+     */
+    fun setText(content: String, map: Map<String, Float>){
+        text = content
+        setReadPageParameters(map)
+    }
+
+    /**
+     * 设置字体大小，字间距，行间距
+     */
+    private fun setReadPageParameters(map: Map<String, Float>) {
         textSize = map[ReadPageProfileUtil.LINE_MARGIN] ?: 14F
         textScaleX = map[ReadPageProfileUtil.LINE_MARGIN] ?: 0F
         setLineSpacing(10F, map[ReadPageProfileUtil.LINE_MARGIN] ?: 0F)
         // 添加段间距设置方法
-        setParagraphMargin(map[ReadPageProfileUtil.PARAGRAPH_MARGIN]?.toInt()?:1)
+        setParagraphSpacing(map[ReadPageProfileUtil.PARAGRAPH_MARGIN]?.toInt()?:1)
     }
 
-    fun setParagraphMargin(paragraphSpacing: Int){
+    /**
+     * 设置段间距
+     */
+    private fun setParagraphSpacing(paragraphSpacing: Int){
         if(!text.contains("\n")){
             return
         }
@@ -103,6 +117,8 @@ class ReadPage : AppCompatTextView {
 
         text = spanString
     }
+
+
 
 
 }

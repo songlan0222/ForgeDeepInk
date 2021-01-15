@@ -85,11 +85,11 @@ class ReadPage : AppCompatTextView {
         textScaleX = map[ReadPageProfileUtil.LINE_MARGIN] ?: 0F
         setLineSpacing(10F, map[ReadPageProfileUtil.LINE_MARGIN] ?: 0F)
         // 添加段间距设置方法
-        setParagraphSpacing(map[ReadPageProfileUtil.PARAGRAPH_MARGIN]?.toInt() ?: 1)
+        // setParagraphSpacing(map[ReadPageProfileUtil.PARAGRAPH_MARGIN]?.toInt() ?: 1)
     }
 
     /**
-     * 设置段间距
+     * 设置段间距，资源占用过大，取消使用
      */
     private fun setParagraphSpacing(paragraphSpacing: Int) {
         if (!text.contains("\n")) {

@@ -21,7 +21,7 @@ import com.songlan.deepink.AppProfiles.DOCUMENT_URI_STRING
 import com.songlan.deepink.MyApplication.Companion.context
 import com.songlan.deepink.R
 import com.songlan.deepink.model.Book
-import com.songlan.deepink.utils.ChapterDivideUtil.getChaptersFromTxt
+import com.songlan.deepink.utils.ChapterUtil.getChaptersFromTxt
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_add_local_book.toolbar
 import kotlinx.android.synthetic.main.activity_edit_local_book.*

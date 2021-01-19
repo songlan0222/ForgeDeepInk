@@ -12,8 +12,10 @@ import java.io.*
 import java.lang.Exception
 import java.lang.StringBuilder
 
-
-object ChapterDivideUtil {
+/**
+ * 章节工具
+ */
+object ChapterUtil {
 
     private val CHAPTER_SPLIT_REGEX =
         Regex("^.*第([0-9]{1,5}|[一二三四五六七八九十百千万亿]{1,5})[章回节部集卷](\\s.{0,24}|$)")

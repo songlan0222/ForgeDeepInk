@@ -7,11 +7,7 @@ import android.text.style.ImageSpan
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.R
-import com.songlan.deepink.utils.ReadPageProfileUtil
 
 
 class ReadPage : AppCompatTextView {

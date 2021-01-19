@@ -2,6 +2,9 @@ package com.songlan.deepink.utils
 
 import android.util.Log
 
+/**
+ * 日志输出工具
+ */
 object LogUtils {
 
     private const val VERBOSE = 1

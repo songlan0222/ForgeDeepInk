@@ -6,7 +6,10 @@ import java.io.FileOutputStream
 import java.lang.Exception
 import java.util.*
 
-object PropertiesUtil {
+/**
+ * 配置文件工具
+ */
+object ConfigUtil {
     fun loadConfig(context: Context, file: String): Properties{
         val properties = Properties()
         try{

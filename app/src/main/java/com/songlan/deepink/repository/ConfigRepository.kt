@@ -2,21 +2,21 @@ package com.songlan.deepink.repository
 
 import android.content.Context
 import androidx.lifecycle.liveData
-import com.songlan.deepink.utils.PropertiesUtil
+import com.songlan.deepink.utils.ConfigUtil
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
-object ReadPageMenuConfigRepository {
+object ConfigRepository {
 
     fun loadConfig(context: Context, file: String) = fire(Dispatchers.IO) {
-        val properties = PropertiesUtil.loadConfig(context, file)
+        val properties = ConfigUtil.loadConfig(context, file)
         Result.success(properties)
     }
 
     fun saveConfig(context: Context, file: String, properties: Properties) = fire(Dispatchers.IO) {
-        PropertiesUtil.saveConfig(context, file, properties)
+        ConfigUtil.saveConfig(context, file, properties)
         Result.success(Any())
     }
 

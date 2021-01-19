@@ -8,9 +8,14 @@ import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.*
 
+/**
+ * 格式化工具
+ */
 object FormatUtil {
 
-    // 时间格式化工具
+    /**
+     * 时间格式化工具
+     */
     fun getFormatFileLastModified(time: Long): String {
         return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             val instant = Instant.ofEpochMilli(time)
@@ -25,7 +30,9 @@ object FormatUtil {
         }
     }
 
-    // 文件大小格式化方法
+    /**
+     * 文件大小格式化方法
+     */
     fun getFormatFileSize(length: Long): String {
         LogUtils.d("MainTest", "文件大小为：$length")
         val arr = arrayOf("Bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")

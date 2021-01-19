@@ -7,8 +7,6 @@ import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.repository.ChapterRepository
 import com.songlan.deepink.repository.DatabaseRepository
-import com.songlan.deepink.repository.ProfileRepository
-import com.songlan.deepink.utils.LogUtils
 import java.lang.StringBuilder
 
 class ReadBookActivityVM : ViewModel() {
@@ -147,37 +145,9 @@ class ReadBookActivityVM : ViewModel() {
     /**
      * 获取ReadPage参数
      */
-    private val pLoadReadPageProfileLiveData = MutableLiveData<Any>()
-    val loadReadPageProfile = mutableMapOf<String, Float>()
-    val loadReadPageProfileLiveData = Transformations.switchMap(pLoadReadPageProfileLiveData) {
-        LogUtils.v(msg="获取ReadPage配置信息中，in ReadBookActivityVM")
-        ProfileRepository.loadReadPageProfile()
-    }
-
-    fun loadReadPageProfile() {
-        LogUtils.v(msg="调用获取ReadPage配置信息方法，in ReadBookActivityVM")
-        pLoadReadPageProfileLiveData.value = pLoadReadPageProfileLiveData.value
-    }
 
     /**
      * 保存ReadPage参数
      */
-    private val pSaveReadPageProfileLiveData = MutableLiveData<Map<String, Float>>()
-    lateinit var saveReadPageProfile: Map<String, Float>
-    val saveReadPageProfileLiveData =
-        Transformations.switchMap(pSaveReadPageProfileLiveData) { map ->
-            ProfileRepository.saveReadPageProfile(map)
-        }
 
-    fun saveReadPageProfile(map: Map<String, Float>) {
-        pSaveReadPageProfileLiveData.value = map
-    }
-
-
-    companion object {
-        // 小说页默认显示中间页面
-        const val DEFAULT_ITEM_ID = 1
-    }
-
-    //private val pSelectedChapter =
 }

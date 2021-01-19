@@ -52,7 +52,6 @@ object AppProfiles {
         activity.startActivity(intent)
     }
 
-
     // 跳转到添加书籍界面
     fun jumpToAddLocalBookActivity(activity: AppCompatActivity) {
         val intent = Intent(activity, AddLocalBookActivity::class.java)

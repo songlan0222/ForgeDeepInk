@@ -10,7 +10,7 @@ object PropertiesUtil {
     fun loadConfig(context: Context, file: String): Properties{
         val properties = Properties()
         try{
-            val s = FileInputStream(file)
+            val s = context.openFileInput(file)
             properties.load(s)
         } catch (e: Exception){
             e.printStackTrace()
@@ -20,7 +20,7 @@ object PropertiesUtil {
 
     fun saveConfig(context: Context, file: String, properties: Properties){
         try{
-            val s = FileOutputStream(file, false)
+            val s = context.openFileOutput(file, Context.MODE_PRIVATE)
             properties.store(s, "")
         } catch (e: Exception){
             e.printStackTrace()

@@ -1,0 +1,43 @@
+# 图片内容配置信息
+image_anchor=ic_rpsetting_anchor
+image_background=ic_rpsetting_background
+image_bold=ic_rpsetting_bold
+image_bookmark=ic_rpsetting_bookmark
+image_change_resource=ic_rpsetting_change_resource
+image_download=ic_rpsetting_download
+image_filter=ic_rpsetting_filter
+image_font=ic_rpsetting_font
+image_font_size=ic_rpsetting_font_size
+image_indent=ic_rpsetting_indent
+image_light=ic_rpsetting_light
+image_line_margin=ic_rpsetting_line_margin
+image_long_press=ic_rpsetting_long_press
+image_page_up_down=ic_rpsetting_page_up_down
+image_position=ic_rpsetting_position
+image_screen_lock=ic_rpsetting_screen_lock
+image_theme=ic_rpsetting_theme
+image_time_power=ic_rpsetting_time_power
+image_title_page_number=ic_rpsetting_title_page_number
+image_touch=ic_rpsetting_touch
+image_voice_page=ic_rpsetting_voice_page
+# 文字配置信息
+text_bold=文字加粗
+text_bookmark=书签
+text_change_resource=换源 
+text_download=缓存
+text_filter=屏蔽
+text_font=字体
+text_font_size=字号
+text_indent=
+text_light=亮度
+text_line_margin=行间距
+text_long_press=选择文字
+text_page_up_down=上下翻页
+text_position=快速定位
+text_screen_lock=屏幕锁
+text_theme=主题
+text_time_power=时间电量
+text_title_page_number =页数
+text_touch=全屏翻页
+text_voice_page=音量键翻页
+

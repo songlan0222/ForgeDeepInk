@@ -1,0 +1,9 @@
+## 界面文字的样式
+# 文字大小
+FONT_SIZE = 14F
+# 字间距
+FONT_MARGIN = 0F
+# 行间距
+LINE_MARGIN = 0F
+# 段间距
+PARAGRAPH_MARGIN = 0F

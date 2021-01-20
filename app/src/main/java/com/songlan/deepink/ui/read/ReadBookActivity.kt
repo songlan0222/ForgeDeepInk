@@ -541,9 +541,9 @@ class ReadBookActivity : AppCompatActivity() {
      */
     private fun initPreference(){
         val map = mutableMapOf(
-            "textSize" to 14F,
-            "textScaleX" to 0F,
-            "lineSpacing" to 0F,
+            "textSize" to 21F,
+            "textScaleX" to 1F,
+            "lineSpacing" to 1F,
         )
         savePreference(map)
     }

@@ -1,5 +1,6 @@
 package com.songlan.deepink.ui.read
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import kotlinx.android.synthetic.main.fragment_pre_page.*
 class PrePageFragment : Fragment() {
 
     private lateinit var readBookActivity: ReadBookActivity
+    private lateinit var readPageConfig: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -20,6 +22,7 @@ class PrePageFragment : Fragment() {
     ): View? {
         if (activity != null) {
             readBookActivity = activity as ReadBookActivity
+            readPageConfig = readBookActivity.viewModel.readPageConfig
         }
         return inflater.inflate(R.layout.fragment_pre_page, container, false)
     }
@@ -36,10 +39,9 @@ class PrePageFragment : Fragment() {
     private fun initReadPage(){
         preReadPage.text = ""
         preReadPage?.let {
-            it.textSize = readBookActivity.viewModel.readPageConfig.getFloat("textSize", 14F)
-            it.textScaleX = readBookActivity.viewModel.readPageConfig.getFloat("textScaleX", 0F)
-            it.setLineSpacing(
-                readBookActivity.viewModel.readPageConfig.getFloat("lineSpacing", 0F), 1F)
+            it.textSize = readPageConfig.getFloat("textSize", 14F)
+            it.textScaleX = readPageConfig.getFloat("textScaleX", 1F)
+            it.setLineSpacing(readPageConfig.getFloat("lineSpacing", 1F), 1F)
         }
     }
 

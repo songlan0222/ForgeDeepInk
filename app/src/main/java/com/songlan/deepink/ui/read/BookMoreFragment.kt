@@ -4,30 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
-import com.songlan.deepink.utils.LogUtils
+import com.songlan.deepink.ui.base.BasePageFragment
 import kotlinx.android.synthetic.main.fragment_book_more.*
 
-class BookMoreFragment : Fragment() {
-    private lateinit var readBookActivity: ReadBookActivity
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        if (activity != null) {
-            readBookActivity = activity as ReadBookActivity
-        }
-        LogUtils.v(msg = "加载BookMoreFragment")
-        return inflater.inflate(R.layout.fragment_book_more, container, false)
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-    }
+class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BasePageFragment(layout) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

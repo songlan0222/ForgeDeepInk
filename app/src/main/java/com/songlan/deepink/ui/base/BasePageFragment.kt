@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.songlan.deepink.ui.component.ReadPage
 import com.songlan.deepink.ui.read.ReadBookActivity
 
-abstract class BasePageFragment(val layout: Int): Fragment() {
+abstract class BasePageFragment(layout: Int) : BaseFragment(layout) {
     lateinit var readBookActivity: ReadBookActivity
     lateinit var readPageConfig: SharedPreferences
 
@@ -23,7 +23,7 @@ abstract class BasePageFragment(val layout: Int): Fragment() {
             readPageConfig = readBookActivity.viewModel.readPageConfig
         }
 
-        return inflater.inflate(layout, container, false)
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     fun initReadPage(readPage: ReadPage) {

@@ -1,5 +1,7 @@
 package com.songlan.deepink.ui.read
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -50,7 +52,8 @@ class ReadBookActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_read_book)
         // 设置ReadPage的显示参数
-        bindReadPageLiveData()
+//        bindReadPageLiveData()
+        viewModel.readPageConfig = loadPreference()
         // 获取点开书籍的相关信息
         getIntentData()
         // 绑定VM中LiveData数据的监听
@@ -94,31 +97,31 @@ class ReadBookActivity : AppCompatActivity() {
     /**
      * 设置ReadPage的显示参数
      */
-    private inline fun bindReadPageLiveData() {
-        viewModel.loadReadPageProfileLiveData.observe(this, Observer { result ->
-            val map = result.getOrNull()
-            if (map != null) {
-                map.forEach{
-                    LogUtils.v(msg = "${it.key} = ${it.value}")
-                }
-                viewModel.loadReadPageProfile.clear()
-                viewModel.loadReadPageProfile.putAll(map)
-                LogUtils.v(msg="加载ReadPage配置信息成功")
-                curReadPage.setProfile(viewModel.loadReadPageProfile)
-            }
-        })
-
-        viewModel.saveReadPageProfileLiveData.observe(this, Observer { result ->
-            val isSaved = result.getOrNull()
-            if (isSaved != null) {
-                LogUtils.v(msg = "ReadPage配置信息保存成功")
-                // 重新加载数据
-                viewModel.loadReadPageProfile()
-            }
-        })
-
-        viewModel.loadReadPageProfile()
-    }
+//    private inline fun bindReadPageLiveData() {
+//        viewModel.loadReadPageProfileLiveData.observe(this, Observer { result ->
+//            val map = result.getOrNull()
+//            if (map != null) {
+//                map.forEach{
+//                    LogUtils.v(msg = "${it.key} = ${it.value}")
+//                }
+//                viewModel.loadReadPageProfile.clear()
+//                viewModel.loadReadPageProfile.putAll(map)
+//                LogUtils.v(msg="加载ReadPage配置信息成功")
+//                curReadPage.setProfile(viewModel.loadReadPageProfile)
+//            }
+//        })
+//
+//        viewModel.saveReadPageProfileLiveData.observe(this, Observer { result ->
+//            val isSaved = result.getOrNull()
+//            if (isSaved != null) {
+//                LogUtils.v(msg = "ReadPage配置信息保存成功")
+//                // 重新加载数据
+//                viewModel.loadReadPageProfile()
+//            }
+//        })
+//
+//        viewModel.loadReadPageProfile()
+//    }
 
     /**
      * 绑定VM中LiveData数据的监听
@@ -520,4 +523,53 @@ class ReadBookActivity : AppCompatActivity() {
 
         fun getSelectedPosition() = selectedPosition
     }
+
+    /**
+     * 加载配置文件中的全部信息
+     */
+    private fun loadPreference(): SharedPreferences {
+        var prop = getPreferences(Context.MODE_PRIVATE)
+        if(prop.getBoolean("FIRST", true)){
+            initPreference()
+            prop = getPreferences(Context.MODE_PRIVATE)
+        }
+        return prop
+    }
+
+    /**
+     * 对配置文件进行初始化
+     */
+    private fun initPreference(){
+        val map = mutableMapOf(
+            "textSize" to 14F,
+            "textScaleX" to 0F,
+            "lineSpacing" to 0F,
+        )
+        savePreference(map)
+    }
+
+    /**
+     * 保存map到配置文件中
+     */
+    private fun savePreference(map: Map<String, Any>){
+        val editor = getPreferences(Context.MODE_PRIVATE).edit()
+        map.forEach {
+            when (it.value) {
+                is Int -> {
+                    editor.putInt(it.key, it.value as Int)
+                }
+                is Float -> {
+                    editor.putFloat(it.key, it.value as Float)
+                }
+                is Boolean -> {
+                    editor.putBoolean(it.key, it.value as Boolean)
+                }
+                is String -> {
+                    editor.putString(it.key, it.value as String)
+                }
+            }
+        }
+        editor.apply()
+    }
+
 }

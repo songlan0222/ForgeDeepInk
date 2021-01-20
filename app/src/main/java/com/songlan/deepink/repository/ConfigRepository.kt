@@ -15,16 +15,16 @@ object ConfigRepository {
     /**
      * 加载配置文件， 并返回map
      */
-    fun loadActivityPreference(activity: Activity) = fire(Dispatchers.IO) {
-        val properties = ConfigUtil.loadActivityPreference(activity)
-        Result.success(properties)
-    }
+//    fun loadActivityPreference() = fire(Dispatchers.IO) {
+//        val properties = ConfigUtil.loadActivityPreference()
+//        Result.success(properties)
+//    }
 
     /**
      * 将map保存到配置文件中
      */
-    fun saveConfig(activity: Activity, map: Map<String, Any>) = fire(Dispatchers.IO) {
-        ConfigUtil.saveActivityPreference(activity, map)
-        Result.success(Any())
-    }
+//    fun saveConfig(activity: Activity, map: Map<String, Any>) = fire(Dispatchers.IO) {
+//        ConfigUtil.saveActivityPreference(activity, map)
+//        Result.success(Any())
+//    }
 }

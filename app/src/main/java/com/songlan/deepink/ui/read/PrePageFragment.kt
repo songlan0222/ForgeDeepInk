@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.songlan.deepink.R
+import kotlinx.android.synthetic.main.fragment_last_page.*
 import kotlinx.android.synthetic.main.fragment_pre_page.*
 
 class PrePageFragment : Fragment() {
@@ -34,6 +35,12 @@ class PrePageFragment : Fragment() {
 
     private fun initReadPage(){
         preReadPage.text = ""
+        preReadPage?.let {
+            it.textSize = readBookActivity.viewModel.readPageConfig.getFloat("textSize", 14F)
+            it.textScaleX = readBookActivity.viewModel.readPageConfig.getFloat("textScaleX", 0F)
+            it.setLineSpacing(
+                readBookActivity.viewModel.readPageConfig.getFloat("lineSpacing", 0F), 1F)
+        }
     }
 
 }

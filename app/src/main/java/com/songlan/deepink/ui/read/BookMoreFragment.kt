@@ -34,7 +34,7 @@ class BookMoreFragment : Fragment() {
         settingItems.layoutManager = GridLayoutManager(readBookActivity, 4)
     }
 
-    inner class MyRecyclerViewAdapter(private val itemList: List<SettingItem>) :
+    inner class MyRecyclerViewAdapter() :
         RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
@@ -46,10 +46,10 @@ class BookMoreFragment : Fragment() {
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-            val settingItem = itemList[position]
+//            val settingItem = itemList[position]
 
         }
 
-        override fun getItemCount() = itemList.size
+        override fun getItemCount() = 0
     }
 }

@@ -1,15 +1,21 @@
 package com.songlan.deepink.ui.read
 
+import android.app.Activity
+import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.repository.ChapterRepository
+import com.songlan.deepink.repository.ConfigRepository
 import com.songlan.deepink.repository.DatabaseRepository
 import java.lang.StringBuilder
 
 class ReadBookActivityVM : ViewModel() {
+
+    // 引用ReadPage的配置信息
+    lateinit var readPageConfig : SharedPreferences
 
     // 根据bookId获取书籍内容
     private val pBookLiveData = MutableLiveData<Long>()
@@ -33,18 +39,6 @@ class ReadBookActivityVM : ViewModel() {
     fun loadChaptersWithBookId(bookId: Long) {
         pLoadChaptersWithBookIdLiveData.value = bookId
     }
-
-    // 根据chapterId获取章节内容
-//    private val pLoadChapterWithChapterId = MutableLiveData<Long>()
-//    lateinit var chapter: Chapter
-//    val loadChapterWithChapterIdLiveData =
-//        Transformations.switchMap(pLoadChapterWithChapterId) { chapterId ->
-//            DatabaseRepository.loadChapterWithChapterId(chapterId)
-//        }
-//
-//    fun loadChapterWithChapterId(chapterId: Long) {
-//        pLoadChapterWithChapterId.value = chapterId
-//    }
 
     // 根据章节id获取的章节
     private val pLoadReadingChapterLiveData = MutableLiveData<Long>()
@@ -100,17 +94,17 @@ class ReadBookActivityVM : ViewModel() {
     val preChapterLiveData =
         Transformations.switchMap(pPreChapterLiveData) { chapter ->
             chapter?.let {
-                ChapterRepository.getChapterContent(chapter)
+                ChapterRepository.getChapterContentFromTxt(chapter)
             }
         }
     val curChapterLiveData =
         Transformations.switchMap(pGetChapterContentLiveData) { chapter ->
-            ChapterRepository.getChapterContent(chapter)
+            ChapterRepository.getChapterContentFromTxt(chapter)
         }
     val nextChapterLiveData =
         Transformations.switchMap(pNextChapterLiveData) { chapter ->
             chapter?.let {
-                ChapterRepository.getChapterContent(chapter)
+                ChapterRepository.getChapterContentFromTxt(chapter)
             }
         }
 
@@ -141,13 +135,4 @@ class ReadBookActivityVM : ViewModel() {
      */
     fun getNextChapterId() = book.readingChapterId + 1
     fun getPreChapterId() = book.readingChapterId - 1
-
-    /**
-     * 获取ReadPage参数
-     */
-
-    /**
-     * 保存ReadPage参数
-     */
-
 }

@@ -27,23 +27,11 @@ class ReadPage : AppCompatTextView {
      * 去除当前页无法显示的字
      * @return 去掉的字数
      */
-    fun resize(): Int {
+    private fun resize(): Int {
         val oldContent = text
         val newContent = oldContent.subSequence(0, getCharNum())
         text = newContent
         return oldContent.length - newContent.length
-    }
-
-    private var paragraphSpacing = 1
-    fun setProfile(map: Map<String, Float>){
-        profileMap = map
-        paragraphSpacing = map.getValue(ReadPageProfileUtil.PARAGRAPH_MARGIN).toInt()
-    }
-    override fun setText(text: CharSequence?, type: BufferType?) {
-        super.setText(text, type)
-        if (this::profileMap.isInitialized) {
-            // setParagraphSpacing(paragraphSpacing)
-        }
     }
 
     /**
@@ -71,17 +59,6 @@ class ReadPage : AppCompatTextView {
         val layout = layout
         val topOfLastLine = height - paddingTop - paddingBottom - lineHeight
         return layout.getLineForVertical(topOfLastLine)
-    }
-
-    /**
-     * 设置字体大小，字间距，行间距
-     */
-    private fun setReadPageParameters(map: Map<String, Float>) {
-        textSize = map[ReadPageProfileUtil.LINE_MARGIN] ?: 14F
-        textScaleX = map[ReadPageProfileUtil.LINE_MARGIN] ?: 0F
-        setLineSpacing(10F, map[ReadPageProfileUtil.LINE_MARGIN] ?: 0F)
-        // 添加段间距设置方法
-        // setParagraphSpacing(map[ReadPageProfileUtil.PARAGRAPH_MARGIN]?.toInt() ?: 1)
     }
 
     /**

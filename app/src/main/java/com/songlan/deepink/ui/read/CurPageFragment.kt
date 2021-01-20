@@ -13,7 +13,7 @@ class CurPageFragment(layout: Int = R.layout.fragment_current_page) : BasePageFr
         super.onActivityCreated(savedInstanceState)
 
         curReadPage.setOnClickListener {
-            readBookActivity.showBottomSheetDialog()
+            currentActivity.showBottomSheetDialog()
         }
     }
 

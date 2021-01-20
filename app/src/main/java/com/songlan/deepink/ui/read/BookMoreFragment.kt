@@ -7,14 +7,15 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
+import com.songlan.deepink.ui.base.BaseFragment
 import com.songlan.deepink.ui.base.BasePageFragment
 import kotlinx.android.synthetic.main.fragment_book_more.*
 
-class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BasePageFragment(layout) {
+class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment(layout) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        settingItems.layoutManager = GridLayoutManager(readBookActivity, 4)
+        settingItems.layoutManager = GridLayoutManager(currentActivity, 4)
     }
 
     inner class MyRecyclerViewAdapter() :
@@ -24,7 +25,8 @@ class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BasePageFrag
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_read_page_settings, parent, false)
+            val view = LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_read_page_settings, parent, false)
             return ViewHolder(view)
         }
 

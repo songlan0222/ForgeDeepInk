@@ -1,32 +1,44 @@
 package com.songlan.deepink.utils
 
+import android.app.Activity
 import android.content.Context
-import java.io.FileInputStream
-import java.io.FileOutputStream
-import java.lang.Exception
-import java.util.*
+import android.content.SharedPreferences
 
 /**
  * 配置文件工具
  */
 object ConfigUtil {
-    fun loadConfig(context: Context, file: String): Properties{
-        val properties = Properties()
-        try{
-            val s = context.openFileInput(file)
-            properties.load(s)
-        } catch (e: Exception){
-            e.printStackTrace()
-        }
-        return properties
+
+    /**
+     * 加载配置文件， 并返回map
+     */
+    fun loadActivityPreference(activity: Activity): MutableMap<String, *>? {
+        val prop = activity.getPreferences(Context.MODE_PRIVATE)
+        val all = prop.all
+        return all
     }
 
-    fun saveConfig(context: Context, file: String, properties: Properties){
-        try{
-            val s = context.openFileOutput(file, Context.MODE_PRIVATE)
-            properties.store(s, "")
-        } catch (e: Exception){
-            e.printStackTrace()
+    /**
+     * 将map保存到配置文件中
+     */
+    fun saveActivityPreference(activity: Activity, map: Map<String, Any>) {
+        val editor = activity.getPreferences(Context.MODE_PRIVATE).edit()
+        map.forEach {
+            when (it.value) {
+                is Int -> {
+                    editor.putInt(it.key, it.value as Int)
+                }
+                is Float -> {
+                    editor.putFloat(it.key, it.value as Float)
+                }
+                is Boolean -> {
+                    editor.putBoolean(it.key, it.value as Boolean)
+                }
+                is String -> {
+                    editor.putString(it.key, it.value as String)
+                }
+            }
         }
+        editor.apply()
     }
 }

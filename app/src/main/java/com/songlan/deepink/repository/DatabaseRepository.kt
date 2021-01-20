@@ -8,6 +8,7 @@ import com.songlan.deepink.model.Book
 import com.songlan.deepink.model.Bookshelf
 import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.utils.LogUtils
+import com.songlan.deepink.utils.fire
 import kotlinx.coroutines.Dispatchers
 import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
@@ -159,15 +160,4 @@ object DatabaseRepository {
         }
         Result.success(fileList)
     }
-
-    // 对获取liveData进行简化
-    private fun <T> fire(context: CoroutineContext, block: suspend () -> Result<T>) =
-        liveData<Result<T>>(context) {
-            var result = try {
-                block()
-            } catch (e: Exception) {
-                Result.failure<T>(e)
-            }
-            emit(result)
-        }
 }

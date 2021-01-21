@@ -16,9 +16,6 @@ open class BaseFragment(val layout: Int) : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        if (activity != null) {
-            currentActivity = activity as ReadBookActivity
-        }
         return inflater.inflate(layout, container, false)
     }
 }

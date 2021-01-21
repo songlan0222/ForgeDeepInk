@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
 import com.songlan.deepink.ui.base.BaseFragment
-import com.songlan.deepink.ui.base.BasePageFragment
 import kotlinx.android.synthetic.main.fragment_book_more.*
 
 class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment(layout) {

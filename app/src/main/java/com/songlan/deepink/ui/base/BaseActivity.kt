@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.ui.read.ReadBookActivityVM
 
-open class BaseActivity: AbstractBaseActivity()  {
+open class BaseActivity: AppCompatActivity()  {
 
     /**
      * 加载配置文件中的全部信息
      */
-    override fun loadPreference(): SharedPreferences {
+    fun loadPreference(): SharedPreferences {
         var prop = getPreferences(Context.MODE_PRIVATE)
         if(prop.getBoolean("FIRST", true)){
             initPreference()
@@ -24,7 +24,7 @@ open class BaseActivity: AbstractBaseActivity()  {
     /**
      * 对配置文件进行初始化
      */
-    override fun initPreference(){
+    private fun initPreference(){
         val map = mutableMapOf(
             "textSize" to 21F,
             "textScaleX" to 1F,
@@ -36,7 +36,7 @@ open class BaseActivity: AbstractBaseActivity()  {
     /**
      * 保存map到配置文件中
      */
-    override fun savePreference(map: Map<String, Any>){
+    fun savePreference(map: Map<String, Any>){
         val editor = getPreferences(Context.MODE_PRIVATE).edit()
         map.forEach {
             when (it.value) {

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.songlan.deepink.ui.component.ReadPage
 import com.songlan.deepink.ui.read.ReadBookActivity
 
-abstract class BasePageFragment(layout: Int) : BaseFragment(layout) {
+abstract class ReadPageFragment(layout: Int) : BaseFragment(layout) {
 
     lateinit var readPageConfig: SharedPreferences
 
@@ -18,7 +18,10 @@ abstract class BasePageFragment(layout: Int) : BaseFragment(layout) {
         savedInstanceState: Bundle?,
     ): View? {
         val view = super.onCreateView(inflater, container, savedInstanceState)
-        readPageConfig = currentActivity.viewModel.readPageConfig
+        if (activity != null) {
+            currentActivity = activity as ReadBookActivity
+            readPageConfig = currentActivity.viewModel.readPageConfig
+        }
         return view
     }
 

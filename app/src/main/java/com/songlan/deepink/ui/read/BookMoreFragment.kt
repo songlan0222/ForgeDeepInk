@@ -12,8 +12,11 @@ import kotlinx.android.synthetic.main.fragment_book_more.*
 
 class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment(layout) {
 
+    private lateinit var currentActivity: ReadBookActivity
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        currentActivity = requireActivity() as ReadBookActivity
         settingItems.layoutManager = GridLayoutManager(currentActivity, 4)
     }
 

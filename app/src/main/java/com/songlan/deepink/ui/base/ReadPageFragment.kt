@@ -1,5 +1,6 @@
 package com.songlan.deepink.ui.base
 
+import android.app.Activity
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,7 +12,7 @@ import com.songlan.deepink.ui.read.ReadBookActivity
 abstract class ReadPageFragment(layout: Int) : BaseFragment(layout) {
 
     lateinit var readPageConfig: SharedPreferences
-
+    lateinit var currentActivity: ReadBookActivity
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

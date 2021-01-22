@@ -55,19 +55,15 @@ class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_read_page_settings, parent, false)
             val holder = ViewHolder(view)
-            val position = holder.adapterPosition
-            holder.let {
-                it.imageView.setImageResource(items[position].itemImageId)
-                it.textView.text = items[position].itemName
-                it.itemView.isSelected = items[position].itemSelected
-            }
             return holder
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
             val item = items[position]
-            holder.itemView.setOnClickListener {
-                // it.isSelected = !it.isSelected
+            holder.let {
+                it.imageView.setImageResource(items[position].itemImageId)
+                it.textView.text = items[position].itemName
+                it.itemView.isSelected = items[position].itemSelected
             }
 
 

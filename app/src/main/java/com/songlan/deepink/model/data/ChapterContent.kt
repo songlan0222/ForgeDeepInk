@@ -1,4 +1,4 @@
-package com.songlan.deepink.model
+package com.songlan.deepink.model.data
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

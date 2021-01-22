@@ -1,14 +1,12 @@
 package com.songlan.deepink.ui.read
 
-import android.app.Activity
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.songlan.deepink.model.Book
-import com.songlan.deepink.model.Chapter
+import com.songlan.deepink.model.data.Book
+import com.songlan.deepink.model.data.Chapter
 import com.songlan.deepink.repository.ChapterRepository
-import com.songlan.deepink.repository.ConfigRepository
 import com.songlan.deepink.repository.DatabaseRepository
 import java.lang.StringBuilder
 

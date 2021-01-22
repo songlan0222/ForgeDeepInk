@@ -1,17 +1,14 @@
 package com.songlan.deepink.repository
 
-import androidx.lifecycle.liveData
 import androidx.documentfile.provider.DocumentFile
 import com.songlan.deepink.AppDatabase
 import com.songlan.deepink.MyApplication.Companion.context
-import com.songlan.deepink.model.Book
-import com.songlan.deepink.model.Bookshelf
-import com.songlan.deepink.model.Chapter
+import com.songlan.deepink.model.data.Book
+import com.songlan.deepink.model.data.Bookshelf
+import com.songlan.deepink.model.data.Chapter
 import com.songlan.deepink.utils.LogUtils
 import com.songlan.deepink.utils.fire
 import kotlinx.coroutines.Dispatchers
-import java.lang.Exception
-import kotlin.coroutines.CoroutineContext
 
 object DatabaseRepository {
 
@@ -37,7 +34,7 @@ object DatabaseRepository {
         Result.success(chapter)
     }
 
-    fun getFirstChapterWithBookId(bookId:Long) = fire(Dispatchers.IO){
+    fun getFirstChapterWithBookId(bookId: Long) = fire(Dispatchers.IO) {
         val chapter = chapterDao.getFirstChapterWithBookId(bookId)
         Result.success(chapter)
     }

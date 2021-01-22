@@ -16,8 +16,8 @@ import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.AppProfiles.CHECKED_BOOKSHELF_ID
 import com.songlan.deepink.AppProfiles.saveToProfile
 import com.songlan.deepink.R
-import com.songlan.deepink.model.Book
-import com.songlan.deepink.model.Bookshelf
+import com.songlan.deepink.model.data.Book
+import com.songlan.deepink.model.data.Bookshelf
 import com.songlan.deepink.repository.DatabaseRepository
 import com.songlan.deepink.ui.main.base.BaseFragment
 import com.songlan.deepink.utils.LogUtils

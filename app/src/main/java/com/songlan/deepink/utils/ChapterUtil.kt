@@ -2,11 +2,9 @@ package com.songlan.deepink.utils
 
 import android.net.Uri
 import android.util.Log
-import androidx.core.net.toUri
 import com.songlan.deepink.MyApplication.Companion.context
-import com.songlan.deepink.model.Book
-import com.songlan.deepink.model.Chapter
-import com.songlan.deepink.repository.DatabaseRepository
+import com.songlan.deepink.model.data.Book
+import com.songlan.deepink.model.data.Chapter
 import com.songlan.deepink.ui.local.AddLocalBookEditActivityVM
 import java.io.*
 import java.lang.Exception

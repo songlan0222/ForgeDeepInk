@@ -4,9 +4,8 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.room.Database
-import com.songlan.deepink.model.Book
-import com.songlan.deepink.model.Chapter
+import com.songlan.deepink.model.data.Book
+import com.songlan.deepink.model.data.Chapter
 import com.songlan.deepink.repository.ChapterRepository
 import com.songlan.deepink.repository.DatabaseRepository
 

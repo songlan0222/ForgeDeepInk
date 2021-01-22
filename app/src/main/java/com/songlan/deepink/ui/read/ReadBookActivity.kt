@@ -1,14 +1,11 @@
 package com.songlan.deepink.ui.read
 
-import android.content.Context
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -18,7 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager.widget.ViewPager
 import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.R
-import com.songlan.deepink.model.Chapter
+import com.songlan.deepink.model.data.Chapter
 import com.songlan.deepink.ui.base.BaseActivity
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_read_book.*

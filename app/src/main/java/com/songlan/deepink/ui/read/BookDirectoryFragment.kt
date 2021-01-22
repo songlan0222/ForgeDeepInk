@@ -5,14 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.widget.Toolbar
-import androidx.core.view.size
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
-import com.songlan.deepink.model.Chapter
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.fragment_book_directory.*
 

@@ -3,7 +3,7 @@ package com.songlan.deepink.ui.main
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.songlan.deepink.model.Bookshelf
+import com.songlan.deepink.model.data.Bookshelf
 import com.songlan.deepink.repository.DatabaseRepository
 
 class EditBookshelfActivityVM : ViewModel() {

@@ -3,7 +3,7 @@ package com.songlan.deepink.databaseTest
 import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import com.songlan.deepink.AppDatabase
-import com.songlan.deepink.dao.BookshelfDao
+import com.songlan.deepink.dao.data.BookshelfDao
 import com.songlan.deepink.utils.LogUtils
 import io.reactivex.Observable
 import io.reactivex.android.plugins.RxAndroidPlugins

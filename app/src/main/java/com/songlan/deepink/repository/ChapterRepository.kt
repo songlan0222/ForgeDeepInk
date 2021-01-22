@@ -1,13 +1,10 @@
 package com.songlan.deepink.repository
 
 import android.net.Uri
-import androidx.lifecycle.liveData
-import com.songlan.deepink.model.Chapter
+import com.songlan.deepink.model.data.Chapter
 import com.songlan.deepink.utils.ChapterUtil
 import com.songlan.deepink.utils.fire
 import kotlinx.coroutines.Dispatchers
-import java.lang.Exception
-import kotlin.coroutines.CoroutineContext
 
 object ChapterRepository {
 

@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
-import com.songlan.deepink.model.BookSrc
+import com.songlan.deepink.model.data.BookSrc
 import kotlinx.android.synthetic.main.activity_book_src_manage.*
 
 class BookSrcManageActivity : AppCompatActivity() {

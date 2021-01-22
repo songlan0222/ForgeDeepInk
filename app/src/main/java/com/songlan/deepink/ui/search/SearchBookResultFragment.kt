@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
-import com.songlan.deepink.model.Book
+import com.songlan.deepink.model.data.Book
 import kotlinx.android.synthetic.main.fragment_search_book_result.*
 
 class SearchBookResultFragment : Fragment() {

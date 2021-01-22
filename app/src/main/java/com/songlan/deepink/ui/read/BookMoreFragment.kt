@@ -1,5 +1,6 @@
 package com.songlan.deepink.ui.read
 
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
 import com.songlan.deepink.ui.base.BaseFragment
+import com.songlan.deepink.utils.ConfigUtil
 import kotlinx.android.synthetic.main.fragment_book_more.*
 
 class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment(layout) {
@@ -18,8 +20,16 @@ class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment
         super.onViewCreated(view, savedInstanceState)
         currentActivity = requireActivity() as ReadBookActivity
         settingItems.layoutManager = GridLayoutManager(currentActivity, 4)
+        val items = loadPageMenuItems()
     }
 
+    private fun loadPageMenuItems(){
+        val configFileName = "READ_PAGE_MENU_ITEMS"
+        var menuItemsPref: SharedPreferences
+        menuItemsPref = ConfigUtil.loadPreference(configFileName)
+        if(menuItemsPref.getBoolean("FIRST", true)){
+        }
+    }
     inner class MyRecyclerViewAdapter() :
         RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {

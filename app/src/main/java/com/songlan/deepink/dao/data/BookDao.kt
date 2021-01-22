@@ -1,7 +1,7 @@
-package com.songlan.deepink.dao
+package com.songlan.deepink.dao.data
 
 import androidx.room.*
-import com.songlan.deepink.model.Book
+import com.songlan.deepink.model.data.Book
 
 @Dao
 interface BookDao {

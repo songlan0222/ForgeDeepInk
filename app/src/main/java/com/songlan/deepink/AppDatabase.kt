@@ -4,16 +4,18 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.songlan.deepink.dao.BookDao
-import com.songlan.deepink.dao.BookshelfDao
-import com.songlan.deepink.dao.ChapterDao
-import com.songlan.deepink.model.Book
-import com.songlan.deepink.model.Bookshelf
-import com.songlan.deepink.model.Chapter
+import com.songlan.deepink.dao.app.ReadPageMenuItemDao
+import com.songlan.deepink.dao.data.BookDao
+import com.songlan.deepink.dao.data.BookshelfDao
+import com.songlan.deepink.dao.data.ChapterDao
+import com.songlan.deepink.model.app.ReadPageMenuItem
+import com.songlan.deepink.model.data.Book
+import com.songlan.deepink.model.data.Bookshelf
+import com.songlan.deepink.model.data.Chapter
 
 @Database(
-    version = 1,
-    entities = [Book::class, Bookshelf::class, Chapter::class],
+    version = 2,
+    entities = [Book::class, Bookshelf::class, Chapter::class, ReadPageMenuItem::class],
     exportSchema = false
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -21,6 +23,7 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun bookDao(): BookDao
     abstract fun bookshelfDao(): BookshelfDao
     abstract fun chapterDao(): ChapterDao
+    abstract fun readPageMenuItemDao(): ReadPageMenuItemDao
 
     companion object {
         private var instance: AppDatabase? = null

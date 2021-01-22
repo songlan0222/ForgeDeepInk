@@ -1,12 +1,10 @@
 package com.songlan.deepink.ui.main
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import androidx.room.Database
-import com.songlan.deepink.model.Book
-import com.songlan.deepink.model.Bookshelf
+import com.songlan.deepink.model.data.Book
+import com.songlan.deepink.model.data.Bookshelf
 import com.songlan.deepink.repository.DatabaseRepository
 
 class MainActivityVM : ViewModel() {

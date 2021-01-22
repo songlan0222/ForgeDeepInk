@@ -19,8 +19,8 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView
 import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.MyApplication
 import com.songlan.deepink.R
-import com.songlan.deepink.model.Book
-import com.songlan.deepink.model.Bookshelf
+import com.songlan.deepink.model.data.Book
+import com.songlan.deepink.model.data.Bookshelf
 import com.songlan.deepink.ui.search.SearchBookActivity
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.fragment_bookshelf_details.*

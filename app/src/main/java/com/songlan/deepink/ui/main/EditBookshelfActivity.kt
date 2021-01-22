@@ -13,7 +13,7 @@ import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.songlan.deepink.R
-import com.songlan.deepink.model.Bookshelf
+import com.songlan.deepink.model.data.Bookshelf
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_edit_bookshelf.*
 import java.util.*

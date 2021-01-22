@@ -3,7 +3,7 @@ package com.songlan.deepink.ui.search
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import com.songlan.deepink.R
-import com.songlan.deepink.model.Book
+import com.songlan.deepink.model.data.Book
 
 class SearchBookActivityVM : ViewModel() {
 

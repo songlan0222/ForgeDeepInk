@@ -4,8 +4,8 @@ import androidx.test.InstrumentationRegistry
 import androidx.test.runner.AndroidJUnit4
 import com.songlan.deepink.AppDatabase
 import com.songlan.deepink.R
-import com.songlan.deepink.dao.BookDao
-import com.songlan.deepink.model.Book
+import com.songlan.deepink.dao.data.BookDao
+import com.songlan.deepink.model.data.Book
 import com.songlan.deepink.utils.LogUtils
 import io.reactivex.Observable
 import io.reactivex.android.plugins.RxAndroidPlugins

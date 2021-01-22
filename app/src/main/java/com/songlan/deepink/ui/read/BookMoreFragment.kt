@@ -5,48 +5,74 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
+import com.songlan.deepink.model.app.ReadPageMenuItem
 import com.songlan.deepink.ui.base.BaseFragment
 import com.songlan.deepink.utils.ConfigUtil
 import kotlinx.android.synthetic.main.fragment_book_more.*
+import java.lang.Exception
+import java.lang.RuntimeException
 
 class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment(layout) {
 
     private lateinit var currentActivity: ReadBookActivity
+    private lateinit var viewModel: ReadBookActivityVM
+    private lateinit var adapter: MyRecyclerViewAdapter
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         currentActivity = requireActivity() as ReadBookActivity
-        settingItems.layoutManager = GridLayoutManager(currentActivity, 4)
-        val items = loadPageMenuItems()
+        viewModel = currentActivity.viewModel
+
+        viewModel.readPageMenuItemsLiveData.observe(currentActivity, Observer { result ->
+            val items = result.getOrNull()
+            if (items != null) {
+                viewModel.readPageMenuItems.clear()
+                viewModel.readPageMenuItems.addAll(items)
+                adapter = MyRecyclerViewAdapter(items)
+                val manager = GridLayoutManager(currentActivity, 4)
+                settingItems.adapter = adapter
+                settingItems.layoutManager = manager
+            }
+        })
+
+        viewModel.getReadPageMenuItems()
     }
 
-    private fun loadPageMenuItems(){
-        val configFileName = "READ_PAGE_MENU_ITEMS"
-        var menuItemsPref: SharedPreferences
-        menuItemsPref = ConfigUtil.loadPreference(configFileName)
-        if(menuItemsPref.getBoolean("FIRST", true)){
-        }
-    }
-    inner class MyRecyclerViewAdapter() :
+    inner class MyRecyclerViewAdapter(private val items: List<ReadPageMenuItem>) :
         RecyclerView.Adapter<MyRecyclerViewAdapter.ViewHolder>() {
         inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-
+            val imageView: ImageView = view.findViewById(R.id.imageView)
+            val textView: TextView = view.findViewById(R.id.textView)
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_read_page_settings, parent, false)
-            return ViewHolder(view)
+            val holder = ViewHolder(view)
+            val position = holder.adapterPosition
+            holder.let {
+                it.imageView.setImageResource(items[position].itemImageId)
+                it.textView.text = items[position].itemName
+                it.itemView.isSelected = items[position].itemSelected
+            }
+            return holder
         }
 
         override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//            val settingItem = itemList[position]
+            val item = items[position]
+            holder.itemView.setOnClickListener {
+                // it.isSelected = !it.isSelected
+            }
+
 
         }
 
-        override fun getItemCount() = 0
+        override fun getItemCount() = items.size
     }
 }

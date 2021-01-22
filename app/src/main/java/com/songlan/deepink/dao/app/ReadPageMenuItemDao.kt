@@ -17,11 +17,11 @@ interface ReadPageMenuItemDao {
     fun updateItem(item: ReadPageMenuItem)
 
     @Delete
-    fun deleteItem(item: ReadPageMenuItem): Long
+    fun deleteItem(item: ReadPageMenuItem)
 
     @Query("select * from ReadPageMenuItem where itemId = :id")
     fun loadItemWithId(id: Long): ReadPageMenuItem
 
-    @Query("select * from ReadPageMenuItem where itemId != null")
+    @Query("select * from ReadPageMenuItem where 1 = 1")
     fun loadAll(): List<ReadPageMenuItem>
 }

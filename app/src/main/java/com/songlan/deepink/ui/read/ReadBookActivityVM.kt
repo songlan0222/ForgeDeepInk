@@ -4,16 +4,18 @@ import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.songlan.deepink.model.app.ReadPageMenuItem
 import com.songlan.deepink.model.data.Book
 import com.songlan.deepink.model.data.Chapter
 import com.songlan.deepink.repository.ChapterRepository
+import com.songlan.deepink.repository.ConfigRepository
 import com.songlan.deepink.repository.DatabaseRepository
 import java.lang.StringBuilder
 
 class ReadBookActivityVM : ViewModel() {
 
     // 引用ReadPage的配置信息
-    lateinit var readPageConfig : SharedPreferences
+    lateinit var readPageConfig: SharedPreferences
 
     // 根据bookId获取书籍内容
     private val pBookLiveData = MutableLiveData<Long>()
@@ -133,4 +135,18 @@ class ReadBookActivityVM : ViewModel() {
      */
     fun getNextChapterId() = book.readingChapterId + 1
     fun getPreChapterId() = book.readingChapterId - 1
+
+    /**
+     * 绑定ReadPageMenuItem
+     */
+    private val pReadPageMenuItemsLiveData = MutableLiveData<Any?>()
+    val readPageMenuItems = mutableListOf<ReadPageMenuItem>()
+    val readPageMenuItemsLiveData = Transformations.switchMap(pReadPageMenuItemsLiveData) {
+        ConfigRepository.getReadPageMenuItems()
+    }
+
+    fun getReadPageMenuItems() {
+        pReadPageMenuItemsLiveData.value = pReadPageMenuItemsLiveData.value
+    }
+
 }

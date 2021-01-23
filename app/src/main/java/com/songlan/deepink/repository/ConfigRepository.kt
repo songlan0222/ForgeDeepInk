@@ -83,9 +83,9 @@ object ConfigRepository {
             ReadPageMenuItem(R.drawable.ic_rpsetting_bold, "字体加粗", false),
 
             ReadPageMenuItem(R.drawable.ic_rpsetting_background, "背景跟随", false),
-            ReadPageMenuItem(R.drawable.ic_rpsetting_background, "状态栏", true),
-            ReadPageMenuItem(R.drawable.ic_rpsetting_theme, "导航栏", true),
-            ReadPageMenuItem(R.drawable.ic_rpsetting_theme, "异形屏", true),
+            ReadPageMenuItem(R.drawable.ic_rpsetting_statusbar, "状态栏", true),
+            ReadPageMenuItem(R.drawable.ic_rpsetting_navbar, "导航栏", true),
+            ReadPageMenuItem(R.drawable.ic_rpsetting_iphonex, "异形屏", true),
         )
         val itemIds = readPageMenuItemDao.insertItems(items)
     }

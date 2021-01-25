@@ -29,15 +29,17 @@ class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment
         currentActivity = requireActivity() as ReadBookActivity
         viewModel = currentActivity.viewModel
 
+        val manager = GridLayoutManager(currentActivity, 4)
+        adapter = MyRecyclerViewAdapter(viewModel.readPageMenuItems)
+        settingItems.layoutManager = manager
+        settingItems.adapter = adapter
+
         viewModel.readPageMenuItemsLiveData.observe(currentActivity, Observer { result ->
             val items = result.getOrNull()
             if (items != null) {
                 viewModel.readPageMenuItems.clear()
                 viewModel.readPageMenuItems.addAll(items)
-                adapter = MyRecyclerViewAdapter(items)
-                val manager = GridLayoutManager(currentActivity, 4)
-                settingItems.adapter = adapter
-                settingItems.layoutManager = manager
+                adapter.notifyDataSetChanged()
             }
         })
 

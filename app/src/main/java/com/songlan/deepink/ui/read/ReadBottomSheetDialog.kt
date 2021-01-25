@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.view.marginBottom
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -55,7 +54,6 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
             // 与界面同宽，但是高度只有总高度的3/4
             ViewGroup.LayoutParams.MATCH_PARENT, getThreeQuarterWindowHeight()
         )
-        initView(view)
         return view
     }
 
@@ -70,26 +68,71 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         val directoryBtn = rootView.findViewById<TextView>(R.id.directoryBtn)
         val moreBtn = rootView.findViewById<TextView>(R.id.moreBtn)
         detailsBtn.setOnClickListener {
-            detailsBtn.isSelected = true
-            directoryBtn.isSelected = false
-            moreBtn.isSelected = false
+            changeSelectedNavButton(R.id.detailsBtn)
             changePageFragment(PAGE_DETAILS)
         }
         directoryBtn.setOnClickListener {
-            detailsBtn.isSelected = false
-            directoryBtn.isSelected = true
-            moreBtn.isSelected = false
+            changeSelectedNavButton(R.id.directoryBtn)
             changePageFragment(PAGE_DIRECTORY)
         }
         moreBtn.setOnClickListener {
-            detailsBtn.isSelected = false
-            directoryBtn.isSelected = false
-            moreBtn.isSelected = true
+            changeSelectedNavButton(R.id.moreBtn)
             changePageFragment(PAGE_MORE)
         }
         // 初始化时，设置目录页面为选中页面
-        directoryBtn.isSelected = true
+        toolbarViewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int,
+            ) {
+            }
 
+            override fun onPageSelected(position: Int) {
+                changeViewPagerItem(toolbarViewPager.currentItem)
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+            }
+
+        })
+        changeViewPagerItem(toolbarViewPager.currentItem)
+    }
+
+    private fun changeSelectedNavButton(viewId: Int) {
+        when (viewId) {
+            R.id.detailsBtn -> {
+                detailsBtn.isSelected = true
+                directoryBtn.isSelected = false
+                moreBtn.isSelected = false
+            }
+            R.id.directoryBtn -> {
+                detailsBtn.isSelected = false
+                directoryBtn.isSelected = true
+                moreBtn.isSelected = false
+            }
+            R.id.moreBtn -> {
+                detailsBtn.isSelected = false
+                directoryBtn.isSelected = false
+                moreBtn.isSelected = true
+            }
+        }
+    }
+    private fun changeViewPagerItem(itemId: Int) {
+        when (itemId) {
+            0 -> {
+                changeSelectedNavButton(R.id.detailsBtn)
+                changePageFragment(PAGE_DETAILS)
+            }
+            1 -> {
+                changeSelectedNavButton(R.id.directoryBtn)
+                changePageFragment(PAGE_DIRECTORY)
+            }
+            2 -> {
+                changeSelectedNavButton(R.id.moreBtn)
+                changePageFragment(PAGE_MORE)
+            }
+        }
     }
 
     override fun onStart() {
@@ -118,10 +161,12 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
                 read_toolbar_guide.layoutParams = layoutParams
             }
         })
+
+        initView(view)
     }
 
     override fun show(manager: FragmentManager, tag: String?) {
-        if(!this.isAdded)
+        if (!this.isAdded)
             super.show(manager, tag)
     }
 

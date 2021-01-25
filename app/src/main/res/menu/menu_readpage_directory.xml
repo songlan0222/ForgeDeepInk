@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/rpdirectory_voice"
+            android:icon="@drawable/ic_rpdirect_microphone"
+            android:title="@string/voice"
+            app:showAsAction="always" />
+
+        <item
+            android:id="@+id/rpdirectory_moon"
+            android:icon="@drawable/ic_rpdirect_night"
+            android:title="@string/night"
+            app:showAsAction="always" />
+    </group>
+
+</menu>

@@ -67,4 +67,6 @@
     <string name="more">更多</string>
     <string name="no_pre_chapter">很抱歉，已翻到最前页。</string>
     <string name="no_next_chapter">很抱歉，已翻到末页。</string>
+    <string name="voice">朗读</string>
+    <string name="night">夜间模式</string>
 </resources>

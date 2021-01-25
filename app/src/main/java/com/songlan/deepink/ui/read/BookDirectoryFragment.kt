@@ -1,10 +1,9 @@
 package com.songlan.deepink.ui.read
 
 import android.os.Bundle
+import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.songlan.deepink.R
@@ -25,7 +24,12 @@ class BookDirectoryFragment : Fragment() {
             readBookActivity = activity as ReadBookActivity
         }
         LogUtils.v(msg = "加载BookDirectoryFragment")
+        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_book_directory, container, false)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_readpage_directory, menu)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -33,9 +37,9 @@ class BookDirectoryFragment : Fragment() {
 
         // 配置工具栏内容
         val toolbar = view?.findViewById<Toolbar>(R.id.toolbar)
+        (activity as AppCompatActivity).setSupportActionBar(toolbar)
         toolbar?.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
-
             }
             true
         }

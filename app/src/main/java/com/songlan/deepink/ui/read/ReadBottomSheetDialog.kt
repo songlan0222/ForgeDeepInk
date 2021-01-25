@@ -51,8 +51,8 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
     ): View? {
         val view = inflater.inflate(R.layout.dialog_reading_tool_bar, container, false)
         view.layoutParams = ViewGroup.LayoutParams(
-            // 与界面同宽，但是高度只有总高度的3/4
-            ViewGroup.LayoutParams.MATCH_PARENT, getThreeQuarterWindowHeight()
+            // 与界面同宽，但是高度只有总高度的4/5
+            ViewGroup.LayoutParams.MATCH_PARENT, getOneSixthWindowHeight(4)
         )
         return view
     }
@@ -155,9 +155,9 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         // 拿到系统的 bottom_sheet
         val view = dialog?.findViewById<FrameLayout>(R.id.design_bottom_sheet)!!
         val behavior = BottomSheetBehavior.from(view)
-        behavior.peekHeight = 2 * getQuarterWindowHeight()
+        behavior.peekHeight = getOneSixthWindowHeight(2)
         val layoutParams = read_toolbar_guide.layoutParams as LinearLayout.LayoutParams
-        layoutParams.bottomMargin = 1 * getQuarterWindowHeight()
+        layoutParams.bottomMargin = getOneSixthWindowHeight(2)
         read_toolbar_guide.layoutParams = layoutParams
 
         // 配置behavior，使底部导航栏可以固定，不会随工具栏展开而移动
@@ -172,7 +172,8 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
 
             override fun onSlide(bottomSheet: View, slideOffset: Float) {
                 val layoutParams = read_toolbar_guide.layoutParams as LinearLayout.LayoutParams
-                val offset = (getQuarterWindowHeight() * 1 * (1 - slideOffset)).toInt()
+                // 计算公式：底部2/5作为起始，随展开比例移动
+                val offset = (getOneSixthWindowHeight(2) * (1 - slideOffset)).toInt()
                 layoutParams.bottomMargin = offset
                 read_toolbar_guide.layoutParams = layoutParams
             }
@@ -217,23 +218,12 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
     }
 
     /**
-     * 获取屏幕的四分之一高度
+     * 获取屏幕的六分之一高度
      */
-    private fun getQuarterWindowHeight(): Int {
+    private fun getOneSixthWindowHeight(multiNum: Int = 1): Int {
         val res = resources
         val displayMatrix = res.displayMetrics
         val heightPixels = displayMatrix.heightPixels
-        return heightPixels / 4
+        return heightPixels / 6 * multiNum
     }
-
-    /**
-     * 获取屏幕的四分之三高度
-     */
-    private fun getThreeQuarterWindowHeight(): Int {
-        val res = resources
-        val displayMatrix = res.displayMetrics
-        val heightPixels = displayMatrix.heightPixels
-        return heightPixels - heightPixels / 4
-    }
-
 }

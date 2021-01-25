@@ -69,18 +69,19 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         val moreBtn = rootView.findViewById<TextView>(R.id.moreBtn)
         detailsBtn.setOnClickListener {
             changeSelectedNavButton(R.id.detailsBtn)
-            changePageFragment(PAGE_DETAILS)
+            toolbarViewPager.currentItem = PAGE_DETAILS
         }
         directoryBtn.setOnClickListener {
             changeSelectedNavButton(R.id.directoryBtn)
-            changePageFragment(PAGE_DIRECTORY)
+            toolbarViewPager.currentItem = PAGE_DIRECTORY
         }
         moreBtn.setOnClickListener {
             changeSelectedNavButton(R.id.moreBtn)
-            changePageFragment(PAGE_MORE)
+            toolbarViewPager.currentItem = PAGE_MORE
         }
-        // 初始化时，设置目录页面为选中页面
-        toolbarViewPager.addOnPageChangeListener(object: ViewPager.OnPageChangeListener{
+
+        // 添加监听，保证切换时，会同步改变底部导航栏的选择
+        toolbarViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
                 position: Int,
                 positionOffset: Float,
@@ -89,16 +90,26 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
             }
 
             override fun onPageSelected(position: Int) {
-                changeViewPagerItem(toolbarViewPager.currentItem)
+                // Page切换后，同步修改底部导航栏的选中项
+                when(position){
+                    0 -> changeSelectedNavButton(R.id.detailsBtn)
+                    1 -> changeSelectedNavButton(R.id.directoryBtn)
+                    2 -> changeSelectedNavButton(R.id.moreBtn)
+                }
             }
 
             override fun onPageScrollStateChanged(state: Int) {
             }
 
         })
+
+        // 初始化时，设置目录页面为选中页面
         changeViewPagerItem(toolbarViewPager.currentItem)
     }
 
+    /**
+     * 切换底部的导航栏选中的按钮方法
+     */
     private fun changeSelectedNavButton(viewId: Int) {
         when (viewId) {
             R.id.detailsBtn -> {
@@ -118,19 +129,23 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
             }
         }
     }
+
+    /**
+     * 切换ViewPager的Fragment方法，会同步切换底部导航栏的选中内容
+     */
     private fun changeViewPagerItem(itemId: Int) {
         when (itemId) {
             0 -> {
                 changeSelectedNavButton(R.id.detailsBtn)
-                changePageFragment(PAGE_DETAILS)
+                toolbarViewPager.currentItem = PAGE_DETAILS
             }
             1 -> {
                 changeSelectedNavButton(R.id.directoryBtn)
-                changePageFragment(PAGE_DIRECTORY)
+                toolbarViewPager.currentItem = PAGE_DIRECTORY
             }
             2 -> {
                 changeSelectedNavButton(R.id.moreBtn)
-                changePageFragment(PAGE_MORE)
+                toolbarViewPager.currentItem = PAGE_MORE
             }
         }
     }
@@ -145,6 +160,7 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         layoutParams.bottomMargin = 1 * getQuarterWindowHeight()
         read_toolbar_guide.layoutParams = layoutParams
 
+        // 配置behavior，使底部导航栏可以固定，不会随工具栏展开而移动
         behavior.addBottomSheetCallback(object : BottomSheetBehavior.BottomSheetCallback() {
             override fun onStateChanged(bottomSheet: View, newState: Int) {
                 if (newState == BottomSheetBehavior.STATE_HIDDEN) {
@@ -200,11 +216,9 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         }
     }
 
-
-    private fun changePageFragment(pageNum: Int) {
-        toolbarViewPager.currentItem = pageNum
-    }
-
+    /**
+     * 获取屏幕的四分之一高度
+     */
     private fun getQuarterWindowHeight(): Int {
         val res = resources
         val displayMatrix = res.displayMetrics
@@ -212,6 +226,9 @@ class ReadBottomSheetDialog : BottomSheetDialogFragment() {
         return heightPixels / 4
     }
 
+    /**
+     * 获取屏幕的四分之三高度
+     */
     private fun getThreeQuarterWindowHeight(): Int {
         val res = resources
         val displayMatrix = res.displayMetrics

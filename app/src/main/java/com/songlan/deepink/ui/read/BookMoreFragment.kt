@@ -1,6 +1,8 @@
 package com.songlan.deepink.ui.read
 
+import android.annotation.SuppressLint
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +17,7 @@ import com.songlan.deepink.model.app.ReadPageMenuItem
 import com.songlan.deepink.ui.base.BaseFragment
 import com.songlan.deepink.utils.ConfigUtil
 import kotlinx.android.synthetic.main.fragment_book_more.*
+import kotlinx.android.synthetic.main.item_read_page_settings.view.*
 import java.lang.Exception
 import java.lang.RuntimeException
 
@@ -57,6 +60,14 @@ class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment
             val view = LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_read_page_settings, parent, false)
             val holder = ViewHolder(view)
+            holder.imageView.setOnClickListener {
+                holder.itemView.isSelected = !holder.itemView.isSelected
+                if (holder.itemView.isSelected) {
+                    it.imageView.drawable.setTint(Color.BLUE)
+                } else {
+                    it.imageView.drawable.setTint(Color.BLACK)
+                }
+            }
             return holder
         }
 
@@ -66,11 +77,15 @@ class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment
                 it.imageView.setImageResource(items[position].itemImageId)
                 it.textView.text = items[position].itemName
                 it.itemView.isSelected = items[position].itemSelected
+                if (holder.itemView.isSelected) {
+                    it.imageView.drawable.setTint(Color.BLUE)
+                } else {
+                    it.imageView.drawable.setTint(Color.BLACK)
+                }
             }
-
-
         }
 
         override fun getItemCount() = items.size
+
     }
 }

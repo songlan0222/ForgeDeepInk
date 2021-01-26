@@ -14,7 +14,9 @@
         android:max="100"
         android:progress="20"
         android:thumb="@null"
-        android:progressDrawable="@drawable/layer_list_progress_drawable" />
+        android:duplicateParentState="true"
+        android:progressDrawable="@drawable/layer_list_progress_drawable">
+    </SeekBar>
 
     <SeekBar
         android:id="@+id/fontMargin"
@@ -25,6 +27,7 @@
         android:layout_margin="10dp"
         android:max="100"
         android:thumb="@null"
+        android:duplicateParentState="true"
         android:progress="20"
         android:progressDrawable="@drawable/layer_list_progress_drawable" />
 </LinearLayout>

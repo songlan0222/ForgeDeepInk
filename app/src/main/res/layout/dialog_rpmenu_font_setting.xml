@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <SeekBar
+        android:id="@+id/fontSize"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="10dp"
+        android:maxHeight="40dp"
+        android:max="100"
+        android:progress="20"
+        android:thumb="@null"
+        android:progressDrawable="@drawable/layer_list_progress_drawable" />
+
+    <SeekBar
+        android:id="@+id/fontMargin"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:maxHeight="40dp"
+        android:layout_margin="10dp"
+        android:max="100"
+        android:thumb="@null"
+        android:progress="20"
+        android:progressDrawable="@drawable/layer_list_progress_drawable" />
+</LinearLayout>

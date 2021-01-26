@@ -61,11 +61,21 @@ class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment
                 .inflate(R.layout.item_read_page_settings, parent, false)
             val holder = ViewHolder(view)
             holder.imageView.setOnClickListener {
-                holder.itemView.isSelected = !holder.itemView.isSelected
-                if (holder.itemView.isSelected) {
-                    it.imageView.drawable.setTint(Color.BLUE)
-                } else {
-                    it.imageView.drawable.setTint(Color.BLACK)
+                when (holder.adapterPosition) {
+                    4 -> {
+                        // 隐藏现有弹窗
+                        currentActivity.hideBottomSheetDialog()
+                        // 显示字体设置进度条
+                        currentActivity.showBSD()
+                    }
+                    else -> {
+                        holder.itemView.isSelected = !holder.itemView.isSelected
+                        if (holder.itemView.isSelected) {
+                            it.imageView.drawable.setTint(Color.BLUE)
+                        } else {
+                            it.imageView.drawable.setTint(Color.BLACK)
+                        }
+                    }
                 }
             }
             return holder
@@ -86,6 +96,5 @@ class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment
         }
 
         override fun getItemCount() = items.size
-
     }
 }

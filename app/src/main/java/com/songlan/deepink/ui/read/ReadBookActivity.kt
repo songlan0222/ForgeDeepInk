@@ -34,6 +34,7 @@ class ReadBookActivity : BaseActivity() {
     private var bookId = -1L
     private val fragmentMap = hashMapOf<Int, Fragment>()
     lateinit var bottomFragment: ReadBottomSheetDialog
+    lateinit var fontSettingDialog: FontSettingBSD
     lateinit var chapterTitleAdapter: MyRecyclerViewAdapter
     lateinit var readPageAdapter: ReadingPageViewAdapter
 
@@ -60,6 +61,9 @@ class ReadBookActivity : BaseActivity() {
         setDataToUI()
         // 配置底部弹窗
         setBottomSheetDialog()
+        // 配置字体设置进度条
+        setBSD()
+
 
         chapterContent.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
             override fun onPageScrolled(
@@ -445,6 +449,29 @@ class ReadBookActivity : BaseActivity() {
 
     private fun hideBottomSheetDialogFragment() {
         bottomFragment?.dismiss()
+    }
+
+    /**
+     * 底部弹窗统一管理方法 BottomSheetDialog
+     */
+    private fun setBSD() {
+        fontSettingDialog = FontSettingBSD.getDialog()
+    }
+
+    fun showBSD() {
+        showBSDFragment()
+    }
+
+    private fun showBSDFragment() {
+        fontSettingDialog.show(supportFragmentManager, "fontSizeBSDFragment")
+    }
+
+    fun hideBSD() {
+        hideBottomSheetDialogFragment()
+    }
+
+    private fun hideBSDFragment() {
+        fontSettingDialog?.dismiss()
     }
 
     // 书籍翻页功能的Adapter

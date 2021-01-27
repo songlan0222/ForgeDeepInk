@@ -1,4 +1,4 @@
-package com.songlan.deepink.ui.read
+package com.songlan.deepink.ui.read.dialog
 
 import android.os.Bundle
 import android.os.Parcelable
@@ -15,6 +15,10 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.songlan.deepink.R
+import com.songlan.deepink.ui.read.BookDetailsFragment
+import com.songlan.deepink.ui.read.BookDirectoryFragment
+import com.songlan.deepink.ui.read.BookMoreFragment
+import com.songlan.deepink.ui.read.ReadBookActivity
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.dialog_reading_tool_bar.*
 

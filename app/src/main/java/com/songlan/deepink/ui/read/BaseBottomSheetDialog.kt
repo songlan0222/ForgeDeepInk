@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.songlan.deepink.R
+import com.songlan.deepink.ui.read.dialog.ReadBottomSheetDialog
 
 class BaseBottomSheetDialog : BottomSheetDialogFragment() {
 

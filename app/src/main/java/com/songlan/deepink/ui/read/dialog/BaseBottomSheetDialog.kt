@@ -1,4 +1,4 @@
-package com.songlan.deepink.ui.read
+package com.songlan.deepink.ui.read.dialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,20 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.songlan.deepink.R
+import com.songlan.deepink.ui.read.ReadBookActivity
 
-
-class FontSettingBSD : BottomSheetDialogFragment() {
-
-    companion object {
-        private var fontSizeBSD: FontSettingBSD? = null
-
-        fun getDialog(): FontSettingBSD {
-            if (fontSizeBSD == null) {
-                fontSizeBSD = FontSettingBSD()
-            }
-            return fontSizeBSD!!
-        }
-    }
+abstract class BaseBottomSheetDialog(val layout: Int) : BottomSheetDialogFragment() {
 
     private lateinit var readBookActivity: ReadBookActivity
     private val toolbarFragmentMap = hashMapOf<Int, Fragment>()
@@ -39,7 +28,7 @@ class FontSettingBSD : BottomSheetDialogFragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View? {
-        val view = inflater.inflate(R.layout.dialog_rpmenu_font_setting, container, false)
+        val view = inflater.inflate(layout, container, false)
         view.layoutParams = ViewGroup.LayoutParams(
             // 与界面同宽，但是高度只有总高度的4/5
             ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT

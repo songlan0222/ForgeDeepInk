@@ -17,6 +17,8 @@ import com.songlan.deepink.AppProfiles
 import com.songlan.deepink.R
 import com.songlan.deepink.model.data.Chapter
 import com.songlan.deepink.ui.base.BaseActivity
+import com.songlan.deepink.ui.read.dialog.FontSettingBSD
+import com.songlan.deepink.ui.read.dialog.ReadBottomSheetDialog
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_read_book.*
 import kotlinx.android.synthetic.main.fragment_current_page.*
@@ -62,7 +64,7 @@ class ReadBookActivity : BaseActivity() {
         // 配置底部弹窗
         setBottomSheetDialog()
         // 配置字体设置进度条
-        setBSD()
+        setFontSettingBSD()
 
 
         chapterContent.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -454,23 +456,23 @@ class ReadBookActivity : BaseActivity() {
     /**
      * 底部弹窗统一管理方法 BottomSheetDialog
      */
-    private fun setBSD() {
+    private fun setFontSettingBSD() {
         fontSettingDialog = FontSettingBSD.getDialog()
     }
 
-    fun showBSD() {
-        showBSDFragment()
+    fun showFontSettingBSD() {
+        showFontSettingBSDFragment()
     }
 
-    private fun showBSDFragment() {
+    private fun showFontSettingBSDFragment() {
         fontSettingDialog.show(supportFragmentManager, "fontSizeBSDFragment")
     }
 
-    fun hideBSD() {
+    fun hideFontSettingBSD() {
         hideBottomSheetDialogFragment()
     }
 
-    private fun hideBSDFragment() {
+    private fun hideFontSettingBSDFragment() {
         fontSettingDialog?.dismiss()
     }
 

@@ -1,7 +1,5 @@
 package com.songlan.deepink.ui.read
 
-import android.annotation.SuppressLint
-import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,11 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
 import com.songlan.deepink.model.app.ReadPageMenuItem
 import com.songlan.deepink.ui.base.BaseFragment
-import com.songlan.deepink.utils.ConfigUtil
 import kotlinx.android.synthetic.main.fragment_book_more.*
 import kotlinx.android.synthetic.main.item_read_page_settings.view.*
-import java.lang.Exception
-import java.lang.RuntimeException
 
 class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment(layout) {
 
@@ -66,7 +61,7 @@ class BookMoreFragment(layout: Int = R.layout.fragment_book_more) : BaseFragment
                         // 隐藏现有弹窗
                         currentActivity.hideBottomSheetDialog()
                         // 显示字体设置进度条
-                        currentActivity.showBSD()
+                        currentActivity.showFontSettingBSD()
                     }
                     else -> {
                         holder.itemView.isSelected = !holder.itemView.isSelected

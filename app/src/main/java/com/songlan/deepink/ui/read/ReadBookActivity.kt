@@ -454,7 +454,7 @@ class ReadBookActivity : BaseActivity() {
     }
 
     /**
-     * 底部弹窗统一管理方法 BottomSheetDialog
+     * 文字设置的底部弹窗管理方法 FontSettingBSD
      */
     private fun setFontSettingBSD() {
         fontSettingDialog = FontSettingBSD.getDialog()

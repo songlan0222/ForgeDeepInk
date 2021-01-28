@@ -1,4 +1,4 @@
-package com.songlan.deepink.ui.read
+package com.songlan.deepink.ui.read.page
 
 import android.os.Bundle
 import android.view.View

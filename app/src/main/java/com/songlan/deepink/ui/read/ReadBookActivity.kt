@@ -19,6 +19,9 @@ import com.songlan.deepink.model.data.Chapter
 import com.songlan.deepink.ui.base.BaseActivity
 import com.songlan.deepink.ui.read.dialog.FontSettingBSD
 import com.songlan.deepink.ui.read.dialog.ReadBottomSheetDialog
+import com.songlan.deepink.ui.read.page.CurPageFragment
+import com.songlan.deepink.ui.read.page.NextPageFragment
+import com.songlan.deepink.ui.read.page.PrePageFragment
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.activity_read_book.*
 import kotlinx.android.synthetic.main.fragment_current_page.*

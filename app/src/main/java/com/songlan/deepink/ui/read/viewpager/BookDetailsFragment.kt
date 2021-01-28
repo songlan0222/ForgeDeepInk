@@ -1,4 +1,4 @@
-package com.songlan.deepink.ui.read
+package com.songlan.deepink.ui.read.viewpager
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.songlan.deepink.R
+import com.songlan.deepink.ui.read.ReadBookActivity
 import com.songlan.deepink.utils.LogUtils
 
 class BookDetailsFragment : Fragment() {

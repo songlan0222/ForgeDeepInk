@@ -1,4 +1,4 @@
-package com.songlan.deepink.ui.read
+package com.songlan.deepink.ui.read.viewpager
 
 import android.os.Bundle
 import android.view.*
@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.songlan.deepink.R
+import com.songlan.deepink.ui.read.ReadBookActivity
 import com.songlan.deepink.utils.LogUtils
 import kotlinx.android.synthetic.main.fragment_book_directory.*
 

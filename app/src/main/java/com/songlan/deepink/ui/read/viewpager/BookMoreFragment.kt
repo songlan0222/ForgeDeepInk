@@ -1,4 +1,4 @@
-package com.songlan.deepink.ui.read
+package com.songlan.deepink.ui.read.viewpager
 
 import android.graphics.Color
 import android.os.Bundle
@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.songlan.deepink.R
 import com.songlan.deepink.model.app.ReadPageMenuItem
 import com.songlan.deepink.ui.base.BaseFragment
+import com.songlan.deepink.ui.read.ReadBookActivity
+import com.songlan.deepink.ui.read.ReadBookActivityVM
 import kotlinx.android.synthetic.main.fragment_book_more.*
 import kotlinx.android.synthetic.main.item_read_page_settings.view.*
 
